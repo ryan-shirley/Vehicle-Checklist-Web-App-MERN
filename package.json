@@ -1,6 +1,7 @@
 {
   "name": "hgv-app",
   "version": "0.1.0",
+  "description": "HGV web app using React.js",
   "private": true,
   "author": "Ryan Shirley",
   "dependencies": {

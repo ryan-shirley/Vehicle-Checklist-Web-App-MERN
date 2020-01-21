@@ -1,7 +1,7 @@
 {
-  "name": "moviesite",
+  "name": "hgv-api",
   "version": "1.0.0",
-  "description": "Movie website using express and mongoDB",
+  "description": "HGV web app API using express and mongoDB",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
