@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const recordsRouter = require('./records')
 
 const User = require('../models/User')
 const Plant = require('../models/Plant')
@@ -30,8 +29,5 @@ router.route('/:id').get((req, res) => {
         }))
 
 })
-
-// Nested Route | Records for user
-router.use('/:id/records', recordsRouter)
 
 module.exports = router;
