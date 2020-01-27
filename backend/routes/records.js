@@ -3,13 +3,17 @@ const router = require('express').Router()
 const Record = require('../models/Record')
 const User = require('../models/User')
 
+const checkIfAuthenticated = require('../middleware/auth-middleware')
+
 /**
  * route('/').get() returns all records
  * for one user
  */
-router.route('/').get((req, res) => {
+router.route('/').get(checkIfAuthenticated, (req, res) => {
     // Change this for auth user when implemented
-    const user_id = '5e2582a1091c4f14c061163c'
+    const user_id = req.decoded._id
+
+    console.log('Getting user records');
 
     Record.find({ user_id: user_id})
         .select('-user_id')
