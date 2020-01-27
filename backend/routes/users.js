@@ -6,6 +6,8 @@ const CheckList = require('../models/CheckList')
 
 router.route('/').get((req, res) => {
 
+    // ********* TODO: Validate user is admin *********
+
     User.find()
         .select('-vehicle.check_list_id')
         .populate('plant_id')
@@ -19,6 +21,8 @@ router.route('/').get((req, res) => {
 
 router.route('/:id').get((req, res) => {
     const user_id = req.params.id
+
+    // ********* TODO: Validate user is same as id or is admin *********
 
     User.findOne({ _id: user_id })
         .populate('plant_id vehicle.check_list_id')
