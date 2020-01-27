@@ -28,9 +28,9 @@ router.route('/').get(checkIfAuthenticated, (req, res) => {
 /**
  * route('/:id').get() returns single record
  */
-router.route('/:id').get((req, res) => {
+router.route('/:id').get(checkIfAuthenticated, (req, res) => {
     // Change this for auth user when implemented
-    const user_id = '5e2582a1091c4f14c061163c'
+    const user_id = req.decoded._id
     const id = req.params.id
 
     Record.findOne({ _id: id})
@@ -47,9 +47,9 @@ router.route('/:id').get((req, res) => {
  * route('/').post() creates new record
  * for user
  */
-router.route('/').post(async (req, res) => {
+router.route('/').post(checkIfAuthenticated, async (req, res) => {
     // Change this for auth user when implemented
-    const user_id = '5e2582a1091c4f14c061163c'
+    const user_id = req.decoded._id
     const record = req.body
 
     try {
@@ -57,7 +57,7 @@ router.route('/').post(async (req, res) => {
         const registration_number = user.vehicle.registration_number
         const plant_name = user.plant_id.name
 
-        // ********* Validate user trying to add to is same as logged in *********
+        // ********* TODO: Validate user trying to add to is same as logged in *********
         
         // Add user, vehicle and plant information (String as if driver plant or vehicle changes in future)
         record.user_id = user._id
@@ -80,13 +80,13 @@ router.route('/').post(async (req, res) => {
  * route('/:id').put() updates record
  * for user
  */
-router.route('/:id').put(async (req, res) => {
+router.route('/:id').put(checkIfAuthenticated, async (req, res) => {
     // Change this for auth user when implemented
-    const user_id = '5e2582a1091c4f14c061163c'
+    const user_id = req.decoded._id
     const id = req.params.id
     const record = req.body
 
-    // ********* Validate user trying to add to is same as logged in *********
+    // ********* TODO: Validate user trying to add to is same as logged in *********
 
     Record.findOneAndUpdate({ _id: id }, record, (err, newRecord) => {
         if (err) return res.status(500).json({
@@ -102,13 +102,13 @@ router.route('/:id').put(async (req, res) => {
  * route('/:id').delete() deletes record
  * for user
  */
-router.route('/:id').delete(async (req, res) => {
+router.route('/:id').delete(checkIfAuthenticated, async (req, res) => {
     // Change this for auth user when implemented
-    const user_id = '5e2582a1091c4f14c061163c'
+    const user_id = req.decoded._id
     const id = req.params.id
     const record = req.body
 
-    // ********* Validate user trying to add to is same as logged in *********
+    // ********* TODO: Validate user trying to add to is same as logged in *********
 
     Record.deleteOne({ _id: id }, (err, doc) => {
         if (err) return res.status(500).json({
