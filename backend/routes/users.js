@@ -1,10 +1,11 @@
 const router = require('express').Router()
+const checkIfAuthenticated = require('../middleware/auth-middleware')
 
 const User = require('../models/User')
 const Plant = require('../models/Plant')
 const CheckList = require('../models/CheckList')
 
-router.route('/').get((req, res) => {
+router.route('/').get(checkIfAuthenticated, (req, res) => {
 
     // ********* TODO: Validate user is admin *********
 
@@ -19,7 +20,7 @@ router.route('/').get((req, res) => {
 
 })
 
-router.route('/:id').get((req, res) => {
+router.route('/:id').get(checkIfAuthenticated, (req, res) => {
     const user_id = req.params.id
 
     // ********* TODO: Validate user is same as id or is admin *********
@@ -34,7 +35,7 @@ router.route('/:id').get((req, res) => {
 
 })
 
-router.route('/').post(async (req,res) => {
+router.route('/').post(checkIfAuthenticated, async (req,res) => {
     const user = new User(req.body);
     try {
         const token = await user.newAuthToken()
