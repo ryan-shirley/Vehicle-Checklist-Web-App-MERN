@@ -44,8 +44,8 @@ class Home extends React.Component {
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Registration Number</th>
-                        <th>Plant</th>
+                        <th className="d-none d-md-block">Registration Number</th>
+                        <th className="d-none d-md-block">Plant</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -59,8 +59,8 @@ class Home extends React.Component {
                                     </Moment>
                                 </Link>
                             </td>
-                            <td>{record.registration_number}</td>
-                            <td>{record.plant_name}</td>
+                            <td className="d-none d-md-block">{record.registration_number}</td>
+                            <td className="d-none d-md-block">{record.plant_name}</td>
                             <td>Unknown</td>
                         </tr>
                     ))}
