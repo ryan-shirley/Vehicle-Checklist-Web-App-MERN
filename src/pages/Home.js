@@ -33,6 +33,13 @@ class Home extends React.Component {
             })
     }
 
+    /**
+     * rowClicked() Open single project
+     */
+    rowClicked(url) {
+        this.props.history.push(url)
+    }
+
     render() {
         const { path, url, isExact } = this.props.match
         let recordOpen = !isExact
@@ -44,23 +51,21 @@ class Home extends React.Component {
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th className="d-none d-md-block">Registration Number</th>
-                        <th className="d-none d-md-block">Plant</th>
+                        <th className="d-none d-sm-table-cell">Registration Number</th>
+                        <th className="d-none d-sm-table-cell">Plant</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     {records.map(record => (
-                        <tr key={record._id}>
+                        <tr key={record._id} onClick={e => this.rowClicked(`${url}/${record._id}`)}>
                             <td>
-                                <Link to={`${url}/${record._id}`}>
-                                    <Moment format="YYYY/MM/DD">
-                                        {record.date}
-                                    </Moment>
-                                </Link>
+                                <Moment format="YYYY/MM/DD" className="text-primary">
+                                    {record.date}
+                                </Moment>
                             </td>
-                            <td className="d-none d-md-block">{record.registration_number}</td>
-                            <td className="d-none d-md-block">{record.plant_name}</td>
+                            <td className="d-none d-sm-table-cell">{record.registration_number}</td>
+                            <td className="d-none d-sm-table-cell">{record.plant_name}</td>
                             <td>Unknown</td>
                         </tr>
                     ))}
@@ -75,7 +80,7 @@ class Home extends React.Component {
                 <Col sm={tableSize}>
                     <Link
                         to="/records/create"
-                        className="btn btn-primary float-right"
+                        className="btn btn-primary float-right my-2"
                     >
                         Add Record
                     </Link>

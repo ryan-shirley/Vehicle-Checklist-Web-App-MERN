@@ -1,5 +1,5 @@
 import React from "react"
-import { Table } from "react-bootstrap"
+import { Table, Badge} from "react-bootstrap"
 
 /**
  * GroupList() List all the groups of checks that need to be preformed
@@ -12,7 +12,11 @@ const GroupList = props => {
             onClick={() => props.onClick(group._id)}
         >
             <td>{group.check_group_id.name}</td>
-            <td>{group.completed === undefined ? 'Not Done' : 'Done' }</td>
+            <td>
+                <Badge pill variant={group.completed ? 'success' : 'danger' } >
+                    {group.completed ? 'Done' : 'Not Done' }
+                </Badge>
+            </td>
         </tr>
     ))
 
