@@ -7,12 +7,12 @@ import { Navbar, Nav } from 'react-bootstrap'
 const HGVNavbar = () => {
     return (
         <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="#home">HGV Tracking</Navbar.Brand>
+            <Navbar.Brand href="/home">HGV Tracking</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
+                {/* <Nav className="mr-auto">
                     <Nav.Link href="#home">Home</Nav.Link>
-                </Nav>
+                </Nav> */}
             </Navbar.Collapse>
         </Navbar>
     )
