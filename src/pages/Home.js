@@ -72,10 +72,10 @@ class Home extends React.Component {
                 </tbody>
             </Table>
         )
-
+        
         return (
             <Row>
-                <Col sm={recordOpen ? 10 : 12} className={recordOpen && 'd-none'}>
+                <Col sm={recordOpen ? 10 : 12} className={recordOpen && window.innerWidth <= 375 && 'd-none'}>
                     <Link
                         to="/records/create"
                         className="btn btn-primary float-right my-2"
