@@ -1,6 +1,6 @@
 import React from "react"
 import axios from "axios"
-import { Table, Row, Col } from "react-bootstrap"
+import { Table, Row, Col, Badge } from "react-bootstrap"
 import Moment from "react-moment"
 import { Switch, Route, Link } from "react-router-dom"
 import RecordShow from "./records/Show"
@@ -66,7 +66,11 @@ class Home extends React.Component {
                             </td>
                             <td className="d-none d-sm-table-cell">{record.registration_number}</td>
                             <td className="d-none d-sm-table-cell">{record.plant_name}</td>
-                            <td>Unknown</td>
+                            <td>
+                                <Badge pill variant='danger'>
+                                    *To Be Implemented
+                                </Badge>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
