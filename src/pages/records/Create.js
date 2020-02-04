@@ -89,8 +89,6 @@ class Create extends React.Component {
         for (let i = 0; i < this.state.groups.length; i++) {
             let group = this.state.groups[i]
 
-            console.log(group._id, this.state.currentList._id)
-
             if (group._id === this.state.currentList._id) {
                 group.completed = true
                 newGroups.push(group)
@@ -102,7 +100,7 @@ class Create extends React.Component {
         this.setState(state => {
             let results = state.results.concat({
                 checks: groupResults,
-                group_id: state.currentList._id
+                group_id: state.currentList.check_group_id._id
             })
 
             return {
