@@ -20,7 +20,7 @@ class App extends Component {
             <main>
                 <BrowserRouter>
                     <HGVNavbar />
-                    <Container fluid={true} className="px-0">
+                    <Container fluid={true}>
                         <Switch>
                             <Route path="/" exact component={Login} />
                             <Route path="/records/create" exact component={Create} />
