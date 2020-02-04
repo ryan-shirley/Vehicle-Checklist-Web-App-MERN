@@ -5,6 +5,7 @@
   "private": true,
   "author": "Ryan Shirley",
   "dependencies": {
+    "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "node-sass": "^4.13.1",
     "react": "^16.12.0",

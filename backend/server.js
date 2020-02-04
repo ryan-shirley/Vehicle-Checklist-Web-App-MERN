@@ -9,6 +9,7 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const ATLAS_URI = process.env.ATLAS_URI
 
+const rootRouter = require('./routes/root')
 const usersRouter = require('./routes/users')
 const plantsRouter = require('./routes/plants')
 const checkListRouter = require('./routes/checkList')
@@ -26,9 +27,7 @@ mongoose.connect(ATLAS_URI, {useNewUrlParser: true, useUnifiedTopology: true, us
     }
 });
 
-app.get('/', (req, res) => {
-    res.json({ message: "You are in the root route."})
-})
+app.use('/', rootRouter)
 app.use('/users', usersRouter)
 app.use('/plants', plantsRouter)
 app.use('/check-lists', checkListRouter)

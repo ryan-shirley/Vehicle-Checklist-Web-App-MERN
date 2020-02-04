@@ -1,29 +1,25 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Navbar, Nav } from 'react-bootstrap'
 import './App.scss';
 
 // Pages
-import Home from './pages/Home'
+import Login from './pages/Login'
 
+// Components
+import HGVNavbar from './components/hgv-navbar'
+
+/**
+ * App() Main component used for routing and general layout
+ */
 class App extends Component {
     render() {
         return (
             <main>
                 <BrowserRouter>
-                    <Navbar bg="light" expand="lg">
-                        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#link">Link</Nav.Link>
-                        </Nav>
-                        </Navbar.Collapse>
-                    </Navbar>
+                    <HGVNavbar />
                     <div className="container">
                         <Switch>
-                            <Route exact path="/" component={Home} />
+                            <Route exact path="/" component={Login} />
                         </Switch>
                     </div>
                 </BrowserRouter>
