@@ -17,7 +17,10 @@ const GroupsSchema = new mongoose.Schema({
         required: true,
         ref: 'CheckGroup'
     },
-    checks: [CheckSchema]
+    checks: {
+        type: [CheckSchema],
+        required: true
+    }
 })
 
 
