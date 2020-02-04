@@ -35,7 +35,7 @@ class Login extends React.Component {
             .then(res => {
                 // save token in local storage
                 localStorage.setItem("jwtToken", res.data.token)
-                this.props.history.push("/home")
+                this.props.history.push("/records")
             })
             .catch(err => {
                 this.setState({

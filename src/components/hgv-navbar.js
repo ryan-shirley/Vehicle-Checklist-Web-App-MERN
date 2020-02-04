@@ -7,7 +7,7 @@ import { Navbar } from 'react-bootstrap'
 const HGVNavbar = () => {
     return (
         <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="/home">HGV Tracking</Navbar.Brand>
+            <Navbar.Brand href="/records">HGV Tracking</Navbar.Brand>
         </Navbar>
     )
 }

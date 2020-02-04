@@ -90,7 +90,7 @@ class RecordShow extends Component {
 
             return (
                 <>
-                    <Link to="/home">Close</Link>
+                    <Link to="/records">Close</Link>
                     <p>
                         <Moment format="YYYY/MM/DD">
                             {this.state.record.date}

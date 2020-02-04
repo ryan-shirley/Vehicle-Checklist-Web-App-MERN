@@ -53,7 +53,7 @@ class Home extends React.Component {
                     {records.map(record => (
                         <tr key={record._id}>
                             <td>
-                                <Link to={`${url}/record/${record._id}`}>
+                                <Link to={`${url}/${record._id}`}>
                                     <Moment format="YYYY/MM/DD">
                                         {record.date}
                                     </Moment>
@@ -77,7 +77,7 @@ class Home extends React.Component {
                     <Col sm={2} className="bg-light">
                     <Switch>
                             <Route
-                                path={`${path}/record/:recordId`}
+                                path={`${path}/:recordId`}
                                 component={RecordShow}
                             />
                         </Switch>
