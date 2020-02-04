@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken')
 
 const checkIfAuthenticated = async (req, res, next) => {
-    console.log('Checking if authenticated');
-
     try {
         const token = req.header('Authorization').replace('Bearer', '').trim()
         const decoded = jwt.verify(token, process.env.JWT_VERIFY)
