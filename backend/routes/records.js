@@ -15,6 +15,7 @@ router.route('/').get(checkIfAuthenticated, (req, res) => {
 
     Record.find({ user_id: user_id})
         .select('-user_id -checked_groups')
+        .sort('-date')
         .then(records => res.json(records))
         .catch(err => res.status(400).json({
             code: 400,
