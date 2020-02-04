@@ -8,7 +8,7 @@ const checkIfAuthenticated = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_VERIFY)
 
         req.decoded = decoded
-        console.log('Authenticated!')
+        // console.log('Authenticated!')
         
         // const user = await User.findOne({ _id:decoded._id, 'tokens.token': token})
 
@@ -18,7 +18,7 @@ const checkIfAuthenticated = async (req, res, next) => {
 
         // req.user = user
     } catch (error) {
-        console.log('Not Authenticated!');
+        // console.log('Not Authenticated!');
         return res.status(401).json({ error:'You are not authenticated!' })
     }
 

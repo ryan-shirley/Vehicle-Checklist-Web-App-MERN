@@ -13,8 +13,6 @@ router.route('/').get(checkIfAuthenticated, (req, res) => {
     // Change this for auth user when implemented
     const user_id = req.decoded._id
 
-    console.log('Getting user records');
-
     Record.find({ user_id: user_id})
         .select('-user_id')
         .populate('checked_groups.group_id')
