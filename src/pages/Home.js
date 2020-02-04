@@ -73,11 +73,9 @@ class Home extends React.Component {
             </Table>
         )
 
-        let tableSize = recordOpen ? 10 : 12
-
         return (
             <Row>
-                <Col sm={tableSize}>
+                <Col sm={recordOpen ? 10 : 12} className={recordOpen && 'd-none'}>
                     <Link
                         to="/records/create"
                         className="btn btn-primary float-right my-2"
