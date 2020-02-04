@@ -14,8 +14,7 @@ router.route('/').get(checkIfAuthenticated, (req, res) => {
     const user_id = req.decoded._id
 
     Record.find({ user_id: user_id})
-        .select('-user_id')
-        .populate('checked_groups.group_id')
+        .select('-user_id -checked_groups')
         .then(records => res.json(records))
         .catch(err => res.status(400).json({
             code: 400,
