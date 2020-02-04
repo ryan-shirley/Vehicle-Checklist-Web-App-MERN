@@ -6,6 +6,7 @@ import './App.scss';
 // Pages
 import Login from './pages/Login'
 import Home from './pages/Home'
+import Create from './pages/records/Create'
 
 // Components
 import HGVNavbar from './components/hgv-navbar'
@@ -19,9 +20,10 @@ class App extends Component {
             <main>
                 <BrowserRouter>
                     <HGVNavbar />
-                    <Container fluid={true}>
+                    <Container fluid={true} className="px-0">
                         <Switch>
-                            <Route exact path="/" component={Login} />
+                            <Route path="/" exact component={Login} />
+                            <Route path="/records/create" exact component={Create} />
                             <Route path="/records" component={Home} />
                         </Switch>
                     </Container>

@@ -34,7 +34,7 @@ class Home extends React.Component {
     }
 
     render() {
-        const { path, url, isExact  } = this.props.match
+        const { path, url, isExact } = this.props.match
         let recordOpen = !isExact
 
         const { records } = this.state
@@ -72,10 +72,19 @@ class Home extends React.Component {
 
         return (
             <Row>
-                <Col sm={tableSize}>{recordTable}</Col>
+                <Col sm={tableSize}>
+                    <Link
+                        to="/records/create"
+                        className="btn btn-primary float-right"
+                    >
+                        Add Record
+                    </Link>
+                    {recordTable}
+                </Col>
+                
                 {recordOpen && (
                     <Col sm={2} className="bg-light">
-                    <Switch>
+                        <Switch>
                             <Route
                                 path={`${path}/:recordId`}
                                 component={RecordShow}

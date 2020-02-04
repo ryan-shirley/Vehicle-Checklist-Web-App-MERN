@@ -35,6 +35,20 @@ router.route('/:id').get(checkIfAuthenticated, (req, res) => {
 
 })
 
+router.route('/:id/checklist').get(checkIfAuthenticated, async (req, res) => {
+    const user_id = req.params.id
+
+    // ********* TODO: Validate user is same as id or is admin *********
+
+    let userChecklist = await User.findOne({ _id: user_id }).select('vehicle.check_list_id')
+    let checkListId = userChecklist.vehicle.check_list_id
+
+    let checkList = await CheckList.findOne({ _id: checkListId }).populate('required_checks.check_group_id')
+
+    res.json({checkList})
+
+})
+
 router.route('/').post(checkIfAuthenticated, async (req,res) => {
     const user = new User(req.body);
     try {
