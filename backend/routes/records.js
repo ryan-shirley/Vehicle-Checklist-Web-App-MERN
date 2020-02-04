@@ -49,6 +49,14 @@ router.route('/').post(checkIfAuthenticated, async (req, res) => {
     const user_id = req.decoded._id
     const record = req.body
 
+    if(!record) {
+        res.status(500).json({
+            code: 500,
+            message: 'No record was provided'
+        })
+    }
+    
+
     try {
         let user = await User.findOne({ _id: user_id }).select('vehicle.registration_number').populate('plant_id').exec()
         const registration_number = user.vehicle.registration_number

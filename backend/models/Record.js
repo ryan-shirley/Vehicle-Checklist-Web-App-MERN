@@ -22,7 +22,10 @@ const GroupsSchema = new mongoose.Schema({
 
 
 const RecordSchema = new mongoose.Schema({
-    checked_groups: [GroupsSchema],
+    checked_groups: {
+        type: [GroupsSchema],
+        required: true
+    },
     date: { 
         type: Date, 
         default: Date.now,
