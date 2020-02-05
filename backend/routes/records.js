@@ -2,6 +2,7 @@ const router = require("express").Router()
 
 const Record = require("../models/Record")
 const User = require("../models/User")
+const CheckList = require("../models/CheckList")
 
 const checkIfAuthenticated = require("../middleware/auth-middleware")
 
@@ -35,7 +36,7 @@ router.route("/:id").get(checkIfAuthenticated, (req, res) => {
 
     Record.findOne({ _id: id })
         .select("-user_id")
-        .populate("checked_groups.group_id")
+        .populate("checked_groups.group_id check_list_id")
         .then(records => res.json(records))
         .catch(err =>
             res.status(400).json({
@@ -63,18 +64,20 @@ router.route("/").post(checkIfAuthenticated, async (req, res) => {
 
     try {
         let user = await User.findOne({ _id: user_id })
-            .select("vehicle.registration_number")
+            .select("vehicle.registration_number vehicle.check_list_id")
             .populate("plant_id")
             .exec()
         const registration_number = user.vehicle.registration_number
+        const check_list_id = user.vehicle.check_list_id
         const plant_name = user.plant_id.name
 
         // ********* TODO: Validate user trying to add to is same as logged in *********
 
-        // Add user, vehicle, plant and pass information (String as if driver plant or vehicle changes in future)
+        // Add user, vehicle, checklist, plant and pass information (String as if driver plant or vehicle changes in future)
         record.user_id = user._id
         record.plant_name = plant_name
         record.registration_number = registration_number
+        record.check_list_id = check_list_id
 
         // Determin if passed
         record.passed = true

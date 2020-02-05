@@ -50,6 +50,11 @@ const RecordSchema = new mongoose.Schema({
     passed: {
         type: Boolean,
         required: true
+    },
+    check_list_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'CheckList'
     }
 })
 

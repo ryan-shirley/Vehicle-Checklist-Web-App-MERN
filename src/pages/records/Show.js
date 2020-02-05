@@ -114,7 +114,7 @@ class RecordShow extends Component {
                             {this.state.record.passed ? "PASS" : "FAIL"}
                         </Badge>
                     </p>
-                    <p>Checklist: *Need to save</p>
+                    <p>Checklist: {this.state.record.check_list_id.name}</p>
                     {groups}
                 </>
             )
