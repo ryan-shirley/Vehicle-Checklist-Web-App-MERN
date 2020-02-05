@@ -13,6 +13,21 @@ class Login extends React.Component {
         }
     }
 
+    /**
+     * componentDidMount() Check for redirect message
+     */
+    componentDidMount() {
+        let redirect_message = this.props.location.redirect_message
+
+        console.log(redirect_message)
+
+        if(redirect_message) {
+            this.setState({
+                error: redirect_message
+            })
+        }
+    }
+
     handleInputChange = e => {
         const target = e.target
         const { name, value } = target

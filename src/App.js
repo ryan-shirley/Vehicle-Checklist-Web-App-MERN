@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import React, { Component } from 'react'
+import { BrowserRouter, Switch } from 'react-router-dom'
+import PrivateRoute from './components/PrivateRoute'
+import RestricedRoute from './components/RestricedRoute'
 import { Container } from "react-bootstrap"
-import './App.scss';
+import './App.scss'
 
 // Pages
 import Login from './pages/Login'
@@ -22,9 +24,9 @@ class App extends Component {
                     <HGVNavbar />
                     <Container fluid={true}>
                         <Switch>
-                            <Route path="/" exact component={Login} />
-                            <Route path="/records/create" exact component={Create} />
-                            <Route path="/records" component={Home} />
+                            <RestricedRoute path="/" exact component={Login} />
+                            <PrivateRoute path="/records/create" exact component={Create} />
+                            <PrivateRoute path="/records" component={Home} />
                         </Switch>
                     </Container>
                 </BrowserRouter>
