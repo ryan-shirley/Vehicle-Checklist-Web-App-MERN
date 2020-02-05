@@ -65,10 +65,23 @@ router.route('/').post(checkIfAuthenticated, async (req, res) => {
 
         // ********* TODO: Validate user trying to add to is same as logged in *********
         
-        // Add user, vehicle and plant information (String as if driver plant or vehicle changes in future)
+        // Add user, vehicle, plant and pass information (String as if driver plant or vehicle changes in future)
         record.user_id = user._id
         record.plant_name = plant_name
         record.registration_number = registration_number
+
+        // Determin if passed
+        record.passed = true
+        for (var i = 0; i < record.checked_groups.length; i++) {
+            for (var j = 0; j < record.checked_groups[i].checks.length; j++) {
+                console.log(record.checked_groups[i].checks[j].passed);
+                
+                if (!record.checked_groups[i].checks[j].passed) {
+                    record.passed = false
+                    break;
+                }
+            }
+        }
 
         const newRecord = new Record(record)
         const savedRecord = await newRecord.save()

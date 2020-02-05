@@ -47,6 +47,10 @@ const RecordSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
+    passed: {
+        type: Boolean,
+        required: true
+    }
 })
 
 module.exports = mongoose.model('Record', RecordSchema)
