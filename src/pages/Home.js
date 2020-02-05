@@ -53,6 +53,7 @@ class Home extends React.Component {
                         <th>Date</th>
                         <th className="d-none d-sm-table-cell">Registration Number</th>
                         <th className="d-none d-sm-table-cell">Plant</th>
+                        <th className="d-none d-sm-table-cell">Checklist</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -60,12 +61,13 @@ class Home extends React.Component {
                     {records.map(record => (
                         <tr key={record._id} onClick={e => this.rowClicked(`${url}/${record._id}`)}>
                             <td>
-                                <Moment format="YYYY/MM/DD" className="text-primary">
+                                <Moment format="YYYY/MM/DD - hh:mm a" className="text-primary">
                                     {record.date}
                                 </Moment>
                             </td>
                             <td className="d-none d-sm-table-cell">{record.registration_number}</td>
                             <td className="d-none d-sm-table-cell">{record.plant_name}</td>
+                            <td className="d-none d-sm-table-cell">{record.check_list_id.name}</td>
                             <td>
                                 <Badge pill variant={record.passed ? 'success' : 'danger'}>
                                     {record.passed ? 'PASS' : 'FAIL'}
