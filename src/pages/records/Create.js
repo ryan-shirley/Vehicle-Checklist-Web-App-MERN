@@ -78,10 +78,19 @@ class Create extends React.Component {
     startGroupCheck = groupId => {
         const currentList = this.state.groups.find(({ _id }) => _id === groupId)
 
-        this.setState({
-            currentList,
-            error: ""
-        })
+        if(!currentList.completed) {
+            this.setState({
+                currentList,
+                error: ""
+            })
+        }
+        else {
+            this.setState({
+                error: "You have already filled out this group"
+            })
+        }
+
+        
     }
 
     groupFinished = groupResults => {
