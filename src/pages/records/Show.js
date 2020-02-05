@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import axios from "axios"
 import Moment from "react-moment"
 import { Link } from "react-router-dom"
-import { Badge } from "react-bootstrap"
+import { Badge, Button } from "react-bootstrap"
 
 /**
  * RecordShow() Main navbar for all users
@@ -36,6 +36,9 @@ class RecordShow extends Component {
         }
     }
 
+    /**
+     * fetchRecord() Fetch single record
+     */
     fetchRecord() {
         let recordId = this.props.match.params.recordId
 
@@ -114,6 +117,7 @@ class RecordShow extends Component {
                             {this.state.record.passed ? "PASS" : "FAIL"}
                         </Badge>
                     </p>
+                    <p><Button variant="danger" onClick={() => this.props.deleteRecord(this.state.record._id)}>Delete</Button></p>
                     <p>Checklist: {this.state.record.check_list_id.name}</p>
                     {groups}
                 </>

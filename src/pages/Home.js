@@ -12,12 +12,22 @@ class Home extends React.Component {
         this.state = {
             records: []
         }
+
+        // Binding this to work in the callback
+        this.deleteRecord = this.deleteRecord.bind(this)
     }
 
     /**
-     * componentDidMount() Load users records
+     * componentDidMount() Fetch users records on mount
      */
     componentDidMount() {
+        this.fetchRecords()
+    }
+
+    /**
+     * fetchRecords() Fetch users records
+     */
+    fetchRecords() {
         axios.defaults.headers.common["Authorization"] = localStorage.getItem(
             "jwtToken"
         )
@@ -38,6 +48,28 @@ class Home extends React.Component {
      */
     rowClicked(url) {
         this.props.history.push(url)
+    }
+
+    /**
+     * deleteRecord() Delete single record
+     */
+    deleteRecord(id) {
+        axios.defaults.headers.common["Authorization"] = localStorage.getItem(
+            "jwtToken"
+        )
+        axios
+            .delete(process.env.REACT_APP_API_URI + "/records/" + id)
+            .then(res => {
+                this.props.history.push("/records")
+                this.fetchRecords()
+            })
+            .catch(err => {
+                console.log(err.response.data.message)
+            })
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {
@@ -96,7 +128,7 @@ class Home extends React.Component {
                         <Switch>
                             <Route
                                 path={`${path}/:recordId`}
-                                component={RecordShow}
+                                component={props => <RecordShow {...props} deleteRecord={this.deleteRecord} />}
                             />
                         </Switch>
                     </Col>

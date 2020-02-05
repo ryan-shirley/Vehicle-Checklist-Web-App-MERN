@@ -133,7 +133,6 @@ router.route("/:id").delete(checkIfAuthenticated, async (req, res) => {
     // Change this for auth user when implemented
     const user_id = req.decoded._id
     const id = req.params.id
-    const record = req.body
 
     // ********* TODO: Validate user trying to add to is same as logged in *********
 
