@@ -16,6 +16,7 @@ router.route("/").get(checkIfAuthenticated, (req, res) => {
 
     Record.find({ user_id: user_id })
         .select("-user_id -checked_groups")
+        .populate('check_list_id', 'name')
         .sort("-date")
         .then(records => res.json(records))
         .catch(err =>
