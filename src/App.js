@@ -17,14 +17,34 @@ import HGVNavbar from './components/hgv-navbar'
  * App() Main component used for routing and general layout
  */
 class App extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            loggedIn: localStorage.getItem('UID') ? true : false
+        }
+
+        // Binding this to work in the callback
+        this.updateLoggedInStatus = this.updateLoggedInStatus.bind(this)
+    }
+
+    /**
+     * updateLoggedInStatus() Update logged in status
+     */
+    updateLoggedInStatus(newStatus) {
+        this.setState({
+            loggedIn: newStatus
+        })
+    }
+
     render() {
         return (
             <main>
                 <BrowserRouter>
-                    <HGVNavbar />
+                    <HGVNavbar loggedIn={this.state.loggedIn} onLogout={this.updateLoggedInStatus} />
                     <Container fluid={true}>
                         <Switch>
-                            <RestricedRoute path="/" exact component={Login} />
+                            <RestricedRoute path="/" exact component={Login} onLogin={this.updateLoggedInStatus} />
                             <PrivateRoute path="/records/create" exact component={Create} />
                             <PrivateRoute path="/records" component={Home} />
                         </Switch>

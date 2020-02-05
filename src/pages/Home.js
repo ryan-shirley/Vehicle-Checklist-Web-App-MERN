@@ -68,10 +68,6 @@ class Home extends React.Component {
             })
     }
 
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
-
     render() {
         const { path, url, isExact } = this.props.match
         let recordOpen = !isExact

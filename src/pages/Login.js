@@ -11,6 +11,9 @@ class Login extends React.Component {
             password: "",
             error: ""
         }
+
+        // Binding this to work in the callback
+        this.onSubmit = this.onSubmit.bind(this)
     }
 
     /**
@@ -18,8 +21,6 @@ class Login extends React.Component {
      */
     componentDidMount() {
         let redirect_message = this.props.location.redirect_message
-
-        console.log(redirect_message)
 
         if(redirect_message) {
             this.setState({
@@ -51,6 +52,9 @@ class Login extends React.Component {
                 // save token in local storage
                 localStorage.setItem("jwtToken", res.data.token)
                 localStorage.setItem("UID", res.data.user._id)
+                localStorage.setItem("userFullName", res.data.user.first_name + ' ' + res.data.user.last_name)
+
+                this.props.onLogin(true)
                 this.props.history.push("/records")
             })
             .catch(err => {

@@ -9,7 +9,7 @@ const RestricedRoute = ({component: Component, ...rest}) => {
         <Route
           {...rest}
           render={(props) => !localStorage.getItem("jwtToken")
-            ? <Component {...props} />
+            ? <Component {...props} {...rest} />
             : <Redirect to={{pathname: '/records', state: {from: props.location}}} />}
         />
       )
