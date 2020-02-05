@@ -4,7 +4,6 @@ import Moment from "react-moment"
 import { Link } from "react-router-dom"
 import { Badge } from "react-bootstrap"
 
-
 /**
  * RecordShow() Main navbar for all users
  */
@@ -30,7 +29,9 @@ class RecordShow extends Component {
      * then fetch new record.
      */
     componentDidUpdate(nextProps) {
-        if (nextProps.match.params.recordId !== this.props.match.params.recordId) {
+        if (
+            nextProps.match.params.recordId !== this.props.match.params.recordId
+        ) {
             this.fetchRecord()
         }
     }
@@ -42,7 +43,9 @@ class RecordShow extends Component {
             loading: true
         })
 
-        axios.defaults.headers.common["Authorization"] = localStorage.getItem("jwtToken")
+        axios.defaults.headers.common["Authorization"] = localStorage.getItem(
+            "jwtToken"
+        )
         axios
             .get(process.env.REACT_APP_API_URI + "/records/" + recordId)
             .then(res => {
@@ -70,17 +73,23 @@ class RecordShow extends Component {
                 <div key={group._id}>
                     <h4>{group.group_id.name}</h4>
                     <hr />
-                    
+
                     <ul className="list-unstyled">
                         {group.checks.map(check => (
                             <li key={check.code} className="media mb-3">
-                                <Badge pill variant={check.passed ? 'success' : 'danger' } className="align-self-start mr-3" >
-                                    {check.passed ? 'PASS' : 'FAIL' }
+                                <Badge
+                                    pill
+                                    variant={
+                                        check.passed ? "success" : "danger"
+                                    }
+                                    className="align-self-start mr-3"
+                                >
+                                    {check.passed ? "PASS" : "FAIL"}
                                 </Badge>
                                 <div className="media-body">
-                                    {group.group_id.checks.map(chk => (
-                                        chk.code === check.code ? chk.title : ''
-                                    ))}
+                                    {group.group_id.checks.map(chk =>
+                                        chk.code === check.code ? chk.title : ""
+                                    )}
                                 </div>
                             </li>
                         ))}
@@ -95,7 +104,15 @@ class RecordShow extends Component {
                         <Moment format="YYYY/MM/DD">
                             {this.state.record.date}
                         </Moment>{" "}
-                        - STATUS *TODO DB
+                        -{" "}
+                        <Badge
+                            pill
+                            variant={
+                                this.state.record.passed ? "success" : "danger"
+                            }
+                        >
+                            {this.state.record.passed ? "PASS" : "FAIL"}
+                        </Badge>
                     </p>
                     <p>Checklist: *Need to save</p>
                     {groups}

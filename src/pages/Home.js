@@ -67,8 +67,8 @@ class Home extends React.Component {
                             <td className="d-none d-sm-table-cell">{record.registration_number}</td>
                             <td className="d-none d-sm-table-cell">{record.plant_name}</td>
                             <td>
-                                <Badge pill variant='danger'>
-                                    *To Be Implemented
+                                <Badge pill variant={record.passed ? 'success' : 'danger'}>
+                                    {record.passed ? 'PASS' : 'FAIL'}
                                 </Badge>
                             </td>
                         </tr>
