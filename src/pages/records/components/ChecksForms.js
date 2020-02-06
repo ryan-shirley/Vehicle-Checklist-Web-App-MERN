@@ -26,6 +26,8 @@ class ChecksForm extends React.Component {
             numChecks: checks.length,
             checks
         })
+
+        this.props.onStageChange(`1/${checks.length}`)
     }
 
     submitCheck(passed) {
@@ -51,12 +53,13 @@ class ChecksForm extends React.Component {
                 // console.log("All stages completed")
 
                 this.props.onComplete(this.state.results)
+                this.props.onStageChange('')
             } else {
                 // console.log("Next stage")
 
                 this.setState({
                     stage: stage + 1
-                })
+                }, () => { this.props.onStageChange(`${this.state.stage}/${this.state.numChecks}`) })
             }
         })
     }

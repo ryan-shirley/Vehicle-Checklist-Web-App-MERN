@@ -14,8 +14,12 @@ class Create extends React.Component {
             error: "",
             loading: true,
             currentList: [],
-            results: []
+            results: [],
+            process: ''
         }
+
+        // Binding this to work in the callback
+        this.setProgress = this.setProgress.bind(this)
     }
 
     /**
@@ -127,6 +131,15 @@ class Create extends React.Component {
         })
     }
 
+    /**
+     * setProgress() Set progress of group checks
+     */
+    setProgress(process) {
+        this.setState({
+            process
+        })
+    }
+
     render() {
         if (this.state.loading) {
             return (
@@ -136,10 +149,12 @@ class Create extends React.Component {
 
         return (
             <>
-                <h5 className="text-center bg-light border py-3">
+                <h5 className="text-center bg-light border py-3 position-relative">
                     {this.state.currentList.check_group_id
                         ? this.state.currentList.check_group_id.name
                         : "Checklist: " + this.state.checklist}
+
+                    {this.state.process && <span className="position-absolute" style={{ right: 20 }}>{ this.state.process }</span>}
                 </h5>
 
                 {this.state.error && (
@@ -155,6 +170,7 @@ class Create extends React.Component {
                                     this.state.currentList.check_group_id.checks
                                 }
                                 onComplete={this.groupFinished}
+                                onStageChange={this.setProgress}
                             />
                         ) : (
                             <>
