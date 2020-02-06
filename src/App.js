@@ -7,6 +7,7 @@ import './App.scss'
 
 // Pages
 import Login from './pages/Login'
+import Register from './pages/Register'
 import Home from './pages/Home'
 import Create from './pages/records/Create'
 
@@ -45,6 +46,7 @@ class App extends Component {
                     <Container fluid={true}>
                         <Switch>
                             <RestricedRoute path="/" exact component={Login} onLogin={this.updateLoggedInStatus} />
+                            <RestricedRoute path="/register" exact component={Register} onLogin={this.updateLoggedInStatus} />
                             <PrivateRoute path="/records/create" exact component={Create} />
                             <PrivateRoute path="/records" component={Home} />
                         </Switch>

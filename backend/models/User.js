@@ -44,7 +44,8 @@ const UserSchema = new mongoose.Schema({
     },
     is_admin: {
         type: Boolean,
-        required: false
+        required: false,
+        default: false
     },
     email:{
         type: String,

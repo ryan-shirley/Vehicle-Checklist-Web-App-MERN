@@ -3,7 +3,7 @@ const checkIfAuthenticated = require('../middleware/auth-middleware')
 
 const Plant = require('../models/Plant')
 
-router.route('/').get(checkIfAuthenticated, (req, res) => {
+router.route('/').get((req, res) => {
 
     Plant.find()
         .then(plant => res.json(plant))

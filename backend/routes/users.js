@@ -49,14 +49,14 @@ router.route('/:id/checklist').get(checkIfAuthenticated, async (req, res) => {
 
 })
 
-router.route('/').post(checkIfAuthenticated, async (req,res) => {
+router.route('/').post(async (req,res) => {
     const user = new User(req.body);
     try {
         const token = await user.newAuthToken()
         res.status(201).send({user, token})
     } catch(e){
         console.log(e)
-        res.status(400).json(e.message)
+        res.status(400).json({ error: e.message})
     }
 })
 
