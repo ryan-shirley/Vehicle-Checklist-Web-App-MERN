@@ -3,6 +3,7 @@ import axios from "axios"
 import { Row, Col, Button, Alert } from "react-bootstrap"
 import GroupList from "./components/GroupList"
 import ChecksForm from "./components/ChecksForms"
+import { Link } from "react-router-dom"
 
 class Create extends React.Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class Create extends React.Component {
             loading: true,
             currentList: [],
             results: [],
-            process: ''
+            process: ""
         }
 
         // Binding this to work in the callback
@@ -62,12 +63,13 @@ class Create extends React.Component {
                 error: "Need to complete all stages"
             })
         } else {
-            axios.defaults.headers.common["Authorization"] = localStorage.getItem("jwtToken")
+            axios.defaults.headers.common[
+                "Authorization"
+            ] = localStorage.getItem("jwtToken")
             axios
-                .post(
-                    process.env.REACT_APP_API_URI + "/records",
-                    { checked_groups: this.state.results }
-                )
+                .post(process.env.REACT_APP_API_URI + "/records", {
+                    checked_groups: this.state.results
+                })
                 .then(res => {
                     this.props.history.push("/records")
                 })
@@ -85,19 +87,16 @@ class Create extends React.Component {
     startGroupCheck = groupId => {
         const currentList = this.state.groups.find(({ _id }) => _id === groupId)
 
-        if(!currentList.completed) {
+        if (!currentList.completed) {
             this.setState({
                 currentList,
                 error: ""
             })
-        }
-        else {
+        } else {
             this.setState({
                 error: "You have already filled out this group"
             })
         }
-
-        
     }
 
     /**
@@ -154,7 +153,14 @@ class Create extends React.Component {
                         ? this.state.currentList.check_group_id.name
                         : "Checklist: " + this.state.checklist}
 
-                    {this.state.process && <span className="position-absolute" style={{ right: 20 }}>{ this.state.process }</span>}
+                    {this.state.process && (
+                        <span
+                            className="position-absolute"
+                            style={{ right: 20 }}
+                        >
+                            {this.state.process}
+                        </span>
+                    )}
                 </h5>
 
                 {this.state.error && (
@@ -178,6 +184,13 @@ class Create extends React.Component {
                                     groups={this.state.groups}
                                     onClick={this.startGroupCheck}
                                 />
+
+                                <Link
+                                    to="/records"
+                                    className="btn btn-secondary mr-2"
+                                >
+                                    Cancel
+                                </Link>
                                 <Button
                                     variant="primary"
                                     onClick={this.onSubmit}
