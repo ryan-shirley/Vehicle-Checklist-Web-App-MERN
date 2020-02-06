@@ -75,6 +75,9 @@ class Create extends React.Component {
         }
     }
 
+    /**
+     * startGroupCheck() Open single group for checks
+     */
     startGroupCheck = groupId => {
         const currentList = this.state.groups.find(({ _id }) => _id === groupId)
 
@@ -93,6 +96,10 @@ class Create extends React.Component {
         
     }
 
+    /**
+     * groupFinished() Group check was completed
+     * add to results
+     */
     groupFinished = groupResults => {
         let newGroups = []
         for (let i = 0; i < this.state.groups.length; i++) {
@@ -130,8 +137,8 @@ class Create extends React.Component {
         return (
             <>
                 <h5 className="text-center bg-light border py-3">
-                    {this.state.currentList.name
-                        ? this.state.currentList.name
+                    {this.state.currentList.check_group_id
+                        ? this.state.currentList.check_group_id.name
                         : "Checklist: " + this.state.checklist}
                 </h5>
 
