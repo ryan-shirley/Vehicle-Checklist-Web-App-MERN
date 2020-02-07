@@ -123,7 +123,7 @@ class RecordShow extends Component {
                         <Col className="border-bottom border-top">
                             <Moment
                                 format="YYYY/MM/DD"
-                                className="text-primary text-medium d-inline-block align-middle"
+                                className="text-primary font-weight-medium d-inline-block align-middle"
                             >
                                 {this.state.record.date}
                             </Moment>
