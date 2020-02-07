@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { BrowserRouter, Switch } from 'react-router-dom'
 import PrivateRoute from './components/PrivateRoute'
 import RestricedRoute from './components/RestricedRoute'
-import { Container } from "react-bootstrap"
 import './App.scss'
 
 // Pages
@@ -44,15 +43,13 @@ class App extends Component {
             <main>
                 <BrowserRouter>
                     <HGVNavbar loggedIn={this.state.loggedIn} onLogout={this.updateLoggedInStatus} />
-                    <Container fluid={true}>
-                        <Switch>
-                            <RestricedRoute path="/" exact component={Login} onLogin={this.updateLoggedInStatus} />
-                            <RestricedRoute path="/register" exact component={Register} onLogin={this.updateLoggedInStatus} />
-                            <PrivateRoute path="/records/create" exact component={Create} />
-                            <PrivateRoute path="/records/:recordId/edit" exact component={Edit} />
-                            <PrivateRoute path="/records" component={Home} />
-                        </Switch>
-                    </Container>
+                    <Switch>
+                        <RestricedRoute path="/" exact component={Login} onLogin={this.updateLoggedInStatus} />
+                        <RestricedRoute path="/register" exact component={Register} onLogin={this.updateLoggedInStatus} />
+                        <PrivateRoute path="/records/create" exact component={Create} />
+                        <PrivateRoute path="/records/:recordId/edit" exact component={Edit} />
+                        <PrivateRoute path="/records" component={Home} />
+                    </Switch>
                 </BrowserRouter>
             </main>
         );
