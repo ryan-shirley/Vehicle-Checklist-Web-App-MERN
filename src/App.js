@@ -10,6 +10,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
 import Create from './pages/records/Create'
+import Edit from './pages/records/Edit'
 
 // Components
 import HGVNavbar from './components/hgv-navbar'
@@ -48,6 +49,7 @@ class App extends Component {
                             <RestricedRoute path="/" exact component={Login} onLogin={this.updateLoggedInStatus} />
                             <RestricedRoute path="/register" exact component={Register} onLogin={this.updateLoggedInStatus} />
                             <PrivateRoute path="/records/create" exact component={Create} />
+                            <PrivateRoute path="/records/:recordId/edit" exact component={Edit} />
                             <PrivateRoute path="/records" component={Home} />
                         </Switch>
                     </Container>

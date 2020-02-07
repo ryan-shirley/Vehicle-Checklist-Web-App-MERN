@@ -118,6 +118,7 @@ class RecordShow extends Component {
                         </Badge>
                     </p>
                     <p><Button variant="danger" onClick={() => this.props.deleteRecord(this.state.record._id)}>Delete</Button></p>
+                    <p><Link to={`/records/${this.state.record._id}/edit`} className="btn btn-warning">Edit</Link></p>
                     <p>Checklist: {this.state.record.check_list_id.name}</p>
                     {groups}
                 </>

@@ -110,9 +110,20 @@ router.route("/:id").put(checkIfAuthenticated, async (req, res) => {
     // Change this for auth user when implemented
     const user_id = req.decoded._id
     const id = req.params.id
-    const record = req.body
+    let record = req.body
 
     // ********* TODO: Validate user trying to add to is same as logged in *********
+
+    // Determin if passed
+    record.passed = true
+    for (var i = 0; i < record.checked_groups.length; i++) {
+        for (var j = 0; j < record.checked_groups[i].checks.length; j++) {
+            if (!record.checked_groups[i].checks[j].passed) {
+                record.passed = false
+                break
+            }
+        }
+    }
 
     Record.findOneAndUpdate({ _id: id }, record, (err, newRecord) => {
         if (err)
