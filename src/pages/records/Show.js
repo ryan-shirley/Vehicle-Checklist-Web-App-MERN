@@ -122,7 +122,7 @@ class RecordShow extends Component {
                     <Row className="sidebar-header align-items-center">
                         <Col className="border-bottom border-top">
                             <Moment
-                                format="YYYY/MM/DD"
+                                format="DD/MM/YYYY"
                                 className="text-primary font-weight-medium d-inline-block align-middle"
                             >
                                 {this.state.record.date}
