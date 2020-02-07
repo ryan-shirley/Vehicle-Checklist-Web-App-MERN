@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Navbar, Nav, NavDropdown } from "react-bootstrap"
-import { Redirect } from "react-router-dom"
+import { Redirect, Link } from "react-router-dom"
 
 /**
  * HGVNavbar() Main navbar for all users
@@ -57,31 +57,43 @@ class HGVNavbar extends Component {
 
         return (
             <Navbar bg="light" expand="lg" className="p-0 pr-3">
-                <Navbar.Brand href="/" className="py-0">
-                    <img
-                        alt="HGV Logo"
-                        src="/logo192.png"
-                        width="60"
-                        height="60"
-                        className="d-inline-block align-top mr-3"
-                    />{' '}
-                    HGV Tracking
-                </Navbar.Brand>
+                <Link to="/">
+                    <Navbar.Brand className="py-0">
+                        <img
+                            alt="HGV Logo"
+                            src="/logo192.png"
+                            width="60"
+                            height="60"
+                            className="d-inline-block align-top mr-3"
+                        />{" "}
+                        HGV Tracking
+                    </Navbar.Brand>
+                </Link>
                 <Nav className="hgv-settings-nav ml-auto">
                     <div>
-                        {this.state.userFullName && <span className="text-uppercase driver">Driver</span>}
-                        {this.state.userFullName && (<NavDropdown alignRight title={`${this.state.userFullName}`} id="hgv-settings-dropdown">
-                            <NavDropdown.Item href="/">
-                                Action*
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="/">
-                                Another action*
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={this.logout}>
-                                Logout
-                            </NavDropdown.Item>
-                        </NavDropdown>)}
+                        {this.state.userFullName && (
+                            <span className="text-uppercase driver">
+                                Driver
+                            </span>
+                        )}
+                        {this.state.userFullName && (
+                            <NavDropdown
+                                alignRight
+                                title={`${this.state.userFullName}`}
+                                id="hgv-settings-dropdown"
+                            >
+                                <NavDropdown.Item href="/">
+                                    Action*
+                                </NavDropdown.Item>
+                                <NavDropdown.Item href="/">
+                                    Another action*
+                                </NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item onClick={this.logout}>
+                                    Logout
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                        )}
                     </div>
                 </Nav>
             </Navbar>
