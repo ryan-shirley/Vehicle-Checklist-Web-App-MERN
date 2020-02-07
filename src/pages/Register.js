@@ -1,6 +1,6 @@
 import React from "react"
 import axios from "axios"
-import { Form, Button, Row, Col, Alert } from "react-bootstrap"
+import { Form, Button, Alert } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 class Register extends React.Component {
