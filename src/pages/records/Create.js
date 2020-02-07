@@ -155,7 +155,7 @@ class Create extends React.Component {
 
                     {this.state.process && (
                         <span
-                            className="position-absolute"
+                            className="position-absolute text-primary"
                             style={{ right: 20 }}
                         >
                             {this.state.process}
