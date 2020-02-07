@@ -119,7 +119,7 @@ class RecordShow extends Component {
                             </Badge>
                         </Col>
                         <Col className="border-bottom border-top text-right pr-0">
-                            <Link to="/records" className="btn btn-outline-secondary btn-close border-right-0 border-top-0 border-bottom-0 rounded-0">Close</Link>
+                            <Link to="/records" className="btn btn-outline-secondary btn-close border-right-0 border-top-0 border-bottom-0 rounded-0">></Link>
                         </Col>
                     </Row>
                     {/* <Link to="/records">Close</Link>
