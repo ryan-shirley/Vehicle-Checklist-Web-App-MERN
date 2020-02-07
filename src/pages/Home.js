@@ -134,7 +134,7 @@ class Home extends React.Component {
                             recordOpen && window.innerWidth <= 375 && "d-none"
                         }
                     >
-                        <Container fluid={true} className="text-right">
+                        <Container fluid={true} className="text-right px-4">
                             <Link
                                 to="/records/create"
                                 className="btn btn-primary my-2"
@@ -145,7 +145,7 @@ class Home extends React.Component {
 
                         <hr className="my-0" />
 
-                        <Container fluid={true} >
+                        <Container fluid={true} className="px-4" >
                             {recordTable}
                         </Container>
                     </Col>
