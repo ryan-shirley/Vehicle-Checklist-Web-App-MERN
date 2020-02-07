@@ -1,0 +1,16 @@
+//
+// Basic Bootstrap table
+//
+
+.table {
+  
+    th {
+        border-top: none;
+        color: $headings-color;
+        font-weight: 600;
+    }
+  
+    thead th {
+        border-bottom: $table-border-width solid darken( $table-border-color, 10% );
+    }
+}
