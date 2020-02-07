@@ -1,4 +1,6 @@
 .single-record {
+    height: 100vh;
+    
     .col, .btn-close {
         border-color: darken( $table-border-color, 5% ) !important;
     }
