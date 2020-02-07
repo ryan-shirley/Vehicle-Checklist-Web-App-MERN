@@ -153,7 +153,7 @@ class RecordShow extends Component {
                         <Col className="border-bottom bg-lightdarker">
                             <span>
                                 <span className="font-weight-semi-bold">
-                                    Checklist
+                                    Checklist:
                                 </span>{" "}
                                 {this.state.record.check_list_id.name}
                             </span>
