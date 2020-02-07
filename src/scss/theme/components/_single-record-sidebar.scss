@@ -1,0 +1,21 @@
+.single-record {
+    .col, .btn-close {
+        border-color: darken( $table-border-color, 5% ) !important;
+    }
+
+    > div {
+        padding: 0 15px;
+    }
+
+    .sidebar-header {
+        div:first-child {
+            padding: 14.5px 15px;
+        }
+        div:nth-child(2) {
+            padding: 14.5px 15px;
+        }
+        div:last-child .btn {
+            padding: 14.5px 15px;
+        }
+    }
+}

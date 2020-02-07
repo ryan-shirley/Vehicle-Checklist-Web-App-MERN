@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import axios from "axios"
 import Moment from "react-moment"
 import { Link } from "react-router-dom"
-import { Badge, Button } from "react-bootstrap"
+import { Badge, Button, Row, Col } from "react-bootstrap"
 
 /**
  * RecordShow() Main navbar for all users
@@ -102,7 +102,27 @@ class RecordShow extends Component {
 
             return (
                 <>
-                    <Link to="/records">Close</Link>
+                    <Row className="sidebar-header align-items-center">
+                        <Col className="border-bottom border-top">
+                            <Moment format="YYYY/MM/DD" className="text-primary text-medium d-inline-block align-middle">
+                                {this.state.record.date}
+                            </Moment>
+                        </Col>
+                        <Col className="border-bottom border-top">
+                            <Badge
+                                pill
+                                variant={
+                                    this.state.record.passed ? "success" : "danger"
+                                }
+                            >
+                                {this.state.record.passed ? "PASS" : "FAIL"}
+                            </Badge>
+                        </Col>
+                        <Col className="border-bottom border-top text-right pr-0">
+                            <Link to="/records" className="btn btn-outline-secondary btn-close border-right-0 border-top-0 border-bottom-0 rounded-0">Close</Link>
+                        </Col>
+                    </Row>
+                    {/* <Link to="/records">Close</Link>
                     <p>
                         <Moment format="YYYY/MM/DD">
                             {this.state.record.date}
@@ -120,7 +140,7 @@ class RecordShow extends Component {
                     <p><Button variant="danger" onClick={() => this.props.deleteRecord(this.state.record._id)}>Delete</Button></p>
                     <p><Link to={`/records/${this.state.record._id}/edit`} className="btn btn-warning">Edit</Link></p>
                     <p>Checklist: {this.state.record.check_list_id.name}</p>
-                    {groups}
+                    {groups} */}
                 </>
             )
         }
