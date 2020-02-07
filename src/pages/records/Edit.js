@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import axios from "axios"
 import Moment from "react-moment"
 import { Row, Col, Card, Button, Form, Alert } from "react-bootstrap"
+import { Link } from "react-router-dom"
 
 /**
  * RecordEdit() Edit record
@@ -204,6 +205,12 @@ class RecordEdit extends Component {
                                         )}
 
                                     <hr />
+                                    <Link
+                                    to="/records"
+                                    className="btn btn-secondary mr-2"
+                                >
+                                    Cancel
+                                </Link>
                                     <Button variant="primary" type="submit">
                                         Update
                                     </Button>
