@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import axios from "axios"
 import Moment from "react-moment"
-import { Row, Col, Card, Button, Form, Alert } from "react-bootstrap"
+import { Container, Row, Col, Button, Form, Alert } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 /**
@@ -113,19 +113,20 @@ class RecordEdit extends Component {
             return "Loading..."
         } else {
             return (
-                <Row className="justify-content-md-center mt-3">
-                    <Col sm={12} md={6}>
-                        <Card>
-                            <Card.Header>
-                                Edit Record -{" "}
-                                <Moment
-                                    format="DD/MM/YYYY - hh:mm a"
-                                    className="text-primary"
-                                >
-                                    {this.state.record.date}
-                                </Moment>
-                            </Card.Header>
-                            <Card.Body>
+                <>
+                    <p className="text-center bg-lightdarker create-header py-3 mb-5 position-relative">
+                        Edit Record -{" "}
+                        <Moment
+                            format="DD/MM/YYYY - hh:mm a"
+                            className="text-primary"
+                        >
+                            {this.state.record.date}
+                        </Moment>
+                    </p>
+
+                    <Container fluid={true}>
+                        <Row className="justify-content-md-center mt-3 mb-3">
+                            <Col sm={12} md={6}>
                                 <Form onSubmit={this.updateRecord}>
                                     {this.state.error && (
                                         <Alert variant="danger">
@@ -137,14 +138,24 @@ class RecordEdit extends Component {
                                         this.state.record.checked_groups.map(
                                             (group, gIndex) => (
                                                 <div key={group._id}>
-                                                    <h4>
-                                                        {group.group_id.name}
-                                                    </h4>
+                                                    <h4>{group.group_id.name}</h4>
                                                     <hr />
 
                                                     <Row>
-                                                        <Col className='text-uppercase font-weight-bold' xs={9} sm={6}>Check</Col>
-                                                        <Col className='text-uppercase font-weight-bold' xs={3} sm={4}>Status</Col>
+                                                        <Col
+                                                            className="text-uppercase font-weight-bold"
+                                                            xs={9}
+                                                            sm={6}
+                                                        >
+                                                            Check
+                                                        </Col>
+                                                        <Col
+                                                            className="text-uppercase font-weight-bold"
+                                                            xs={3}
+                                                            sm={4}
+                                                        >
+                                                            Status
+                                                        </Col>
                                                     </Row>
 
                                                     {group.checks.map(
@@ -166,10 +177,7 @@ class RecordEdit extends Component {
                                                                         ].title
                                                                     }
                                                                 </Form.Label>
-                                                                <Col
-                                                                    xs={3}
-                                                                    sm={6}
-                                                                >
+                                                                <Col xs={3} sm={6}>
                                                                     <Form.Check
                                                                         type="checkbox"
                                                                         id="custom-switch"
@@ -185,8 +193,7 @@ class RecordEdit extends Component {
                                                                             ]
                                                                                 .checks[
                                                                                 cIndex
-                                                                            ]
-                                                                                .passed
+                                                                            ].passed
                                                                         }
                                                                         onChange={e =>
                                                                             this.handleChange(
@@ -206,19 +213,19 @@ class RecordEdit extends Component {
 
                                     <hr />
                                     <Link
-                                    to="/records"
-                                    className="btn btn-secondary mr-2"
-                                >
-                                    Cancel
-                                </Link>
+                                        to="/records"
+                                        className="btn btn-secondary mr-2"
+                                    >
+                                        Cancel
+                                    </Link>
                                     <Button variant="primary" type="submit">
                                         Update
                                     </Button>
                                 </Form>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                </Row>
+                            </Col>
+                        </Row>
+                    </Container>
+                </>
             )
         }
     }
