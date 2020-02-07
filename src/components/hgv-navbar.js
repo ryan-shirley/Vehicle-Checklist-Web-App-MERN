@@ -53,22 +53,34 @@ class HGVNavbar extends Component {
         }
 
         return (
-            <Navbar bg="light" expand="lg">
-                <Navbar.Brand href="/">HGV Tracking</Navbar.Brand>
-                <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar bg="light" expand="lg" className="p-0 pr-3">
+                <Navbar.Brand href="/" className="py-0">
+                    <img
+                        alt="HGV Logo"
+                        src="/logo192.png"
+                        width="60"
+                        height="60"
+                        className="d-inline-block align-top mr-3"
+                    />{' '}
+                    HGV Tracking
+                </Navbar.Brand>
+                <Navbar.Collapse id="hgv-settings-dropdown-nav">
                     <Nav className="ml-auto">
-                        {this.state.userFullName && (<NavDropdown alignRight title={this.state.userFullName} id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/">
-                                Action*
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="/">
-                                Another action*
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={this.logout}>
-                                Logout
-                            </NavDropdown.Item>
-                        </NavDropdown>)}
+                        <div>
+                            <span className="text-uppercase driver">Driver</span>
+                            {this.state.userFullName && (<NavDropdown alignRight title={`${this.state.userFullName}`} id="hgv-settings-dropdown" className='ml-n2'>
+                                <NavDropdown.Item href="/">
+                                    Action*
+                                </NavDropdown.Item>
+                                <NavDropdown.Item href="/">
+                                    Another action*
+                                </NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item onClick={this.logout}>
+                                    Logout
+                                </NavDropdown.Item>
+                            </NavDropdown>)}
+                        </div>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
