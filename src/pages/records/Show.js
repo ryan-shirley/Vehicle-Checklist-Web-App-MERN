@@ -108,7 +108,7 @@ class RecordShow extends Component {
                                 {this.state.record.date}
                             </Moment>
                         </Col>
-                        <Col className="border-bottom border-top">
+                        <Col className="border-bottom border-top text-right">
                             <Badge
                                 pill
                                 variant={
