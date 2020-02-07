@@ -1,11 +1,10 @@
 // Theme Styles
 @import './text';
-@import './components/navbar';
-@import './components/single-record-sidebar';
-
 
 // Components
-// @import './components/hero'
+@import './components/navbar';
+@import './components/single-record-sidebar';
+@import './components/header';
 
 // .col-sm-10 {
 //     flex-shrink: 1;

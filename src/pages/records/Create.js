@@ -148,10 +148,10 @@ class Create extends React.Component {
 
         return (
             <>
-                <h5 className="text-center bg-light border py-3 position-relative">
+                <p className="text-center bg-lightdarker create-header py-3 position-relative">
                     {this.state.currentList.check_group_id
                         ? this.state.currentList.check_group_id.name
-                        : "Checklist: " + this.state.checklist}
+                        : <span><span className="font-weight-semi-bold">Checklist:</span> {this.state.checklist}</span>}
 
                     {this.state.process && (
                         <span
@@ -161,7 +161,7 @@ class Create extends React.Component {
                             {this.state.process}
                         </span>
                     )}
-                </h5>
+                </p>
 
                 {this.state.error && (
                     <Alert variant="danger">{this.state.error}</Alert>
