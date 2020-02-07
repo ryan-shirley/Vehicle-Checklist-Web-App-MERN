@@ -141,6 +141,11 @@ class RecordEdit extends Component {
                                                     </h4>
                                                     <hr />
 
+                                                    <Row>
+                                                        <Col className='text-uppercase font-weight-bold'>Check</Col>
+                                                        <Col className='text-uppercase font-weight-bold'>Status</Col>
+                                                    </Row>
+
                                                     {group.checks.map(
                                                         (check, cIndex) => (
                                                             <Form.Group
@@ -159,7 +164,6 @@ class RecordEdit extends Component {
                                                                             cIndex
                                                                         ].title
                                                                     }
-                                                                    {check.code}
                                                                 </Form.Label>
                                                                 <Col
                                                                     xs={2}
