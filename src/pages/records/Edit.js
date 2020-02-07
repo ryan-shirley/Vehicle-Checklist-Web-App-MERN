@@ -143,8 +143,8 @@ class RecordEdit extends Component {
                                                     <hr />
 
                                                     <Row>
-                                                        <Col className='text-uppercase font-weight-bold' xs={10} sm={6}>Check</Col>
-                                                        <Col className='text-uppercase font-weight-bold' xs={2} sm={4}>Status</Col>
+                                                        <Col className='text-uppercase font-weight-bold' xs={9} sm={6}>Check</Col>
+                                                        <Col className='text-uppercase font-weight-bold' xs={3} sm={4}>Status</Col>
                                                     </Row>
 
                                                     {group.checks.map(
@@ -155,7 +155,7 @@ class RecordEdit extends Component {
                                                             >
                                                                 <Form.Label
                                                                     column
-                                                                    xs={10}
+                                                                    xs={9}
                                                                     sm={6}
                                                                 >
                                                                     {
@@ -167,7 +167,7 @@ class RecordEdit extends Component {
                                                                     }
                                                                 </Form.Label>
                                                                 <Col
-                                                                    xs={2}
+                                                                    xs={3}
                                                                     sm={6}
                                                                 >
                                                                     <Form.Check
