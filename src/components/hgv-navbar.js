@@ -69,7 +69,7 @@ class HGVNavbar extends Component {
                 </Navbar.Brand>
                 <Nav className="hgv-settings-nav ml-auto">
                     <div>
-                        <span className="text-uppercase driver">Driver</span>
+                        {this.state.userFullName && <span className="text-uppercase driver">Driver</span>}
                         {this.state.userFullName && (<NavDropdown alignRight title={`${this.state.userFullName}`} id="hgv-settings-dropdown">
                             <NavDropdown.Item href="/">
                                 Action*
