@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, ButtonGroup } from "react-bootstrap"
+import { Button, Row, Col } from "react-bootstrap"
 
 /**
  * ChecksForm() Pass or fail certain checks
@@ -37,31 +37,40 @@ class ChecksForm extends React.Component {
         let stage = this.state.stage
         let code = this.state.checks[stage - 1].code
 
-        this.setState(state => {
-            const results = state.results.concat({
-                code,
-                passed
-            })
+        this.setState(
+            state => {
+                const results = state.results.concat({
+                    code,
+                    passed
+                })
 
-            return {
-                results
+                return {
+                    results
+                }
+            },
+            () => {
+                // Next stage or complete
+                if (stage === this.state.checks.length) {
+                    // console.log("All stages completed")
+
+                    this.props.onComplete(this.state.results)
+                    this.props.onStageChange("")
+                } else {
+                    // console.log("Next stage")
+
+                    this.setState(
+                        {
+                            stage: stage + 1
+                        },
+                        () => {
+                            this.props.onStageChange(
+                                `${this.state.stage}/${this.state.numChecks}`
+                            )
+                        }
+                    )
+                }
             }
-        }, () => {
-
-            // Next stage or complete
-            if (stage === this.state.checks.length) {
-                // console.log("All stages completed")
-
-                this.props.onComplete(this.state.results)
-                this.props.onStageChange('')
-            } else {
-                // console.log("Next stage")
-
-                this.setState({
-                    stage: stage + 1
-                }, () => { this.props.onStageChange(`${this.state.stage}/${this.state.numChecks}`) })
-            }
-        })
+        )
     }
 
     render() {
@@ -71,24 +80,28 @@ class ChecksForm extends React.Component {
 
         return (
             <>
-                <p className="h5">{title}</p>
+                <p className="h5 font-weight-normal mb-5">{title}</p>
 
-                <div className="d-flex flex-column">
-                    <ButtonGroup className="mt-3">
+                <Row>
+                    <Col>
                         <Button
+                            block
                             variant="danger"
                             onClick={e => this.submitCheck(false)}
                         >
                             Fail
                         </Button>
+                    </Col>
+                    <Col>
                         <Button
+                            block
                             variant="success"
                             onClick={e => this.submitCheck(true)}
                         >
                             Pass
                         </Button>
-                    </ButtonGroup>
-                </div>
+                    </Col>
+                </Row>
             </>
         )
     }
