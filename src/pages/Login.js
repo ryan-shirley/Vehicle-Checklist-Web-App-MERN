@@ -86,7 +86,7 @@ class Login extends React.Component {
 
     render() {
         return (
-            <Container className="mt-5">
+            <Container className="mt-5 mb-5">
                 <div className="text-center">
                     <h1>HGV Checklist System</h1>
                     <p>
