@@ -145,9 +145,7 @@ class Home extends React.Component {
 
                         <hr className="my-0" />
 
-                        <Container fluid={true} className="px-4" >
-                            {recordTable}
-                        </Container>
+                        {recordTable}
                     </Col>
 
                     {recordOpen && (
