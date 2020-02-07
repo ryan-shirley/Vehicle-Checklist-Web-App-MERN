@@ -143,8 +143,8 @@ class RecordEdit extends Component {
                                                     <hr />
 
                                                     <Row>
-                                                        <Col className='text-uppercase font-weight-bold'>Check</Col>
-                                                        <Col className='text-uppercase font-weight-bold'>Status</Col>
+                                                        <Col className='text-uppercase font-weight-bold' xs={10} sm={6}>Check</Col>
+                                                        <Col className='text-uppercase font-weight-bold' xs={2} sm={4}>Status</Col>
                                                     </Row>
 
                                                     {group.checks.map(
