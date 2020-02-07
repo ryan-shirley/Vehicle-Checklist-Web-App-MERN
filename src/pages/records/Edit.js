@@ -119,7 +119,7 @@ class RecordEdit extends Component {
                             <Card.Header>
                                 Edit Record -{" "}
                                 <Moment
-                                    format="YYYY/MM/DD - hh:mm a"
+                                    format="DD/MM/YYYY - hh:mm a"
                                     className="text-primary"
                                 >
                                     {this.state.record.date}

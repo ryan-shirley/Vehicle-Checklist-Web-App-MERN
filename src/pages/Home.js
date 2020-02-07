@@ -89,7 +89,7 @@ class Home extends React.Component {
                     {records.map(record => (
                         <tr key={record._id} onClick={e => this.rowClicked(`${url}/${record._id}`)}>
                             <td>
-                                <Moment format="YYYY/MM/DD - hh:mm a" className="text-primary">
+                                <Moment format="DD/MM/YYYY - hh:mm a" className="text-primary">
                                     {record.date}
                                 </Moment>
                             </td>
