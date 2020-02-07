@@ -122,6 +122,11 @@ class RecordShow extends Component {
                             <Link to="/records" className="btn btn-outline-secondary btn-close border-right-0 border-top-0 border-bottom-0 rounded-0">></Link>
                         </Col>
                     </Row>
+                    <Row>
+                        <Col className="border-bottom bg-lightdarker">
+                            <span><span className="font-weight-semi-bold">Checklist</span> {this.state.record.check_list_id.name}</span>
+                        </Col>
+                    </Row>
                     {/* <Link to="/records">Close</Link>
                     <p>
                         <Moment format="YYYY/MM/DD">

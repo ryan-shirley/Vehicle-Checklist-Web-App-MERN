@@ -9,7 +9,8 @@ $light: #F5F5F5;
 
 // Theme Colours
 $theme-colors: (
-    orange: $orange
+    orange: $orange,
+    lightdarker: darken( $light, 5% )
 );
 
 
