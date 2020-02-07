@@ -129,7 +129,8 @@ class Home extends React.Component {
             <>
                 <Row noGutters={true}>
                     <Col
-                        sm={recordOpen ? 10 : 12}
+                        md={6}
+                        lg={recordOpen ? 10 : 12}
                         className={
                             recordOpen && window.innerWidth <= 375 && "d-none"
                         }
@@ -149,7 +150,7 @@ class Home extends React.Component {
                     </Col>
 
                     {recordOpen && (
-                        <Col sm={2} className="bg-light single-record">
+                        <Col md={6}  lg={2} className="bg-light single-record">
                             <Switch>
                                 <Route
                                     path={`${path}/:recordId`}

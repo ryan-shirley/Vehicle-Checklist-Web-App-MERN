@@ -2,6 +2,10 @@
     min-height: 100vh;
     padding-bottom: 20px;
 
+    @media (min-width: 768px) {
+        border-left: 1px solid darken( $table-border-color, 5% ) !important;
+    }
+
     .col, .btn-close {
         border-color: darken( $table-border-color, 5% ) !important;
     }
