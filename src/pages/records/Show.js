@@ -68,7 +68,24 @@ class RecordShow extends Component {
             (Object.entries(this.state.record).length === 0 &&
                 this.state.record.constructor === Object)
         ) {
-            return "Loading..."
+            return (
+                <Row className="sidebar-header align-items-center">
+                    <Col className="border-bottom border-top">
+                        <span className="text-primary text-medium d-inline-block align-middle">Loading</span>
+                    </Col>
+                    <Col className="border-bottom border-top text-right">
+                        N/A
+                    </Col>
+                    <Col className="border-bottom border-top text-right pr-0">
+                        <Link
+                            to="/records"
+                            className="btn btn-outline-secondary btn-close border-right-0 border-top-0 border-bottom-0 rounded-0"
+                        >
+                            >
+                        </Link>
+                    </Col>
+                </Row>
+            )
         } else {
             let groups = this.state.record.checked_groups
 
@@ -104,7 +121,10 @@ class RecordShow extends Component {
                 <>
                     <Row className="sidebar-header align-items-center">
                         <Col className="border-bottom border-top">
-                            <Moment format="YYYY/MM/DD" className="text-primary text-medium d-inline-block align-middle">
+                            <Moment
+                                format="YYYY/MM/DD"
+                                className="text-primary text-medium d-inline-block align-middle"
+                            >
                                 {this.state.record.date}
                             </Moment>
                         </Col>
@@ -112,26 +132,36 @@ class RecordShow extends Component {
                             <Badge
                                 pill
                                 variant={
-                                    this.state.record.passed ? "success" : "danger"
+                                    this.state.record.passed
+                                        ? "success"
+                                        : "danger"
                                 }
                             >
                                 {this.state.record.passed ? "PASS" : "FAIL"}
                             </Badge>
                         </Col>
                         <Col className="border-bottom border-top text-right pr-0">
-                            <Link to="/records" className="btn btn-outline-secondary btn-close border-right-0 border-top-0 border-bottom-0 rounded-0">></Link>
+                            <Link
+                                to="/records"
+                                className="btn btn-outline-secondary btn-close border-right-0 border-top-0 border-bottom-0 rounded-0"
+                            >
+                                >
+                            </Link>
                         </Col>
                     </Row>
                     <Row>
                         <Col className="border-bottom bg-lightdarker">
-                            <span><span className="font-weight-semi-bold">Checklist</span> {this.state.record.check_list_id.name}</span>
+                            <span>
+                                <span className="font-weight-semi-bold">
+                                    Checklist
+                                </span>{" "}
+                                {this.state.record.check_list_id.name}
+                            </span>
                         </Col>
                     </Row>
 
                     <Row>
-                        <Col>
-                            {groups}
-                        </Col>
+                        <Col>{groups}</Col>
                     </Row>
                     {/* <Link to="/records">Close</Link>
                     <p>
