@@ -21,7 +21,7 @@ const GroupList = props => {
     ))
 
     return (
-        <Table hover>
+        <Table hover className="clickable-rows">
             <thead>
                 <tr>
                     <th>Checks</th>

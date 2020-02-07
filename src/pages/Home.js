@@ -68,7 +68,7 @@ class Home extends React.Component {
         const { records } = this.state
 
         const recordTable = (
-            <Table hover>
+            <Table hover className="clickable-rows">
                 <thead>
                     <tr>
                         <th className="text-uppercase">Date</th>

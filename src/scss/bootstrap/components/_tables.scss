@@ -13,4 +13,8 @@
     thead th {
         border-bottom: $table-border-width solid darken( $table-border-color, 5% );
     }
+
+    &.clickable-rows:hover {
+        cursor: pointer;
+    }
 }
