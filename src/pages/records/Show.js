@@ -74,7 +74,7 @@ class RecordShow extends Component {
 
             groups = groups.map(group => (
                 <div key={group._id}>
-                    <h4>{group.group_id.name}</h4>
+                    <h5 className="mb-0 mt-4">{group.group_id.name}</h5>
                     <hr />
 
                     <ul className="list-unstyled">
@@ -125,6 +125,12 @@ class RecordShow extends Component {
                     <Row>
                         <Col className="border-bottom bg-lightdarker">
                             <span><span className="font-weight-semi-bold">Checklist</span> {this.state.record.check_list_id.name}</span>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col>
+                            {groups}
                         </Col>
                     </Row>
                     {/* <Link to="/records">Close</Link>
