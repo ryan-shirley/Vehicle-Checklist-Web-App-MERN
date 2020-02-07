@@ -1,4 +1,4 @@
-#hgv-settings-dropdown-nav {
+.hgv-settings-nav {
     .driver {
         font-size: x-small;
         font-weight: 600;
@@ -8,6 +8,11 @@
     .dropdown {
         .dropdown-toggle {
             padding-top: 0;
+            padding-left: 0;
+        }
+
+        .dropdown-menu {
+            position: absolute;
         }
     }
 }

@@ -9,9 +9,9 @@ class HGVNavbar extends Component {
     constructor(props) {
         super(props)
 
-        let name = ''
-        if(props.loggedIn) {
-            name = localStorage.getItem('userFullName')
+        let name = ""
+        if (props.loggedIn) {
+            name = localStorage.getItem("userFullName")
         }
 
         this.state = {
@@ -28,9 +28,9 @@ class HGVNavbar extends Component {
      * componentDidUpdate() Update username on loggin status change
      */
     componentDidUpdate(nextProps) {
-        if(nextProps.loggedIn !== this.props.loggedIn) {
+        if (nextProps.loggedIn !== this.props.loggedIn) {
             this.setState({
-                userFullName: localStorage.getItem('userFullName') || ''
+                userFullName: localStorage.getItem("userFullName") || ""
             })
         }
     }
@@ -39,17 +39,20 @@ class HGVNavbar extends Component {
      * logout() Log user out of the application
      */
     logout() {
-        localStorage.removeItem('jwtToken')
-        localStorage.removeItem('UID')
-        localStorage.removeItem('userFullName')
+        localStorage.removeItem("jwtToken")
+        localStorage.removeItem("UID")
+        localStorage.removeItem("userFullName")
 
-        this.setState({ redirect: true }, () => { this.setState({ redirect: false }, () => { this.props.onLogout(false) })})
+        this.setState({ redirect: true }, () => {
+            this.setState({ redirect: false }, () => {
+                this.props.onLogout(false)
+            })
+        })
     }
 
     render() {
-
-        if(this.state.redirect) {
-            return <Redirect to='/' push={true} />
+        if (this.state.redirect) {
+            return <Redirect to="/" push={true} />
         }
 
         return (
@@ -64,26 +67,50 @@ class HGVNavbar extends Component {
                     />{' '}
                     HGV Tracking
                 </Navbar.Brand>
-                <Navbar.Collapse id="hgv-settings-dropdown-nav">
-                    <Nav className="ml-auto">
-                        <div>
-                            <span className="text-uppercase driver">Driver</span>
-                            {this.state.userFullName && (<NavDropdown alignRight title={`${this.state.userFullName}`} id="hgv-settings-dropdown" className='ml-n2'>
-                                <NavDropdown.Item href="/">
-                                    Action*
-                                </NavDropdown.Item>
-                                <NavDropdown.Item href="/">
-                                    Another action*
-                                </NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item onClick={this.logout}>
-                                    Logout
-                                </NavDropdown.Item>
-                            </NavDropdown>)}
-                        </div>
-                    </Nav>
-                </Navbar.Collapse>
+                <Nav className="hgv-settings-nav ml-auto">
+                    <div>
+                        <span className="text-uppercase driver">Driver</span>
+                        {this.state.userFullName && (<NavDropdown alignRight title={`${this.state.userFullName}`} id="hgv-settings-dropdown">
+                            <NavDropdown.Item href="/">
+                                Action*
+                            </NavDropdown.Item>
+                            <NavDropdown.Item href="/">
+                                Another action*
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={this.logout}>
+                                Logout
+                            </NavDropdown.Item>
+                        </NavDropdown>)}
+                    </div>
+                </Nav>
             </Navbar>
+
+            // <Navbar bg="light" expand="lg">
+            //     <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+            //     <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            //     <Navbar.Collapse id="basic-navbar-nav">
+            //         <Nav className="mr-auto">
+            //             <Nav.Link href="#home">Home</Nav.Link>
+            //             <Nav.Link href="#link">Link</Nav.Link>
+            //             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+            //                 <NavDropdown.Item href="#action/3.1">
+            //                     Action
+            //                 </NavDropdown.Item>
+            //                 <NavDropdown.Item href="#action/3.2">
+            //                     Another action
+            //                 </NavDropdown.Item>
+            //                 <NavDropdown.Item href="#action/3.3">
+            //                     Something
+            //                 </NavDropdown.Item>
+            //                 <NavDropdown.Divider />
+            //                 <NavDropdown.Item href="#action/3.4">
+            //                     Separated link
+            //                 </NavDropdown.Item>
+            //             </NavDropdown>
+            //         </Nav>
+            //     </Navbar.Collapse>
+            // </Navbar>
         )
     }
 }
