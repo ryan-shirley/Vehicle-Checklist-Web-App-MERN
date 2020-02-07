@@ -163,25 +163,17 @@ class RecordShow extends Component {
                     <Row>
                         <Col>{groups}</Col>
                     </Row>
-                    {/* <Link to="/records">Close</Link>
-                    <p>
-                        <Moment format="YYYY/MM/DD">
-                            {this.state.record.date}
-                        </Moment>{" "}
-                        -{" "}
-                        <Badge
-                            pill
-                            variant={
-                                this.state.record.passed ? "success" : "danger"
-                            }
-                        >
-                            {this.state.record.passed ? "PASS" : "FAIL"}
-                        </Badge>
-                    </p>
-                    <p><Button variant="danger" onClick={() => this.props.deleteRecord(this.state.record._id)}>Delete</Button></p>
-                    <p><Link to={`/records/${this.state.record._id}/edit`} className="btn btn-warning">Edit</Link></p>
-                    <p>Checklist: {this.state.record.check_list_id.name}</p>
-                    {groups} */}
+
+                    <hr />
+
+                    <Row>
+                        <Col>
+                            <Link to={`/records/${this.state.record._id}/edit`} className="btn btn-warning">Edit</Link>
+                        </Col>
+                        <Col>
+                            <Button variant="danger" onClick={() => this.props.deleteRecord(this.state.record._id)}>Delete</Button>
+                        </Col>
+                    </Row>
                 </>
             )
         }
