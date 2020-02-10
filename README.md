@@ -24,8 +24,8 @@ In the backend directory, you can run:
 
 #### `npm run watch`
 
-This will run the web app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This will run the backend api in the development mode.<br />
+Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 
