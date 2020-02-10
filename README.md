@@ -1,4 +1,4 @@
-This is a 4th year Computer Science project. Part of a JavaScript module with this project focusing on creating a full stack application using the MERN stack. It is a vehicle checklist progressing web app with a focus on HGV (Heavy Goods Vehicle). 
+This is a 4th year Computer Science project. Part of a JavaScript module with this project focusing on creating a full stack application using the MERN stack. It is a vehicle checklist progressive web app with a focus on HGV (Heavy Goods Vehicle). 
 
 For deployment Heroku and MongoDB Atlas was used.
 
