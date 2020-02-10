@@ -5,20 +5,18 @@ const User = require('../models/User')
 const Plant = require('../models/Plant')
 const CheckList = require('../models/CheckList')
 
-router.route('/').get(checkIfAuthenticated, (req, res) => {
+// router.route('/').get(checkIfAuthenticated, (req, res) => {
+//     // ********* TODO: Validate user is admin *********
 
-    // ********* TODO: Validate user is admin *********
-
-    User.find()
-        .select('-vehicle.check_list_id')
-        .populate('plant_id')
-        .then(user => res.json(user))
-        .catch(err => res.status(400).json({
-            code: 400,
-            message: err.message
-        }))
-
-})
+//     User.find()
+//         .select('-vehicle.check_list_id')
+//         .populate('plant_id')
+//         .then(user => res.json(user))
+//         .catch(err => res.status(400).json({
+//             code: 400,
+//             message: err.message
+//         }))
+// })
 
 router.route('/:id').get(checkIfAuthenticated, (req, res) => {
     const user_id = req.params.id
