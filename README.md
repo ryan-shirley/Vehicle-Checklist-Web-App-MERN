@@ -27,7 +27,7 @@ In the backend directory, you can run:
 This will run the backend api in the development mode.<br />
 Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
 
-The page will reload if you make edits.<br />
+The api will reload if you make edits on save.<br />
 
 ## Project Design
 ![Desktop Records](https://raw.githubusercontent.com/ryan-shirley/hgv-web-app/master/screenshots/Desktop-Records.png)
