@@ -28,3 +28,6 @@ This will run the web app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
+
+## Project Design
+![Desktop Records](https://raw.githubusercontent.com/ryan-shirley/hgv-web-app/master/screenshots/Desktop-Records.png)
