@@ -1,14 +1,15 @@
-const router = require('express').Router()
-const checkIfAuthenticated = require('../middleware/auth-middleware')
+const router = require("express").Router()
 
-const Plant = require('../models/Plant')
+// Models
+const Plant = require("../models/Plant")
 
-router.route('/').get((req, res) => {
-
+/**
+ * route('/').get() Return all plants
+ */
+router.route("/").get((req, res) => {
     Plant.find()
         .then(plant => res.json(plant))
         .catch(err => res.status(400).json(`Error: ${err}`))
-
 })
 
-module.exports = router;
+module.exports = router

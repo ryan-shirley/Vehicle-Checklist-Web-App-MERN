@@ -150,7 +150,7 @@ class Home extends React.Component {
                     </Col>
 
                     {recordOpen && (
-                        <Col md={6}  lg={2} className="bg-light single-record">
+                        <Col md={6} lg={2} className="bg-light single-record">
                             <Switch>
                                 <Route
                                     path={`${path}/:recordId`}

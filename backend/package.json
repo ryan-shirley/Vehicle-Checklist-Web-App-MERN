@@ -1,7 +1,7 @@
 {
-  "name": "hgv-api",
+  "name": "vehicle-checklist-api",
   "version": "1.0.0",
-  "description": "HGV web app API using express and mongoDB",
+  "description": "Vehicle Checklist API using express and mongoDB",
   "main": "server.js",
   "scripts": {
     "test": "jest",

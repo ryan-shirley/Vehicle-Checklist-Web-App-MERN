@@ -71,7 +71,9 @@ class RecordShow extends Component {
             return (
                 <Row className="sidebar-header align-items-center">
                     <Col className="border-bottom border-top">
-                        <span className="text-primary text-medium d-inline-block align-middle">Loading</span>
+                        <span className="text-primary text-medium d-inline-block align-middle">
+                            Loading
+                        </span>
                     </Col>
                     <Col className="border-bottom border-top text-right">
                         N/A
@@ -168,10 +170,24 @@ class RecordShow extends Component {
 
                     <Row>
                         <Col>
-                            <Link to={`/records/${this.state.record._id}/edit`} className="btn btn-warning">Edit</Link>
+                            <Link
+                                to={`/records/${this.state.record._id}/edit`}
+                                className="btn btn-warning"
+                            >
+                                Edit
+                            </Link>
                         </Col>
                         <Col>
-                            <Button variant="danger" onClick={() => this.props.deleteRecord(this.state.record._id)}>Delete</Button>
+                            <Button
+                                variant="danger"
+                                onClick={() =>
+                                    this.props.deleteRecord(
+                                        this.state.record._id
+                                    )
+                                }
+                            >
+                                Delete
+                            </Button>
                         </Col>
                     </Row>
                 </>

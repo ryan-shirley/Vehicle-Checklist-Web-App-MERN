@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
 const CheckSchema = new mongoose.Schema({
     code: {
@@ -19,4 +19,4 @@ const CheckGroupSchema = new mongoose.Schema({
     checks: [CheckSchema]
 })
 
-module.exports = mongoose.model('CheckGroup', CheckGroupSchema)
+module.exports = mongoose.model("CheckGroup", CheckGroupSchema)

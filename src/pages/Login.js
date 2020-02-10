@@ -7,6 +7,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props)
 
+        // Generate welcome message
         let ndate = new Date()
         let hours = ndate.getHours()
         let message =
@@ -90,15 +91,16 @@ class Login extends React.Component {
                 <div className="text-center">
                     <h1>HGV Checklist System</h1>
                     <p>
-                        {this.state.welcomeMessage} and welcome to my
-                        platform.
+                        {this.state.welcomeMessage} and welcome to my platform.
                     </p>
                     <hr style={{ width: 60 }} />
                 </div>
 
                 <Row className="justify-content-md-center mt-5">
                     <Col sm={6}>
-                        <p className="text-center">Sign in with your credentials</p>
+                        <p className="text-center">
+                            Sign in with your credentials
+                        </p>
 
                         <Form onSubmit={this.onSubmit} className="mt-3">
                             {this.state.error && (
@@ -107,9 +109,7 @@ class Login extends React.Component {
                                 </Alert>
                             )}
 
-                            <Form.Group
-                                controlId="hgvLoginEmail"
-                            >
+                            <Form.Group controlId="hgvLoginEmail">
                                 <Form.Control
                                     type="email"
                                     placeholder="Email"
@@ -120,9 +120,7 @@ class Login extends React.Component {
                                 />
                             </Form.Group>
 
-                            <Form.Group
-                                controlId="hgvLoginPassword"
-                            >
+                            <Form.Group controlId="hgvLoginPassword">
                                 <Form.Control
                                     type="password"
                                     placeholder="Password"
@@ -135,7 +133,10 @@ class Login extends React.Component {
 
                             <Button type="submit">Sign In</Button>
 
-                            <Link to="/register" className="btn btn-link float-right">
+                            <Link
+                                to="/register"
+                                className="btn btn-link float-right"
+                            >
                                 Register
                             </Link>
                         </Form>

@@ -1,12 +1,7 @@
 const router = require("express").Router()
-const User = require("../models/User")
 
-/**
- * route('/').get() return message in root route
- */
-// router.route("/").get((req, res) => {
-//     res.json({ message: "You are in the root route." })
-// })
+// Models
+const User = require("../models/User")
 
 /**
  * route('/login').post() login a user

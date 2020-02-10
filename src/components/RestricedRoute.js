@@ -1,18 +1,27 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React from "react"
+import { Route, Redirect } from "react-router-dom"
 
 /**
  * RestricedRoute() Restriced routes (logged in but redirect from this page)
  */
-const RestricedRoute = ({component: Component, ...rest}) => {
+const RestricedRoute = ({ component: Component, ...rest }) => {
     return (
         <Route
-          {...rest}
-          render={(props) => !localStorage.getItem("jwtToken")
-            ? <Component {...props} {...rest} />
-            : <Redirect to={{pathname: '/records', state: {from: props.location}}} />}
+            {...rest}
+            render={props =>
+                !localStorage.getItem("jwtToken") ? (
+                    <Component {...props} {...rest} />
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: "/records",
+                            state: { from: props.location }
+                        }}
+                    />
+                )
+            }
         />
-      )
+    )
 }
 
 export default RestricedRoute

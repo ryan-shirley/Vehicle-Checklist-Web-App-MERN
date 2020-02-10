@@ -171,7 +171,6 @@ class Create extends React.Component {
                 </p>
 
                 <Container fluid={true}>
-
                     {this.state.error && (
                         <Alert variant="danger">{this.state.error}</Alert>
                     )}

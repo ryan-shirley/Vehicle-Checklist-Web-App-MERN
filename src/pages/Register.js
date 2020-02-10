@@ -62,6 +62,9 @@ class Register extends React.Component {
             })
     }
 
+    /**
+     * handleInputChange() Handle form input from user
+     */
     handleInputChange = e => {
         const target = e.target
         const { name, value } = target
@@ -71,6 +74,9 @@ class Register extends React.Component {
         })
     }
 
+    /**
+     * onSubmit() Submit form to register
+     */
     onSubmit = e => {
         e.preventDefault()
 
@@ -87,6 +93,7 @@ class Register extends React.Component {
             confirmPassword
         } = this.state
 
+        // Ensure password and confimation match before submitting
         if (password !== confirmPassword) {
             this.setState({
                 error: "Passwords do not match."

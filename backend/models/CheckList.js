@@ -1,10 +1,10 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
 const Checks = new mongoose.Schema({
     check_group_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'CheckGroup'
+        ref: "CheckGroup"
     }
 })
 
@@ -16,4 +16,4 @@ const CheckListSchema = new mongoose.Schema({
     required_checks: [Checks]
 })
 
-module.exports = mongoose.model('CheckList', CheckListSchema)
+module.exports = mongoose.model("CheckList", CheckListSchema)

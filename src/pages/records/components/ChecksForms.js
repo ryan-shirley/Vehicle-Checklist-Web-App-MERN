@@ -30,6 +30,10 @@ class ChecksForm extends React.Component {
         this.props.onStageChange(`1/${checks.length}`)
     }
 
+    /**
+     * submitCheck() Add pass status of check into array.
+     * Complete if at last stage.
+     */
     submitCheck(passed) {
         console.log("Submitting stage")
 
@@ -51,13 +55,9 @@ class ChecksForm extends React.Component {
             () => {
                 // Next stage or complete
                 if (stage === this.state.checks.length) {
-                    // console.log("All stages completed")
-
                     this.props.onComplete(this.state.results)
                     this.props.onStageChange("")
                 } else {
-                    // console.log("Next stage")
-
                     this.setState(
                         {
                             stage: stage + 1

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
 const CheckSchema = new mongoose.Schema({
     code: {
@@ -15,7 +15,7 @@ const GroupsSchema = new mongoose.Schema({
     group_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'CheckGroup'
+        ref: "CheckGroup"
     },
     checks: {
         type: [CheckSchema],
@@ -23,14 +23,13 @@ const GroupsSchema = new mongoose.Schema({
     }
 })
 
-
 const RecordSchema = new mongoose.Schema({
     checked_groups: {
         type: [GroupsSchema],
         required: true
     },
-    date: { 
-        type: Date, 
+    date: {
+        type: Date,
         default: Date.now,
         required: true
     },
@@ -45,7 +44,7 @@ const RecordSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'User'
+        ref: "User"
     },
     passed: {
         type: Boolean,
@@ -54,8 +53,8 @@ const RecordSchema = new mongoose.Schema({
     check_list_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'CheckList'
+        ref: "CheckList"
     }
 })
 
-module.exports = mongoose.model('Record', RecordSchema)
+module.exports = mongoose.model("Record", RecordSchema)

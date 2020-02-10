@@ -18,6 +18,7 @@ class RecordEdit extends Component {
             error: ""
         }
 
+        // Binding this to work in the callback
         this.handleChange = this.handleChange.bind(this)
     }
 
@@ -54,7 +55,6 @@ class RecordEdit extends Component {
                     error: err.response.data.error,
                     loading: false
                 })
-                console.log(err.response.data.message)
             })
     }
 
@@ -86,7 +86,6 @@ class RecordEdit extends Component {
                     error: err.response.data.error,
                     processing: false
                 })
-                console.log(err.response.data.message)
             })
     }
 
@@ -138,7 +137,9 @@ class RecordEdit extends Component {
                                         this.state.record.checked_groups.map(
                                             (group, gIndex) => (
                                                 <div key={group._id}>
-                                                    <h4>{group.group_id.name}</h4>
+                                                    <h4>
+                                                        {group.group_id.name}
+                                                    </h4>
                                                     <hr />
 
                                                     <Row>
@@ -177,7 +178,10 @@ class RecordEdit extends Component {
                                                                         ].title
                                                                     }
                                                                 </Form.Label>
-                                                                <Col xs={3} sm={6}>
+                                                                <Col
+                                                                    xs={3}
+                                                                    sm={6}
+                                                                >
                                                                     <Form.Check
                                                                         type="checkbox"
                                                                         id="custom-switch"
@@ -193,7 +197,8 @@ class RecordEdit extends Component {
                                                                             ]
                                                                                 .checks[
                                                                                 cIndex
-                                                                            ].passed
+                                                                            ]
+                                                                                .passed
                                                                         }
                                                                         onChange={e =>
                                                                             this.handleChange(
