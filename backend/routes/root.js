@@ -4,9 +4,9 @@ const User = require("../models/User")
 /**
  * route('/').get() return message in root route
  */
-router.route("/").get((req, res) => {
-    res.json({ message: "You are in the root route." })
-})
+// router.route("/").get((req, res) => {
+//     res.json({ message: "You are in the root route." })
+// })
 
 /**
  * route('/login').post() login a user
