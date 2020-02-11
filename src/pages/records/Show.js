@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import axios from "axios"
 import Moment from "react-moment"
 import { Link } from "react-router-dom"
-import { Badge, Button, Row, Col } from "react-bootstrap"
+import { Badge, Button, Row, Col, Alert } from "react-bootstrap"
 
 /**
  * RecordShow() Main navbar for all users
@@ -13,7 +13,8 @@ class RecordShow extends Component {
 
         this.state = {
             record: {},
-            loading: false
+            loading: false,
+            error: ''
         }
     }
 
@@ -58,7 +59,10 @@ class RecordShow extends Component {
                 })
             })
             .catch(err => {
-                console.log(err.response.data.message)
+                this.setState({
+                    error: err.response.data.message,
+                    loading: false
+                })
             })
     }
 
@@ -69,24 +73,33 @@ class RecordShow extends Component {
                 this.state.record.constructor === Object)
         ) {
             return (
-                <Row className="sidebar-header align-items-center">
-                    <Col className="border-bottom border-top">
-                        <span className="text-primary text-medium d-inline-block align-middle">
-                            Loading
-                        </span>
-                    </Col>
-                    <Col className="border-bottom border-top text-right">
-                        N/A
-                    </Col>
-                    <Col className="border-bottom border-top text-right pr-0">
-                        <Link
-                            to="/records"
-                            className="btn btn-outline-secondary btn-close border-right-0 border-top-0 border-bottom-0 rounded-0"
-                        >
+                <>
+                    <Row className="sidebar-header align-items-center mb-2">
+                        <Col className="border-bottom border-top">
+                            <span className="text-primary text-medium d-inline-block align-middle">
+                                Loading...
+                            </span>
+                        </Col>
+                        <Col className="border-bottom border-top text-right">
+                            N/A
+                        </Col>
+                        <Col className="border-bottom border-top text-right pr-0">
+                            <Link
+                                to="/records"
+                                className="btn btn-outline-secondary btn-close border-right-0 border-top-0 border-bottom-0 rounded-0"
                             >
-                        </Link>
-                    </Col>
-                </Row>
+                                >
+                            </Link>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            {this.state.error && (
+                                <Alert variant="danger">{this.state.error}</Alert>
+                            )}
+                        </Col>
+                    </Row>
+                </>
             )
         } else {
             let groups = this.state.record.checked_groups
@@ -163,7 +176,9 @@ class RecordShow extends Component {
                     </Row>
 
                     <Row>
-                        <Col>{groups}</Col>
+                        <Col>
+                            {groups}
+                        </Col>
                     </Row>
 
                     <hr />

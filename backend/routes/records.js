@@ -15,7 +15,9 @@ const checkIfAuthenticated = require("../middleware/auth-middleware")
 router.route("/").get(checkIfAuthenticated, (req, res) => {
     const user_id = req.decoded._id
 
-    Record.find({ user_id: user_id })
+    Record.find({
+            user_id: user_id
+        })
         .select("-user_id -checked_groups")
         .populate("check_list_id", "name")
         .sort("-date")
@@ -35,10 +37,21 @@ router.route("/:id").get(checkIfAuthenticated, (req, res) => {
     const user_id = req.decoded._id
     const id = req.params.id
 
-    Record.findOne({ _id: id })
+    Record.findOne({
+            _id: id
+        })
         .select("-user_id")
         .populate("checked_groups.group_id check_list_id")
-        .then(records => res.json(records))
+        .then(record => {
+            if (record.user_id === user_id) {
+                res.json(record)
+            } else {
+                res.status(401).json({
+                    code: 401,
+                    message: 'Unauthorised! You are not the owner of this record.'
+                })
+            }
+        })
         .catch(err =>
             res.status(400).json({
                 code: 400,
@@ -63,7 +76,9 @@ router.route("/").post(checkIfAuthenticated, async (req, res) => {
     }
 
     try {
-        let user = await User.findOne({ _id: user_id })
+        let user = await User.findOne({
+                _id: user_id
+            })
             .select("vehicle.registration_number vehicle.check_list_id")
             .populate("plant_id")
             .exec()
@@ -126,7 +141,9 @@ router.route("/:id").put(checkIfAuthenticated, async (req, res) => {
         }
     }
 
-    Record.findOneAndUpdate({ _id: id }, record, (err, newRecord) => {
+    Record.findOneAndUpdate({
+        _id: id
+    }, record, (err, newRecord) => {
         if (err)
             return res.status(500).json({
                 code: 500,
@@ -147,7 +164,9 @@ router.route("/:id").delete(checkIfAuthenticated, async (req, res) => {
 
     // ********* TODO: Validate user trying to add to is same as logged in *********
 
-    Record.deleteOne({ _id: id }, (err, doc) => {
+    Record.deleteOne({
+        _id: id
+    }, (err, doc) => {
         if (err)
             return res.status(500).json({
                 code: 500,
