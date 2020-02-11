@@ -1,6 +1,6 @@
 import React from "react"
 import axios from "axios"
-import { Button, Row, Col, Form } from "react-bootstrap"
+import { Button, Row, Col, Form, Spinner } from "react-bootstrap"
 
 /**
  * ChecksForm() Pass or fail certain checks
@@ -17,7 +17,8 @@ class ChecksForm extends React.Component {
             failureScreen: false,
             note: "",
             imageURL: "",
-            image: null
+            image: null,
+            processing: false
         }
     }
 
@@ -123,6 +124,8 @@ class ChecksForm extends React.Component {
      * uploadImage() Upload Image
      */
     uploadImage = () => {
+        this.setState({ processing: true })
+
         return new Promise((resolve, reject) => {
             let formData = new FormData()
             formData.append("image", this.state.image)
@@ -137,9 +140,11 @@ class ChecksForm extends React.Component {
                     }
                 })
                 .then(res => {
+                    this.setState({ processing: false })
                     resolve(res)
                 })
                 .catch(err => {
+                    this.setState({ processing: false })
                     reject(err)
                 })
         })
@@ -205,9 +210,16 @@ class ChecksForm extends React.Component {
                             />
                         </Form.Group>
 
-                        <Button block onClick={e => this.submitFailure()}>
-                            Submit
-                        </Button>
+                        {this.state.processing ? <Button block disabled>
+                            <Spinner
+                                as="span"
+                                animation="grow"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                            />
+                            Processing...
+                        </Button> : <Button block onClick={e => this.submitFailure()}>Submit</Button> }
                     </>
                 )}
             </>
