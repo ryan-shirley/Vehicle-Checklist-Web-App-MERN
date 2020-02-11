@@ -8,6 +8,8 @@ import { Badge, Button, Row, Col, Alert } from "react-bootstrap"
  * RecordShow() Main navbar for all users
  */
 class RecordShow extends Component {
+    _isMounted = false;
+
     constructor(props) {
         super(props)
 
@@ -22,6 +24,7 @@ class RecordShow extends Component {
      * componentDidMount() Load single record
      */
     componentDidMount() {
+        this._isMounted = true;
         this.fetchRecord()
     }
 
@@ -53,17 +56,29 @@ class RecordShow extends Component {
         axios
             .get(process.env.REACT_APP_API_URI + "/records/" + recordId)
             .then(res => {
-                this.setState({
-                    record: res.data,
-                    loading: false
-                })
+                if (this._isMounted) {
+                    this.setState({
+                        record: res.data,
+                        loading: false
+                    })
+                }
             })
             .catch(err => {
-                this.setState({
-                    error: err.response.data.message,
-                    loading: false
-                })
+                if (this._isMounted) {
+                    this.setState({
+                        error: err.response.data.message,
+                        loading: false
+                    })
+                }
             })
+    }
+
+    /**
+     * componentWillUnmount() Helps ensure set state is not
+     * called when not mounted
+     */
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {
