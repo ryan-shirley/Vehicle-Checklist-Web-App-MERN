@@ -111,7 +111,8 @@ router.route("/upload").post([checkIfAuthenticated, upload.single("image")], (re
             const putParams = {
                 Bucket: process.env.AWS_BUCKET,
                 Key: filePath,
-                Body: filedata
+                Body: filedata,
+                ACL:'public-read'
             }
 
             // Uploade file
