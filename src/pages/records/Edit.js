@@ -52,9 +52,13 @@ class RecordEdit extends Component {
             })
             .catch(err => {
                 this.setState({
-                    error: err.response.data.error,
+                    error: err.response.data.message,
                     loading: false
                 })
+
+                if(err.response.data.code === 401) {
+                    this.props.history.replace("/records")
+                }
             })
     }
 
