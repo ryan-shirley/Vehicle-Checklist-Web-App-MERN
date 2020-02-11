@@ -40,10 +40,9 @@ router.route("/:id").get(checkIfAuthenticated, (req, res) => {
     Record.findOne({
             _id: id
         })
-        .select("-user_id")
         .populate("checked_groups.group_id check_list_id")
         .then(record => {
-            if (record.user_id === user_id) {
+            if (record.user_id == user_id) {
                 res.json(record)
             } else {
                 res.status(401).json({
@@ -87,8 +86,6 @@ router.route("/").post(checkIfAuthenticated, async (req, res) => {
         const check_list_id = user.vehicle.check_list_id
         const plant_name = user.plant_id.name
 
-        // ********* TODO: Validate user trying to add to is same as logged in *********
-
         // Add user, vehicle, checklist, plant and pass information
         // (String as if driver plant or vehicle changes in future)
         record.user_id = user._id
@@ -128,8 +125,6 @@ router.route("/:id").put(checkIfAuthenticated, async (req, res) => {
     const id = req.params.id
     let record = req.body
 
-    // ********* TODO: Validate user trying to add to is same as logged in *********
-
     // Determin if passed
     record.passed = true
     for (var i = 0; i < record.checked_groups.length; i++) {
@@ -142,7 +137,7 @@ router.route("/:id").put(checkIfAuthenticated, async (req, res) => {
     }
 
     Record.findOneAndUpdate({
-        _id: id
+        _id: id, user_id
     }, record, (err, newRecord) => {
         if (err)
             return res.status(500).json({
@@ -165,7 +160,8 @@ router.route("/:id").delete(checkIfAuthenticated, async (req, res) => {
     // ********* TODO: Validate user trying to add to is same as logged in *********
 
     Record.deleteOne({
-        _id: id
+        _id: id,
+        user_id
     }, (err, doc) => {
         if (err)
             return res.status(500).json({

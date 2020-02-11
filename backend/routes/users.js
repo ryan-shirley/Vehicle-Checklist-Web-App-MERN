@@ -13,18 +13,26 @@ const checkIfAuthenticated = require("../middleware/auth-middleware")
  */
 router.route("/:id").get(checkIfAuthenticated, (req, res) => {
     const user_id = req.params.id
+    const user_id_token = req.decoded._id
 
-    // ********* TODO: Validate user is same as id or is admin *********
-
-    User.findOne({ _id: user_id })
-        .populate("plant_id vehicle.check_list_id")
-        .then(user => res.json(user))
-        .catch(err =>
-            res.status(400).json({
-                code: 400,
-                message: err.message
+    if (user_id !== user_id_token) {
+        res.status(401).json({
+            code: 401,
+            message: 'Unauthorised! You are not able to access other users data.'
+        })
+    } else {
+        User.findOne({
+                _id: user_id
             })
-        )
+            .populate("plant_id vehicle.check_list_id")
+            .then(user => res.json(user))
+            .catch(err =>
+                res.status(400).json({
+                    code: 400,
+                    message: err.message
+                })
+            )
+    }
 })
 
 /**
@@ -32,19 +40,31 @@ router.route("/:id").get(checkIfAuthenticated, (req, res) => {
  */
 router.route("/:id/checklist").get(checkIfAuthenticated, async (req, res) => {
     const user_id = req.params.id
+    const user_id_token = req.decoded._id
 
-    // ********* TODO: Validate user is same as id or is admin *********
+    if (user_id !== user_id_token) {
+        res.status(401).json({
+            code: 401,
+            message: 'Unauthorised! You are not able to access other users data.'
+        })
+    } else {
+        let userChecklist = await User.findOne({
+            _id: user_id
+        }).select(
+            "vehicle.check_list_id"
+        )
+        let checkListId = userChecklist.vehicle.check_list_id
 
-    let userChecklist = await User.findOne({ _id: user_id }).select(
-        "vehicle.check_list_id"
-    )
-    let checkListId = userChecklist.vehicle.check_list_id
+        let checkList = await CheckList.findOne({
+            _id: checkListId
+        }).populate(
+            "required_checks.check_group_id"
+        )
 
-    let checkList = await CheckList.findOne({ _id: checkListId }).populate(
-        "required_checks.check_group_id"
-    )
-
-    res.json({ checkList })
+        res.json({
+            checkList
+        })
+    }
 })
 
 /**
@@ -54,10 +74,15 @@ router.route("/").post(async (req, res) => {
     const user = new User(req.body)
     try {
         const token = await user.newAuthToken()
-        res.status(201).send({ user, token })
+        res.status(201).send({
+            user,
+            token
+        })
     } catch (e) {
         console.log(e)
-        res.status(400).json({ error: e.message })
+        res.status(400).json({
+            error: e.message
+        })
     }
 })
 
