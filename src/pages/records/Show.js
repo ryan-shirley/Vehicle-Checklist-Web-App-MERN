@@ -2,21 +2,22 @@ import React, { Component } from "react"
 import axios from "axios"
 import Moment from "react-moment"
 import { Link } from "react-router-dom"
-import { Badge, Button, Row, Col, Alert } from "react-bootstrap"
+import { Badge, Button, Row, Col, Alert, Modal, Image } from "react-bootstrap"
 
 /**
  * RecordShow() Main navbar for all users
  */
 class RecordShow extends Component {
-    _isMounted = false;
+    _isMounted = false
 
     constructor(props) {
         super(props)
 
         this.state = {
             record: {},
+            checkDetails: null,
             loading: false,
-            error: ''
+            error: ""
         }
     }
 
@@ -24,7 +25,7 @@ class RecordShow extends Component {
      * componentDidMount() Load single record
      */
     componentDidMount() {
-        this._isMounted = true;
+        this._isMounted = true
         this.fetchRecord()
     }
 
@@ -78,7 +79,16 @@ class RecordShow extends Component {
      * called when not mounted
      */
     componentWillUnmount() {
-        this._isMounted = false;
+        this._isMounted = false
+    }
+
+    /**
+     * toggleDetails() Toggle display details about failed record
+     */
+    toggleDetails(details = null) {
+        this.setState({
+            checkDetails: details
+        })
     }
 
     render() {
@@ -110,7 +120,9 @@ class RecordShow extends Component {
                     <Row>
                         <Col>
                             {this.state.error && (
-                                <Alert variant="danger">{this.state.error}</Alert>
+                                <Alert variant="danger">
+                                    {this.state.error}
+                                </Alert>
                             )}
                         </Col>
                     </Row>
@@ -130,15 +142,58 @@ class RecordShow extends Component {
                                 <Badge
                                     pill
                                     variant={
-                                        check.passed ? "success" : "danger"
+                                        check.passed ? "success" : "warning"
                                     }
                                     className="align-self-start mr-3"
                                 >
-                                    {check.passed ? "PASS" : "FAIL"}
+                                    {check.passed ? "PASS" : "ISSUE"}
                                 </Badge>
                                 <div className="media-body">
-                                    {group.group_id.checks.map(chk =>
-                                        chk.code === check.code ? chk.title : ""
+                                    <p>
+                                        {group.group_id.checks.map(
+                                            chk =>
+                                                chk.code === check.code &&
+                                                chk.title
+                                        )}
+                                    </p>
+                                    {check.note || check.image_url ? (
+                                        <Button
+                                            variant="primary"
+                                            size="sm"
+                                            onClick={e => this.toggleDetails(check)}
+                                        >
+                                            View Details
+                                        </Button>
+                                    ) : (
+                                        ""
+                                    )}
+
+                                {this.state.checkDetails && (
+                                    <Modal
+                                            show={this.state.checkDetails ? true : false}
+                                            onHide={() => this.toggleDetails()}
+                                            animation={false}
+                                            centered
+                                            size="lg"
+                                        >
+                                            <Modal.Header>
+                                                <Modal.Title>
+                                                    Issue Details
+                                                </Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <p>{this.state.checkDetails.note}</p>
+                                                {this.state.checkDetails.image_url && <Image src={this.state.checkDetails.image_url} fluid className="mt-5" />}
+                                            </Modal.Body>
+                                            <Modal.Footer>
+                                                <Button
+                                                    variant="secondary"
+                                                    onClick={() => this.toggleDetails()}
+                                                >
+                                                    Close
+                                                </Button>
+                                            </Modal.Footer>
+                                        </Modal>
                                     )}
                                 </div>
                             </li>
@@ -191,9 +246,7 @@ class RecordShow extends Component {
                     </Row>
 
                     <Row>
-                        <Col>
-                            {groups}
-                        </Col>
+                        <Col>{groups}</Col>
                     </Row>
 
                     <hr />
