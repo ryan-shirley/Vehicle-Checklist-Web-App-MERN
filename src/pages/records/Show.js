@@ -160,45 +160,51 @@ class RecordShow extends Component {
                                         <Button
                                             variant="primary"
                                             size="sm"
-                                            onClick={e => this.toggleDetails(check)}
+                                            onClick={e =>
+                                                this.toggleDetails(check)
+                                            }
                                         >
                                             View Details
                                         </Button>
                                     ) : (
                                         ""
                                     )}
-
-                                {this.state.checkDetails && (
-                                    <Modal
-                                            show={this.state.checkDetails ? true : false}
-                                            onHide={() => this.toggleDetails()}
-                                            animation={false}
-                                            centered
-                                            size="lg"
-                                        >
-                                            <Modal.Header>
-                                                <Modal.Title>
-                                                    Issue Details
-                                                </Modal.Title>
-                                            </Modal.Header>
-                                            <Modal.Body>
-                                                <p>{this.state.checkDetails.note}</p>
-                                                {this.state.checkDetails.image_url && <Image src={this.state.checkDetails.image_url} fluid className="mt-5" />}
-                                            </Modal.Body>
-                                            <Modal.Footer>
-                                                <Button
-                                                    variant="secondary"
-                                                    onClick={() => this.toggleDetails()}
-                                                >
-                                                    Close
-                                                </Button>
-                                            </Modal.Footer>
-                                        </Modal>
-                                    )}
                                 </div>
                             </li>
                         ))}
                     </ul>
+
+                    {this.state.checkDetails && (
+                        <Modal
+                            show={this.state.checkDetails ? true : false}
+                            onHide={() => this.toggleDetails()}
+                            animation={false}
+                            centered
+                            size="lg"
+                        >
+                            <Modal.Header>
+                                <Modal.Title>Issue Details</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <p>{this.state.checkDetails.note}</p>
+                                {this.state.checkDetails.image_url && (
+                                    <Image
+                                        src={this.state.checkDetails.image_url}
+                                        fluid
+                                        className="mt-5"
+                                    />
+                                )}
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button
+                                    variant="secondary"
+                                    onClick={() => this.toggleDetails()}
+                                >
+                                    Close
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
+                    )}
                 </div>
             ))
 
