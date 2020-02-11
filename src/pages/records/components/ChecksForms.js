@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, Row, Col } from "react-bootstrap"
+import { Button, Row, Col, Form } from "react-bootstrap"
 
 /**
  * ChecksForm() Pass or fail certain checks
@@ -12,7 +12,9 @@ class ChecksForm extends React.Component {
             numChecks: 0,
             stage: 1,
             checks: [],
-            results: []
+            results: [],
+            failureScreen: false,
+            note: ""
         }
     }
 
@@ -31,6 +33,18 @@ class ChecksForm extends React.Component {
     }
 
     /**
+     * handleInputChange() Handle form input from user
+     */
+    handleInputChange = e => {
+        const target = e.target
+        const { name, value } = target
+
+        this.setState({
+            [name]: value
+        })
+    }
+
+    /**
      * submitCheck() Add pass status of check into array.
      * Complete if at last stage.
      */
@@ -40,16 +54,24 @@ class ChecksForm extends React.Component {
         // Add check to results
         let stage = this.state.stage
         let code = this.state.checks[stage - 1].code
+        let note = this.state.note
 
         this.setState(
             state => {
-                const results = state.results.concat({
-                    code,
-                    passed
-                })
+                const results = note
+                    ? state.results.concat({
+                          code,
+                          passed,
+                          note
+                      })
+                    : state.results.concat({
+                          code,
+                          passed
+                      })
 
                 return {
-                    results
+                    results,
+                    note: ""
                 }
             },
             () => {
@@ -60,7 +82,8 @@ class ChecksForm extends React.Component {
                 } else {
                     this.setState(
                         {
-                            stage: stage + 1
+                            stage: stage + 1,
+                            failureScreen: false
                         },
                         () => {
                             this.props.onStageChange(
@@ -80,28 +103,59 @@ class ChecksForm extends React.Component {
 
         return (
             <>
-                <p className="h5 font-weight-normal mb-5">{title}</p>
+                {!this.state.failureScreen && (
+                    <>
+                        <p className="h5 font-weight-normal mb-5">{title}</p>
 
-                <Row>
-                    <Col>
+                        <Row>
+                            <Col>
+                                <Button
+                                    block
+                                    variant="danger"
+                                    onClick={e =>
+                                        this.setState({ failureScreen: true })
+                                    }
+                                >
+                                    Fail
+                                </Button>
+                            </Col>
+                            <Col>
+                                <Button
+                                    block
+                                    variant="primary"
+                                    onClick={e => this.submitCheck(true)}
+                                >
+                                    Pass
+                                </Button>
+                            </Col>
+                        </Row>
+                    </>
+                )}
+
+                {this.state.failureScreen && (
+                    <>
+                        <h3 className="mb-4">Failure Note</h3>
+                        <Form.Group controlId="hgvFailureNote">
+                            <Form.Control
+                                as="textarea"
+                                rows="3"
+                                placeholder="Note about failure"
+                                name="note"
+                                value={this.state.note}
+                                onChange={this.handleInputChange}
+                            />
+                        </Form.Group>
+
                         <Button
                             block
-                            variant="danger"
-                            onClick={e => this.submitCheck(false)}
+                            onClick={e =>
+                                this.submitCheck(false, this.state.note)
+                            }
                         >
-                            Fail
+                            Submit
                         </Button>
-                    </Col>
-                    <Col>
-                        <Button
-                            block
-                            variant="success"
-                            onClick={e => this.submitCheck(true)}
-                        >
-                            Pass
-                        </Button>
-                    </Col>
-                </Row>
+                    </>
+                )}
             </>
         )
     }

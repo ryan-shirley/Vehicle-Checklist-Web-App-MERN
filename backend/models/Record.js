@@ -8,7 +8,11 @@ const CheckSchema = new mongoose.Schema({
     passed: {
         type: Boolean,
         required: true
-    }
+    },
+    note: {
+        type: String,
+        required: false
+    },
 })
 
 const GroupsSchema = new mongoose.Schema({
