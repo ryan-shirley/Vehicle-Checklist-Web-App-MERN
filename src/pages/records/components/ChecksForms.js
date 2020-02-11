@@ -1,4 +1,5 @@
 import React from "react"
+import axios from "axios"
 import { Button, Row, Col, Form } from "react-bootstrap"
 
 /**
@@ -14,7 +15,9 @@ class ChecksForm extends React.Component {
             checks: [],
             results: [],
             failureScreen: false,
-            note: ""
+            note: "",
+            imageURL: "",
+            image: null
         }
     }
 
@@ -51,23 +54,23 @@ class ChecksForm extends React.Component {
     submitCheck(passed) {
         console.log("Submitting stage")
 
-        // Add check to results
+        // Get form data
         let stage = this.state.stage
         let code = this.state.checks[stage - 1].code
         let note = this.state.note
+        let image_url = this.state.imageURL
+
+        // Create Results obj
+        let result = {}
+        result.code = code
+        result.passed = passed
+
+        if (note) result.note = note
+        if (image_url) result.image_url = image_url
 
         this.setState(
             state => {
-                const results = note
-                    ? state.results.concat({
-                          code,
-                          passed,
-                          note
-                      })
-                    : state.results.concat({
-                          code,
-                          passed
-                      })
+                const results = state.results.concat(result)
 
                 return {
                     results,
@@ -83,7 +86,8 @@ class ChecksForm extends React.Component {
                     this.setState(
                         {
                             stage: stage + 1,
-                            failureScreen: false
+                            failureScreen: false,
+                            imageURL: ''
                         },
                         () => {
                             this.props.onStageChange(
@@ -94,6 +98,51 @@ class ChecksForm extends React.Component {
                 }
             }
         )
+    }
+
+    /**
+     * submitFailure() Submit failure notes and image
+     */
+    submitFailure = async () => {
+        let image = this.state.image
+
+        if (image) {
+            let res = await this.uploadImage()
+            
+            this.setState({
+                imageURL: res.data.path,
+                image: null
+            }, () => this.submitCheck(false))
+        }
+        else {
+            this.submitCheck(false)
+        }
+    }
+
+    /**
+     * uploadImage() Upload Image
+     */
+    uploadImage = () => {
+        return new Promise((resolve, reject) => {
+            let formData = new FormData()
+            formData.append("image", this.state.image)
+
+            axios.defaults.headers.common[
+                "Authorization"
+            ] = localStorage.getItem("jwtToken")
+            axios
+                .post(process.env.REACT_APP_API_URI + "/upload", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                })
+                .then(res => {
+                    resolve(res)
+                })
+                .catch(err => {
+                    reject(err)
+                })
+        })
     }
 
     render() {
@@ -146,12 +195,17 @@ class ChecksForm extends React.Component {
                             />
                         </Form.Group>
 
-                        <Button
-                            block
-                            onClick={e =>
-                                this.submitCheck(false, this.state.note)
-                            }
-                        >
+                        <Form.Group controlId="hgvFailureNote">
+                            <input
+                                type="file"
+                                className="form-control"
+                                onChange={e =>
+                                    this.setState({ image: e.target.files[0] })
+                                }
+                            />
+                        </Form.Group>
+
+                        <Button block onClick={e => this.submitFailure()}>
                             Submit
                         </Button>
                     </>

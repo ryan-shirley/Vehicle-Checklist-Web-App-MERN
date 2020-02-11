@@ -12,6 +12,10 @@ const CheckSchema = new mongoose.Schema({
     note: {
         type: String,
         required: false
+    },
+    image_url : {
+        type: String,
+        required: false
     }
 })
 
