@@ -13,6 +13,7 @@ import Edit from './pages/records/Edit'
 
 // Components
 import HGVNavbar from './components/hgv-navbar'
+import SweetAlert from 'react-bootstrap-sweetalert'
 
 /**
  * App() Main component used for routing and general layout
@@ -22,11 +23,14 @@ class App extends Component {
         super(props)
 
         this.state = {
-            loggedIn: localStorage.getItem('UID') ? true : false
+            loggedIn: localStorage.getItem('UID') ? true : false,
+            notification: null
         }
 
         // Binding this to work in the callback
         this.updateLoggedInStatus = this.updateLoggedInStatus.bind(this)
+        this.successNotification = this.successNotification.bind(this)
+        this.createNotification = this.createNotification.bind(this)
     }
 
     /**
@@ -36,6 +40,42 @@ class App extends Component {
         this.setState({
             loggedIn: newStatus
         })
+
+        let message = newStatus ? "Successfully logged in!" : "Successfully logged out!"
+        this.successNotification(message)
+    }
+    
+    /**
+     * successNotification() Create a successful notification
+     */
+    successNotification(title) {
+        this.createNotification('success', title)
+    }
+
+    /**
+     * createNotification() Hide alert from screen
+     */
+    createNotification(type = 'success', title, duration = 2000) {
+        let notification = <SweetAlert 
+            success 
+            title={title}
+            showConfirm={false}
+            onConfirm={() => this.hideNotification()}
+            timeout={duration}
+        />
+
+        this.setState({
+            notification
+        })
+    }
+    
+    /**
+     * hideNotification() Hide notification from screen
+     */
+    hideNotification() {
+        this.setState({
+            notification: null
+        })
     }
 
     render() {
@@ -43,6 +83,7 @@ class App extends Component {
             <main>
                 <BrowserRouter>
                     <HGVNavbar loggedIn={this.state.loggedIn} onLogout={this.updateLoggedInStatus} />
+                    {this.state.notification}
                     <Switch>
                         <RestricedRoute path="/" exact component={Login} onLogin={this.updateLoggedInStatus} />
                         <RestricedRoute path="/register" exact component={Register} onLogin={this.updateLoggedInStatus} />
