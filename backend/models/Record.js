@@ -12,7 +12,7 @@ const CheckSchema = new mongoose.Schema({
     note: {
         type: String,
         required: false
-    },
+    }
 })
 
 const GroupsSchema = new mongoose.Schema({
