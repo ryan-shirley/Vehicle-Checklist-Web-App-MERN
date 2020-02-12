@@ -20,6 +20,7 @@ class RecordEdit extends Component {
 
         // Binding this to work in the callback
         this.handleChange = this.handleChange.bind(this)
+        this.handleInputChange = this.handleInputChange.bind(this)
     }
 
     /**
@@ -56,7 +57,7 @@ class RecordEdit extends Component {
                     loading: false
                 })
 
-                if(err.response.data.code === 401) {
+                if (err.response.data.code === 401) {
                     this.props.history.replace("/records")
                 }
             })
@@ -98,12 +99,34 @@ class RecordEdit extends Component {
      */
     handleChange(event, gIndex, cIndex) {
         const target = event.target
-        const value = target.checked
+        const passed = target.checked
 
         // Update Record
         this.setState(state => {
             let record = state.record
-            record.checked_groups[gIndex].checks[cIndex].passed = value
+            record.checked_groups[gIndex].checks[cIndex].passed = passed
+
+            // Reset note message
+            if(passed) record.checked_groups[gIndex].checks[cIndex].note = ''
+
+            return {
+                record
+            }
+        })
+    }
+
+    /**
+     * handleInputChange() Handle form text input changes
+     */
+    handleInputChange(event, gIndex, cIndex) {
+        const target = event.target
+        const value = target.value
+
+        // Update Record
+        this.setState(state => {
+            let record = state.record
+
+            record.checked_groups[gIndex].checks[cIndex].note = value
 
             return {
                 record
@@ -157,9 +180,16 @@ class RecordEdit extends Component {
                                                         <Col
                                                             className="text-uppercase font-weight-bold"
                                                             xs={3}
-                                                            sm={4}
+                                                            sm={2}
                                                         >
                                                             Status
+                                                        </Col>
+                                                        <Col
+                                                            className="text-uppercase font-weight-bold"
+                                                            xs={3}
+                                                            sm={4}
+                                                        >
+                                                            Notes
                                                         </Col>
                                                     </Row>
 
@@ -184,7 +214,7 @@ class RecordEdit extends Component {
                                                                 </Form.Label>
                                                                 <Col
                                                                     xs={3}
-                                                                    sm={6}
+                                                                    sm={2}
                                                                 >
                                                                     <Form.Check
                                                                         type="checkbox"
@@ -212,6 +242,47 @@ class RecordEdit extends Component {
                                                                             )
                                                                         }
                                                                     />
+                                                                </Col>
+                                                                <Col
+                                                                    xs={12}
+                                                                    sm={4}
+                                                                >
+                                                                    {!this.state
+                                                                        .record
+                                                                        .checked_groups[
+                                                                        gIndex
+                                                                    ].checks[
+                                                                        cIndex
+                                                                    ]
+                                                                        .passed && (
+                                                                        <Form.Group controlId="hgvFailureNote">
+                                                                            <Form.Control
+                                                                                as="textarea"
+                                                                                rows="3"
+                                                                                placeholder="Note about failure"
+                                                                                name="note"
+                                                                                value={
+                                                                                    this
+                                                                                        .state
+                                                                                        .record
+                                                                                        .checked_groups[
+                                                                                        gIndex
+                                                                                    ]
+                                                                                        .checks[
+                                                                                        cIndex
+                                                                                    ]
+                                                                                        .note
+                                                                                }
+                                                                                onChange={e =>
+                                                                                    this.handleInputChange(
+                                                                                        e,
+                                                                                        gIndex,
+                                                                                        cIndex
+                                                                                    )
+                                                                                }
+                                                                            />
+                                                                        </Form.Group>
+                                                                    )}
                                                                 </Col>
                                                             </Form.Group>
                                                         )
