@@ -185,7 +185,7 @@ class RecordEdit extends Component {
                                                             Status
                                                         </Col>
                                                         <Col
-                                                            className="text-uppercase font-weight-bold"
+                                                            className="text-uppercase font-weight-bold d-none d-sm-block"
                                                             xs={3}
                                                             sm={4}
                                                         >
