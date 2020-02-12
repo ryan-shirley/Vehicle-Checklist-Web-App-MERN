@@ -39,7 +39,7 @@ class Home extends React.Component {
                 })
             })
             .catch(err => {
-                console.log(err.response.data.message)
+                console.log(err.response.message)
             })
     }
 
