@@ -88,10 +88,11 @@ UserSchema.methods.newAuthToken = async function() {
     const token = jwt.sign(
         { _id: user.id.toString() },
         process.env.JWT_VERIFY,
-        { expiresIn: "30 days" }
+        { expiresIn: "120 days" }
     )
-    user.tokens = user.tokens.concat({ token })
-    await user.save()
+    // user.tokens = user.tokens.concat({ token })
+    // await user.save()
+
     return token
 }
 
