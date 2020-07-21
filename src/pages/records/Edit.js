@@ -84,6 +84,7 @@ class RecordEdit extends Component {
                 this.state.record
             )
             .then(res => {
+                this.props.onEdit(`Successfully update record for ${this.state.record.date}`)
                 this.props.history.push("/records")
             })
             .catch(err => {

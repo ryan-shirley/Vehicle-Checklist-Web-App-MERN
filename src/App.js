@@ -87,9 +87,9 @@ class App extends Component {
                     <Switch>
                         <RestricedRoute path="/" exact component={Login} onLogin={this.updateLoggedInStatus} />
                         <RestricedRoute path="/register" exact component={Register} onLogin={this.updateLoggedInStatus} />
-                        <PrivateRoute path="/records/create" exact component={Create} />
-                        <PrivateRoute path="/records/:recordId/edit" exact component={Edit} />
-                        <PrivateRoute path="/records" component={Home} />
+                        <PrivateRoute path="/records/create" exact component={Create} onCreate={this.successNotification} />
+                        <PrivateRoute path="/records/:recordId/edit" exact component={Edit} onEdit={this.successNotification} />
+                        <PrivateRoute path="/records" component={Home} onDelete={this.successNotification} />
                     </Switch>
                 </BrowserRouter>
             </main>

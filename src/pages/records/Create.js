@@ -71,6 +71,7 @@ class Create extends React.Component {
                     checked_groups: this.state.results
                 })
                 .then(res => {
+                    this.props.onCreate('Successfully added a new record')
                     this.props.history.push("/records")
                 })
                 .catch(err => {

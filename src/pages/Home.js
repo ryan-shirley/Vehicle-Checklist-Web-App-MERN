@@ -59,6 +59,7 @@ class Home extends React.Component {
         axios
             .delete(process.env.REACT_APP_API_URI + "/records/" + id)
             .then(res => {
+                this.props.onDelete('Successfully deleted record')
                 this.props.history.push("/records")
                 this.fetchRecords()
             })
