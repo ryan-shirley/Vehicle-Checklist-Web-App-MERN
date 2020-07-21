@@ -77,6 +77,12 @@ class Create extends React.Component {
                     this.setState({
                         error: err.response.data.message
                     })
+
+                    if(err.response.status === 401) {
+                        // Unauthorised
+                        localStorage.removeItem("jwtToken")
+                        this.props.history.replace('/')
+                    }
                 })
         }
     }

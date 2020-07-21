@@ -39,7 +39,13 @@ class Home extends React.Component {
                 })
             })
             .catch(err => {
-                console.log(err.response.message)
+                console.log(err.message)
+                
+                if(err.response.status === 401) {
+                    // Unauthorised
+                    localStorage.removeItem("jwtToken")
+                    this.props.history.replace('/')
+                }
             })
     }
 
