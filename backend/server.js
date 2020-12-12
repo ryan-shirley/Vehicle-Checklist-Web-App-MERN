@@ -8,6 +8,13 @@ const port = process.env.PORT || 4000
 const cors = require('cors')
 require('dotenv').config()
 
+// Routes
+const rootRouter = require('./routes/root')
+const usersRouter = require('./routes/users')
+const plantsRouter = require('./routes/plants')
+const checkListRouter = require('./routes/checkList')
+const recordsRouter = require('./routes/records')
+
 // Sentry Config
 Sentry.init({ 
     dsn: process.env.SENTRY_DSN,
@@ -17,9 +24,11 @@ Sentry.init({
         // enable Express.js middleware tracing
         new Tracing.Integrations.Express({ 
             // to trace all requests to the default router
-            app, 
+            // app, 
             // alternatively, you can specify the routes you want to trace:
-            // router: someRouter, 
+            router: [
+                rootRouter, usersRouter, plantsRouter, checkListRouter, recordsRouter
+            ], 
         }),
         new Tracing.Integrations.Mongo(),
     ],
@@ -33,12 +42,6 @@ app.use(Sentry.Handlers.tracingHandler());
 
 const mongoose = require('mongoose')
 const ATLAS_URI = process.env.ATLAS_URI
-
-const rootRouter = require('./routes/root')
-const usersRouter = require('./routes/users')
-const plantsRouter = require('./routes/plants')
-const checkListRouter = require('./routes/checkList')
-const recordsRouter = require('./routes/records')
 
 app.use(body_parser.json())
 app.use(cors())
