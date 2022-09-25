@@ -18,6 +18,7 @@ jobs:
       with:
         node-version: '12.x'
     - run: npm install
+      working-directory: ./backend
     - uses: w9jds/firebase-action@master
       with:
         args: deploy --only functions
