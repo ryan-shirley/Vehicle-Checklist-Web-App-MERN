@@ -6,7 +6,7 @@ const body_parser = require('body-parser')
 const app = express()
 const functionsConfig = functions.config()
 
-const cors = require('cors')
+const cors = require('cors')({origin: true})
 
 // Routes
 const rootRouter = require('./routes/root')
