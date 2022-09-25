@@ -7,7 +7,6 @@ import PrivateRoute from './components/PrivateRoute'
 import RestricedRoute from './components/RestricedRoute'
 import './App.scss'
 
-
 // Pages
 import Login from './pages/Login'
 import Register from './pages/Register'
