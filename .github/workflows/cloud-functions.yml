@@ -24,4 +24,3 @@ jobs:
         args: deploy --only functions
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        PROJECT_PATH: ./backend
