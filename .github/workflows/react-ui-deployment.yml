@@ -1,0 +1,28 @@
+name: React UI Deployment - Firebase Hosting
+
+on:
+  push:
+    branches:
+    - master
+    paths:
+      - 'src/**'
+
+jobs:
+  firebase-deploy:
+    runs-on: ubuntu-latest
+    env:
+      REACT_APP_API_URI: ${{ secrets.REACT_APP_API_URI }}
+      REACT_APP_SENTRY_DSN: ${{ secrets.REACT_APP_SENTRY_DSN }}
+      
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: '16.x'
+    - run: npm install
+    - run: npm run build
+    - uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only hosting
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
