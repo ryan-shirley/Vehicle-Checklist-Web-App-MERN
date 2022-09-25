@@ -32,7 +32,7 @@ Sentry.init({
         }),
         new Tracing.Integrations.Mongo(),
     ],
-    environment: 16,
+    environment: 10,
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control
     tracesSampleRate: 1.0,
