@@ -1,3 +1,4 @@
+const functions = require('firebase-functions');
 const Sentry = require("@sentry/node");
 const Tracing = require("@sentry/tracing");
 const express = require('express')
@@ -72,4 +73,6 @@ app.use(function onError(err, req, res, next) {
     res.end(res.sentry + "\n");
 });  
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+// app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+exports.app = functions.https.onRequest(app);
