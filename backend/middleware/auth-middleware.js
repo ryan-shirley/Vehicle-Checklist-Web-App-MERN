@@ -1,3 +1,4 @@
+const functions = require('firebase-functions')
 const jwt = require("jsonwebtoken")
 
 const checkIfAuthenticated = async (req, res, next) => {
@@ -6,7 +7,7 @@ const checkIfAuthenticated = async (req, res, next) => {
             .header("Authorization")
             .replace("Bearer", "")
             .trim()
-        const decoded = jwt.verify(token, process.env.JWT_VERIFY)
+        const decoded = jwt.verify(token, functions.config().jwt.verify)
 
         req.decoded = decoded
     } catch (error) {
