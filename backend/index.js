@@ -1,13 +1,12 @@
-const functions = require('firebase-functions');
-const Sentry = require("@sentry/node");
-const Tracing = require("@sentry/tracing");
+const functions = require('firebase-functions')
+const Sentry = require("@sentry/node")
+const Tracing = require("@sentry/tracing")
 const express = require('express')
 const body_parser = require('body-parser')
 const app = express()
-const port = process.env.PORT || 4000
+const functionsConfig = functions.config()
 
 const cors = require('cors')
-require('dotenv').config()
 
 // Routes
 const rootRouter = require('./routes/root')
@@ -18,7 +17,7 @@ const recordsRouter = require('./routes/records')
 
 // Sentry Config
 Sentry.init({ 
-    dsn: process.env.SENTRY_DSN,
+    dsn: functionsConfig.sentry.dsn,
     integrations: [
         // enable HTTP calls tracing
         // new Sentry.Integrations.Http({ tracing: true }),
@@ -33,7 +32,7 @@ Sentry.init({
         }),
         new Tracing.Integrations.Mongo(),
     ],
-    environment: process.env.NODE_ENV,
+    environment: 16,
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control
     tracesSampleRate: 1.0,
@@ -42,7 +41,7 @@ app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 
 const mongoose = require('mongoose')
-const ATLAS_URI = process.env.ATLAS_URI
+const ATLAS_URI = functionsConfig.mongo.uri
 
 app.use(body_parser.json())
 app.use(cors())

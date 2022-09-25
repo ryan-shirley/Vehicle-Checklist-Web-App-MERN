@@ -1,3 +1,4 @@
+const functions = require('firebase-functions')
 const mongoose = require("mongoose")
 const validator = require("validator")
 const jwt = require("jsonwebtoken")
@@ -87,7 +88,7 @@ UserSchema.methods.newAuthToken = async function() {
     const user = this
     const token = jwt.sign(
         { _id: user.id.toString() },
-        process.env.JWT_VERIFY,
+        functions.config().jwt.verify,
         { expiresIn: "120 days" }
     )
     // user.tokens = user.tokens.concat({ token })
