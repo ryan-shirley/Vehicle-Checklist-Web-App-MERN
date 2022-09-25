@@ -6,7 +6,10 @@ const body_parser = require('body-parser')
 const app = express()
 const functionsConfig = functions.config()
 
-const cors = require('cors')({origin: true})
+const cors = require('cors')
+var corsOptions = {
+    origin: true
+}
 
 // Routes
 const rootRouter = require('./routes/root')
@@ -44,7 +47,7 @@ const mongoose = require('mongoose')
 const ATLAS_URI = functionsConfig.mongo.uri
 
 app.use(body_parser.json())
-app.use(cors())
+app.use(cors(corsOptions))
 
 mongoose.connect(ATLAS_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, 'useFindAndModify': false}, function(err) {
     if(err) {
