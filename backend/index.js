@@ -73,4 +73,4 @@ app.use(function onError(err, req, res, next) {
 });  
 
 // app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-exports.app = functions.https.onRequest(app);
+exports.app = functions.region('europe-west1').https.onRequest(app);
