@@ -33,7 +33,7 @@ class Register extends React.Component {
     componentDidMount() {
         // Get checklists
         axios
-            .get("api/check-lists")
+            .get("/api/check-lists")
             .then(res => {
                 this.setState({
                     checklists: res.data,
@@ -48,7 +48,7 @@ class Register extends React.Component {
 
         // Get plants
         axios
-            .get("api/plants")
+            .get("/api/plants")
             .then(res => {
                 this.setState({
                     plants: res.data,
@@ -114,7 +114,7 @@ class Register extends React.Component {
             }
 
             axios
-                .post("api/users", user)
+                .post("/api/users", user)
                 .then(res => {
                     // save token in local storage
                     localStorage.setItem("jwtToken", res.data.token)

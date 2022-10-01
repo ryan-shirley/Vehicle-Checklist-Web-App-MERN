@@ -134,7 +134,7 @@ class ChecksForm extends React.Component {
                 "Authorization"
             ] = localStorage.getItem("jwtToken")
             axios
-                .post("api/upload", formData, {
+                .post("/api/upload", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data"
                     }

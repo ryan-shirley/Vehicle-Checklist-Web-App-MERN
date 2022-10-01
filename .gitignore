@@ -30,3 +30,4 @@ backend/.DS_Store
 backend/.env
 firebase-debug.log
 backend/.runtimeconfig.json
+ui-debug.log

@@ -57,7 +57,7 @@ class Home extends React.Component {
             "jwtToken"
         )
         axios
-            .delete("api/records/" + id)
+            .delete("/api/records/" + id)
             .then(res => {
                 this.props.onDelete('Successfully deleted record')
                 this.props.history.push("/records")

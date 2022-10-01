@@ -55,7 +55,7 @@ class RecordShow extends Component {
             "jwtToken"
         )
         axios
-            .get("api/records/" + recordId)
+            .get("/api/records/" + recordId)
             .then(res => {
                 if (this._isMounted) {
                     this.setState({
