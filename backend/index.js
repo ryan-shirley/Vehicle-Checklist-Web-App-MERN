@@ -58,11 +58,11 @@ mongoose.connect(ATLAS_URI, {useNewUrlParser: true, useUnifiedTopology: true, us
     }
 });
 
-app.use('/', rootRouter)
-app.use('/users', usersRouter)
-app.use('/plants', plantsRouter)
-app.use('/check-lists', checkListRouter)
-app.use('/records', recordsRouter)
+app.use('/api', rootRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/plants', plantsRouter)
+app.use('/api/check-lists', checkListRouter)
+app.use('/api/records', recordsRouter)
 
 // The error handler must be before any other error middleware and after all controllers
 app.use(Sentry.Handlers.errorHandler());

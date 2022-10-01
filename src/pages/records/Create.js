@@ -33,7 +33,7 @@ class Create extends React.Component {
             "jwtToken"
         )
         axios
-            .get(process.env.REACT_APP_API_URI + "/users/" + uid + "/checklist")
+            .get("api/users/" + uid + "/checklist")
             .then(res => {
                 const { name, required_checks } = res.data.checkList
 
@@ -67,7 +67,7 @@ class Create extends React.Component {
                 "Authorization"
             ] = localStorage.getItem("jwtToken")
             axios
-                .post(process.env.REACT_APP_API_URI + "/records", {
+                .post("api/records", {
                     checked_groups: this.state.results
                 })
                 .then(res => {

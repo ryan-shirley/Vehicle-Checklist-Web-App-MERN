@@ -13,7 +13,6 @@ jobs:
   firebase-deploy:
     runs-on: ubuntu-latest
     env:
-      REACT_APP_API_URI: ${{ secrets.REACT_APP_API_URI }}
       REACT_APP_SENTRY_DSN: ${{ secrets.REACT_APP_SENTRY_DSN }}
       
     steps:

@@ -44,7 +44,7 @@ class RecordEdit extends Component {
             "jwtToken"
         )
         axios
-            .get(process.env.REACT_APP_API_URI + "/records/" + recordId)
+            .get("api/records/" + recordId)
             .then(res => {
                 this.setState({
                     record: res.data,
@@ -80,7 +80,7 @@ class RecordEdit extends Component {
         )
         axios
             .put(
-                process.env.REACT_APP_API_URI + "/records/" + recordId,
+                "api/records/" + recordId,
                 this.state.record
             )
             .then(res => {

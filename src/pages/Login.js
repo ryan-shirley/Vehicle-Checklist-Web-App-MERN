@@ -65,7 +65,7 @@ class Login extends React.Component {
         }
 
         axios
-            .post(process.env.REACT_APP_API_URI + "/login", user)
+            .post("api/login", user)
             .then(res => {
                 // save token in local storage
                 localStorage.setItem("jwtToken", res.data.token)
