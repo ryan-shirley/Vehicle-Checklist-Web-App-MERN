@@ -9,7 +9,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     return (
         <Route
             {...rest}
-            render={props =>
+            render={(props) =>
                 localStorage.getItem(STORAGE_KEYS.JWT_TOKEN) ? (
                     <Component {...props} {...rest} />
                 ) : (
@@ -17,8 +17,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
                         to={{
                             pathname: "/",
                             state: { from: props.location },
-                            redirect_message:
-                                "You are not authorised to access that! Please login first."
+                            redirect_message: "You are not authorised to access that! Please login first."
                         }}
                     />
                 )

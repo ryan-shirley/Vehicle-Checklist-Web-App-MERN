@@ -1,7 +1,14 @@
 import React from "react"
 import api from "../../../services/api"
 import { Button, Row, Col, Form, Spinner } from "react-bootstrap"
-import { IconArrowBack, IconCheckCircle, IconCancel, IconAssignmentTurnedIn, IconReport, IconAddPhotoAlternate } from "../../../components/icons"
+import {
+    IconArrowBack,
+    IconCheckCircle,
+    IconCancel,
+    IconAssignmentTurnedIn,
+    IconReport,
+    IconAddPhotoAlternate
+} from "../../../components/icons"
 import TopAppBar from "../../../components/TopAppBar"
 
 /**
@@ -41,7 +48,7 @@ class ChecksForm extends React.Component {
     /**
      * handleInputChange() Handle form input from user
      */
-    handleInputChange = e => {
+    handleInputChange = (e) => {
         const target = e.target
         const { name, value } = target
 
@@ -70,7 +77,7 @@ class ChecksForm extends React.Component {
         if (image_url) result.image_url = image_url
 
         this.setState(
-            state => {
+            (state) => {
                 const results = state.results.concat(result)
 
                 return {
@@ -88,12 +95,10 @@ class ChecksForm extends React.Component {
                         {
                             stage: stage + 1,
                             failureScreen: false,
-                            imageURL: ''
+                            imageURL: ""
                         },
                         () => {
-                            this.props.onStageChange(
-                                `${this.state.stage}/${this.state.numChecks}`
-                            )
+                            this.props.onStageChange(`${this.state.stage}/${this.state.numChecks}`)
                         }
                     )
                 }
@@ -111,16 +116,19 @@ class ChecksForm extends React.Component {
             if (image) {
                 let res = await this.uploadImage()
 
-                this.setState({
-                    imageURL: res.data.path,
-                    image: null
-                }, () => this.submitCheck(false))
+                this.setState(
+                    {
+                        imageURL: res.data.path,
+                        image: null
+                    },
+                    () => this.submitCheck(false)
+                )
             } else {
                 this.submitCheck(false)
             }
         } catch (err) {
             this.setState({ processing: false })
-            console.error('Image upload failed:', err)
+            console.error("Image upload failed:", err)
         }
     }
 
@@ -134,17 +142,16 @@ class ChecksForm extends React.Component {
             let formData = new FormData()
             formData.append("image", this.state.image)
 
-            api
-                .post("/api/upload", formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data"
-                    }
-                })
-                .then(res => {
+            api.post("/api/upload", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
+                .then((res) => {
                     this.setState({ processing: false })
                     resolve(res)
                 })
-                .catch(err => {
+                .catch((err) => {
                     this.setState({ processing: false })
                     reject(err)
                 })
@@ -153,8 +160,7 @@ class ChecksForm extends React.Component {
 
     render() {
         let stage = this.state.stage
-        let title =
-            this.state.checks[stage - 1] && this.state.checks[stage - 1].title
+        let title = this.state.checks[stage - 1] && this.state.checks[stage - 1].title
 
         return (
             <>
@@ -165,11 +171,13 @@ class ChecksForm extends React.Component {
                                 type="button"
                                 className="omc-check__back"
                                 aria-label="Back"
-                                onClick={() => this.props.onBack ? this.props.onBack() : window.history.back()}
+                                onClick={() => (this.props.onBack ? this.props.onBack() : window.history.back())}
                             >
                                 <IconArrowBack />
                             </button>
-                            <span className="omc-check__step">Step {this.state.stage} of {this.state.numChecks}</span>
+                            <span className="omc-check__step">
+                                Step {this.state.stage} of {this.state.numChecks}
+                            </span>
                             <span className="omc-check__spacer" aria-hidden="true" />
                         </div>
 
@@ -234,7 +242,7 @@ class ChecksForm extends React.Component {
                                     <input
                                         type="file"
                                         className="omc-failure-note__file"
-                                        onChange={e => this.setState({ image: e.target.files[0] })}
+                                        onChange={(e) => this.setState({ image: e.target.files[0] })}
                                     />
                                 </label>
                             </Form.Group>

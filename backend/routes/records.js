@@ -16,13 +16,13 @@ router.route("/").get(checkIfAuthenticated, (req, res) => {
     const user_id = req.decoded._id
 
     Record.find({
-            user_id: user_id
-        })
+        user_id: user_id
+    })
         .select("-user_id -checked_groups")
         .populate("check_list_id", "name")
         .sort("-date")
-        .then(records => res.json(records))
-        .catch(err =>
+        .then((records) => res.json(records))
+        .catch((err) =>
             res.status(400).json({
                 code: 400,
                 message: err.message
@@ -38,20 +38,20 @@ router.route("/:id").get(checkIfAuthenticated, (req, res) => {
     const id = req.params.id
 
     Record.findOne({
-            _id: id
-        })
+        _id: id
+    })
         .populate("checked_groups.group_id check_list_id")
-        .then(record => {
+        .then((record) => {
             if (record.user_id == user_id) {
                 res.json(record)
             } else {
                 res.status(401).json({
                     code: 401,
-                    message: 'Unauthorised! You are not the owner of this record.'
+                    message: "Unauthorised! You are not the owner of this record."
                 })
             }
         })
-        .catch(err =>
+        .catch((err) =>
             res.status(400).json({
                 code: 400,
                 message: err.message
@@ -76,8 +76,8 @@ router.route("/").post(checkIfAuthenticated, async (req, res) => {
 
     try {
         let user = await User.findOne({
-                _id: user_id
-            })
+            _id: user_id
+        })
             .select("vehicle.registration_number vehicle.check_list_id")
             .populate("plant_id")
             .exec()
@@ -136,17 +136,22 @@ router.route("/:id").put(checkIfAuthenticated, async (req, res) => {
         }
     }
 
-    Record.findOneAndUpdate({
-        _id: id, user_id
-    }, record, (err, newRecord) => {
-        if (err)
-            return res.status(500).json({
-                code: 500,
-                message: err.message
-            })
+    Record.findOneAndUpdate(
+        {
+            _id: id,
+            user_id
+        },
+        record,
+        (err, newRecord) => {
+            if (err)
+                return res.status(500).json({
+                    code: 500,
+                    message: err.message
+                })
 
-        return res.send(newRecord)
-    })
+            return res.send(newRecord)
+        }
+    )
 })
 
 /**
@@ -159,21 +164,24 @@ router.route("/:id").delete(checkIfAuthenticated, async (req, res) => {
 
     // ********* TODO: Validate user trying to add to is same as logged in *********
 
-    Record.deleteOne({
-        _id: id,
-        user_id
-    }, (err, doc) => {
-        if (err)
-            return res.status(500).json({
-                code: 500,
-                message: err.message
-            })
+    Record.deleteOne(
+        {
+            _id: id,
+            user_id
+        },
+        (err, doc) => {
+            if (err)
+                return res.status(500).json({
+                    code: 500,
+                    message: err.message
+                })
 
-        return res.json({
-            code: 200,
-            message: `Record with ID ${id} has been successfully deleted.`
-        })
-    })
+            return res.json({
+                code: 200,
+                message: `Record with ID ${id} has been successfully deleted.`
+            })
+        }
+    )
 })
 
 module.exports = router

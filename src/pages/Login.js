@@ -11,8 +11,7 @@ class Login extends React.Component {
 
         let ndate = new Date()
         let hours = ndate.getHours()
-        let message =
-            hours < 12 ? "Good Morning" : hours < 18 ? "Good Afternoon" : "Good Evening"
+        let message = hours < 12 ? "Good Morning" : hours < 18 ? "Good Afternoon" : "Good Evening"
 
         this.state = {
             email: "",
@@ -31,19 +30,18 @@ class Login extends React.Component {
         }
     }
 
-    handleInputChange = e => {
+    handleInputChange = (e) => {
         const { name, value } = e.target
         this.setState({ [name]: value })
     }
 
-    onSubmit = e => {
+    onSubmit = (e) => {
         e.preventDefault()
 
         const user = { email: this.state.email, password: this.state.password }
 
-        api
-            .post("/api/login", user)
-            .then(res => {
+        api.post("/api/login", user)
+            .then((res) => {
                 localStorage.setItem(STORAGE_KEYS.JWT_TOKEN, res.data.token)
                 localStorage.setItem(STORAGE_KEYS.UID, res.data.user._id)
                 localStorage.setItem(
@@ -53,7 +51,7 @@ class Login extends React.Component {
                 this.props.onLogin(true)
                 this.props.history.push("/records")
             })
-            .catch(err => {
+            .catch((err) => {
                 this.setState({ error: err.response?.data?.message || "Login failed. Please try again." })
             })
     }
@@ -78,7 +76,9 @@ class Login extends React.Component {
                         )}
 
                         <div className="omc-auth__form-group">
-                            <label className="omc-auth__label" htmlFor="loginEmail">Email</label>
+                            <label className="omc-auth__label" htmlFor="loginEmail">
+                                Email
+                            </label>
                             <Form.Control
                                 id="loginEmail"
                                 type="email"
@@ -92,7 +92,9 @@ class Login extends React.Component {
                         </div>
 
                         <div className="omc-auth__form-group">
-                            <label className="omc-auth__label" htmlFor="loginPassword">Password</label>
+                            <label className="omc-auth__label" htmlFor="loginPassword">
+                                Password
+                            </label>
                             <Form.Control
                                 id="loginPassword"
                                 type="password"

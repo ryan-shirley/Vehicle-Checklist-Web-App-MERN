@@ -9,7 +9,7 @@ const RestricedRoute = ({ component: Component, ...rest }) => {
     return (
         <Route
             {...rest}
-            render={props =>
+            render={(props) =>
                 !localStorage.getItem(STORAGE_KEYS.JWT_TOKEN) ? (
                     <Component {...props} {...rest} />
                 ) : (

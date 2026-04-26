@@ -18,15 +18,15 @@ router.route("/:id").get(checkIfAuthenticated, (req, res) => {
     if (user_id !== user_id_token) {
         return res.status(401).json({
             code: 401,
-            message: 'Unauthorised! You are not able to access other users data.'
+            message: "Unauthorised! You are not able to access other users data."
         })
     } else {
         User.findOne({
-                _id: user_id
-            })
+            _id: user_id
+        })
             .populate("plant_id vehicle.check_list_id")
-            .then(user => res.json(user))
-            .catch(err =>
+            .then((user) => res.json(user))
+            .catch((err) =>
                 res.status(400).json({
                     code: 400,
                     message: err.message
@@ -45,21 +45,17 @@ router.route("/:id/checklist").get(checkIfAuthenticated, async (req, res) => {
     if (user_id !== user_id_token) {
         return res.status(401).json({
             code: 401,
-            message: 'Unauthorised! You are not able to access other users data.'
+            message: "Unauthorised! You are not able to access other users data."
         })
     } else {
         let userChecklist = await User.findOne({
             _id: user_id
-        }).select(
-            "vehicle.check_list_id"
-        )
+        }).select("vehicle.check_list_id")
         let checkListId = userChecklist.vehicle.check_list_id
 
         let checkList = await CheckList.findOne({
             _id: checkListId
-        }).populate(
-            "required_checks.check_group_id"
-        )
+        }).populate("required_checks.check_group_id")
 
         res.json({
             checkList

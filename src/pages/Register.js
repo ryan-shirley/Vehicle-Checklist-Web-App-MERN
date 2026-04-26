@@ -29,31 +29,29 @@ class Register extends React.Component {
     }
 
     componentDidMount() {
-        api
-            .get("/api/check-lists")
-            .then(res => {
+        api.get("/api/check-lists")
+            .then((res) => {
                 this.setState({ checklists: res.data, check_list_id: res.data[0]._id })
             })
-            .catch(err => {
+            .catch((err) => {
                 this.setState({ error: err.response?.data?.message || "Failed to load checklists" })
             })
 
-        api
-            .get("/api/plants")
-            .then(res => {
+        api.get("/api/plants")
+            .then((res) => {
                 this.setState({ plants: res.data, plant_id: res.data[0]._id })
             })
-            .catch(err => {
+            .catch((err) => {
                 this.setState({ error: err.response?.data?.message || "Failed to load plants" })
             })
     }
 
-    handleInputChange = e => {
+    handleInputChange = (e) => {
         const { name, value } = e.target
         this.setState({ [name]: value })
     }
 
-    onSubmit = e => {
+    onSubmit = (e) => {
         e.preventDefault()
 
         const {
@@ -83,9 +81,8 @@ class Register extends React.Component {
             password
         }
 
-        api
-            .post("/api/users", user)
-            .then(res => {
+        api.post("/api/users", user)
+            .then((res) => {
                 localStorage.setItem(STORAGE_KEYS.JWT_TOKEN, res.data.token)
                 localStorage.setItem(STORAGE_KEYS.UID, res.data.user._id)
                 localStorage.setItem(
@@ -95,7 +92,7 @@ class Register extends React.Component {
                 this.props.onLogin(true)
                 this.props.history.push("/records")
             })
-            .catch(err => {
+            .catch((err) => {
                 this.setState({ error: err.response?.data?.error || "Registration failed. Please try again." })
             })
     }
@@ -121,7 +118,9 @@ class Register extends React.Component {
 
                         <div className="omc-auth__row">
                             <div className="omc-auth__form-group">
-                                <label className="omc-auth__label" htmlFor="regFirstName">First Name</label>
+                                <label className="omc-auth__label" htmlFor="regFirstName">
+                                    First Name
+                                </label>
                                 <Form.Control
                                     id="regFirstName"
                                     type="text"
@@ -133,7 +132,9 @@ class Register extends React.Component {
                                 />
                             </div>
                             <div className="omc-auth__form-group">
-                                <label className="omc-auth__label" htmlFor="regLastName">Last Name</label>
+                                <label className="omc-auth__label" htmlFor="regLastName">
+                                    Last Name
+                                </label>
                                 <Form.Control
                                     id="regLastName"
                                     type="text"
@@ -147,7 +148,9 @@ class Register extends React.Component {
                         </div>
 
                         <div className="omc-auth__form-group">
-                            <label className="omc-auth__label" htmlFor="regReg">Registration Number</label>
+                            <label className="omc-auth__label" htmlFor="regReg">
+                                Registration Number
+                            </label>
                             <Form.Control
                                 id="regReg"
                                 type="text"
@@ -161,7 +164,9 @@ class Register extends React.Component {
 
                         <div className="omc-auth__row">
                             <div className="omc-auth__form-group">
-                                <label className="omc-auth__label" htmlFor="regMake">Make</label>
+                                <label className="omc-auth__label" htmlFor="regMake">
+                                    Make
+                                </label>
                                 <Form.Control
                                     id="regMake"
                                     type="text"
@@ -173,7 +178,9 @@ class Register extends React.Component {
                                 />
                             </div>
                             <div className="omc-auth__form-group">
-                                <label className="omc-auth__label" htmlFor="regModel">Model</label>
+                                <label className="omc-auth__label" htmlFor="regModel">
+                                    Model
+                                </label>
                                 <Form.Control
                                     id="regModel"
                                     type="text"
@@ -188,7 +195,9 @@ class Register extends React.Component {
 
                         <div className="omc-auth__row">
                             <div className="omc-auth__form-group">
-                                <label className="omc-auth__label" htmlFor="regChecklist">Checklist</label>
+                                <label className="omc-auth__label" htmlFor="regChecklist">
+                                    Checklist
+                                </label>
                                 <Form.Control
                                     id="regChecklist"
                                     as="select"
@@ -197,13 +206,17 @@ class Register extends React.Component {
                                     onChange={this.handleInputChange}
                                     className="omc-auth__input"
                                 >
-                                    {this.state.checklists.map(list => (
-                                        <option key={list._id} value={list._id}>{list.name}</option>
+                                    {this.state.checklists.map((list) => (
+                                        <option key={list._id} value={list._id}>
+                                            {list.name}
+                                        </option>
                                     ))}
                                 </Form.Control>
                             </div>
                             <div className="omc-auth__form-group">
-                                <label className="omc-auth__label" htmlFor="regPlant">Plant</label>
+                                <label className="omc-auth__label" htmlFor="regPlant">
+                                    Plant
+                                </label>
                                 <Form.Control
                                     id="regPlant"
                                     as="select"
@@ -212,15 +225,19 @@ class Register extends React.Component {
                                     onChange={this.handleInputChange}
                                     className="omc-auth__input"
                                 >
-                                    {this.state.plants.map(plant => (
-                                        <option key={plant._id} value={plant._id}>{plant.name}</option>
+                                    {this.state.plants.map((plant) => (
+                                        <option key={plant._id} value={plant._id}>
+                                            {plant.name}
+                                        </option>
                                     ))}
                                 </Form.Control>
                             </div>
                         </div>
 
                         <div className="omc-auth__form-group">
-                            <label className="omc-auth__label" htmlFor="regEmail">Email</label>
+                            <label className="omc-auth__label" htmlFor="regEmail">
+                                Email
+                            </label>
                             <Form.Control
                                 id="regEmail"
                                 type="email"
@@ -233,7 +250,9 @@ class Register extends React.Component {
                         </div>
 
                         <div className="omc-auth__form-group">
-                            <label className="omc-auth__label" htmlFor="regPassword">Password</label>
+                            <label className="omc-auth__label" htmlFor="regPassword">
+                                Password
+                            </label>
                             <Form.Control
                                 id="regPassword"
                                 type="password"
@@ -246,7 +265,9 @@ class Register extends React.Component {
                         </div>
 
                         <div className="omc-auth__form-group">
-                            <label className="omc-auth__label" htmlFor="regConfirm">Confirm Password</label>
+                            <label className="omc-auth__label" htmlFor="regConfirm">
+                                Confirm Password
+                            </label>
                             <Form.Control
                                 id="regConfirm"
                                 type="password"

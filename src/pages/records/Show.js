@@ -34,14 +34,13 @@ class RecordShow extends Component {
     fetchRecord() {
         const recordId = this.props.match.params.recordId
 
-        api
-            .get("/api/records/" + recordId)
-            .then(res => {
+        api.get("/api/records/" + recordId)
+            .then((res) => {
                 if (this._isMounted) {
                     this.setState({ record: res.data, loading: false })
                 }
             })
-            .catch(err => {
+            .catch((err) => {
                 if (this._isMounted) {
                     this.setState({
                         error: err.response?.data?.message || "Failed to load record",
@@ -54,8 +53,7 @@ class RecordShow extends Component {
     deleteRecord() {
         const recordId = this.props.match.params.recordId
 
-        api
-            .delete("/api/records/" + recordId)
+        api.delete("/api/records/" + recordId)
             .then(() => {
                 this.props.onDelete("Successfully deleted record")
                 this.props.history.push("/records")
@@ -95,14 +93,16 @@ class RecordShow extends Component {
             )
         }
 
-        const groups = record.checked_groups.map(group => (
+        const groups = record.checked_groups.map((group) => (
             <div key={group._id} className="omc-record-show__group-card">
                 <h5 className="omc-record-show__group-title">{group.group_id.name}</h5>
-                {group.checks.map(check => {
-                    const checkDef = group.group_id.checks.find(c => c.code === check.code)
+                {group.checks.map((check) => {
+                    const checkDef = group.group_id.checks.find((c) => c.code === check.code)
                     return (
                         <div key={check.code} className="omc-record-show__check-item">
-                            <span className={`omc-record-show__check-badge ${check.passed ? "omc-record-show__check-badge--pass" : "omc-record-show__check-badge--issue"}`}>
+                            <span
+                                className={`omc-record-show__check-badge ${check.passed ? "omc-record-show__check-badge--pass" : "omc-record-show__check-badge--issue"}`}
+                            >
                                 {check.passed ? "PASS" : "ISSUE"}
                             </span>
                             <div className="omc-record-show__check-body">
@@ -137,7 +137,9 @@ class RecordShow extends Component {
                         <Moment format="DD/MM/YYYY - hh:mm a" className="omc-record-show__date">
                             {record.date}
                         </Moment>
-                        <span className={`omc-record-show__status-badge ${record.passed ? "omc-record-show__status-badge--pass" : "omc-record-show__status-badge--fail"}`}>
+                        <span
+                            className={`omc-record-show__status-badge ${record.passed ? "omc-record-show__status-badge--pass" : "omc-record-show__status-badge--fail"}`}
+                        >
                             {record.passed ? "PASS" : "FAIL"}
                         </span>
                     </div>
@@ -178,9 +180,7 @@ class RecordShow extends Component {
                         </Modal.Header>
                         <Modal.Body>
                             <p>{checkDetails.note}</p>
-                            {checkDetails.image_url && (
-                                <Image src={checkDetails.image_url} fluid className="mt-3" />
-                            )}
+                            {checkDetails.image_url && <Image src={checkDetails.image_url} fluid className="mt-3" />}
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={() => this.toggleDetails()}>

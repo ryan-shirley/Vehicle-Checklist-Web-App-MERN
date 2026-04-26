@@ -4,19 +4,19 @@ import { Table, Badge } from "react-bootstrap"
 /**
  * GroupList() List all the groups of checks that need to be preformed
  */
-const GroupList = props => {
-    let rows = props.groups.map(group => (
+const GroupList = (props) => {
+    let rows = props.groups.map((group) => (
         <tr
             key={group._id}
             onClick={() => props.onClick(group._id)}
-            className={`omc-inspection__row${group.completed ? ' is-done' : ''}`}
+            className={`omc-inspection__row${group.completed ? " is-done" : ""}`}
         >
             <td className="omc-inspection__row-name">{group.check_group_id.name}</td>
             <td className="omc-inspection__row-badge">
                 <Badge
                     pill
                     variant={group.completed ? "success" : "danger"}
-                    className={`omc-inspection__badge ${group.completed ? 'omc-inspection__badge--done' : 'omc-inspection__badge--not-done'}`}
+                    className={`omc-inspection__badge ${group.completed ? "omc-inspection__badge--done" : "omc-inspection__badge--not-done"}`}
                 >
                     {group.completed ? "Done" : "Not Done"}
                 </Badge>

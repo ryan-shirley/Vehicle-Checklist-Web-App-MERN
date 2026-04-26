@@ -19,9 +19,8 @@ class Home extends React.Component {
     }
 
     fetchRecords() {
-        api
-            .get("/api/records")
-            .then(res => {
+        api.get("/api/records")
+            .then((res) => {
                 this.setState({ records: res.data })
             })
             .catch(() => {})
@@ -39,10 +38,7 @@ class Home extends React.Component {
                     <p className="omc-logbook__subtitle">Vehicle: 201-D-17</p>
 
                     <div className="text-right px-4">
-                        <Link
-                            to="/records/create"
-                            className="omc-logbook__cta"
-                        >
+                        <Link to="/records/create" className="omc-logbook__cta">
                             New Check
                         </Link>
                     </div>
@@ -53,23 +49,19 @@ class Home extends React.Component {
                         <thead>
                             <tr>
                                 <th className="text-uppercase">Date</th>
-                                <th className="d-none d-sm-table-cell text-uppercase">
-                                    Registration Number
-                                </th>
-                                <th className="d-none d-sm-table-cell text-uppercase">
-                                    Plant
-                                </th>
-                                <th className="d-none d-sm-table-cell text-uppercase">
-                                    Checklist
-                                </th>
+                                <th className="d-none d-sm-table-cell text-uppercase">Registration Number</th>
+                                <th className="d-none d-sm-table-cell text-uppercase">Plant</th>
+                                <th className="d-none d-sm-table-cell text-uppercase">Checklist</th>
                                 <th className="text-uppercase">Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {records.map(record => (
+                            {records.map((record) => (
                                 <tr
                                     key={record._id}
-                                    className={record.passed ? "omc-logbook__row" : "omc-logbook__row omc-logbook__row--fail"}
+                                    className={
+                                        record.passed ? "omc-logbook__row" : "omc-logbook__row omc-logbook__row--fail"
+                                    }
                                     onClick={() => this.props.history.push(`${url}/${record._id}`)}
                                 >
                                     <td>
@@ -80,15 +72,9 @@ class Home extends React.Component {
                                             {record.date}
                                         </Moment>
                                     </td>
-                                    <td className="d-none d-sm-table-cell">
-                                        {record.registration_number}
-                                    </td>
-                                    <td className="d-none d-sm-table-cell">
-                                        {record.plant_name}
-                                    </td>
-                                    <td className="d-none d-sm-table-cell">
-                                        {record.check_list_id.name}
-                                    </td>
+                                    <td className="d-none d-sm-table-cell">{record.registration_number}</td>
+                                    <td className="d-none d-sm-table-cell">{record.plant_name}</td>
+                                    <td className="d-none d-sm-table-cell">{record.check_list_id.name}</td>
                                     <td>
                                         <Badge
                                             pill

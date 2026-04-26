@@ -34,7 +34,12 @@
     "e2e:ci": "E2E_MODE=ci playwright test",
     "e2e:up": "docker compose up -d mongo",
     "e2e:up:ci": "docker compose up -d --wait",
-    "e2e:down": "docker compose down"
+    "e2e:down": "docker compose down",
+    "format": "biome format --write",
+    "format:check": "biome format",
+    "lint": "biome lint",
+    "check": "biome check",
+    "check:fix": "biome check --write"
   },
   "browserslist": {
     "production": [
@@ -49,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.13",
     "@playwright/test": "^1.59.1",
     "@types/node": "^25.6.0",
     "typescript": "^5.9.3"

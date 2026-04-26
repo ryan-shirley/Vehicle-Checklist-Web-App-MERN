@@ -32,9 +32,8 @@ class Create extends React.Component {
     componentDidMount() {
         const uid = localStorage.getItem(STORAGE_KEYS.UID)
 
-        api
-            .get("/api/users/" + uid + "/checklist")
-            .then(res => {
+        api.get("/api/users/" + uid + "/checklist")
+            .then((res) => {
                 const { name, required_checks } = res.data.checkList
 
                 this.setState({
@@ -43,7 +42,7 @@ class Create extends React.Component {
                     loading: false
                 })
             })
-            .catch(err => {
+            .catch((err) => {
                 this.setState({
                     error: err.response?.data?.message || "Failed to load checklist"
                 })
@@ -53,7 +52,7 @@ class Create extends React.Component {
     /**
      * onSubmit() Submit form
      */
-    onSubmit = e => {
+    onSubmit = (e) => {
         e.preventDefault()
 
         let { results, groups } = this.state
@@ -63,15 +62,14 @@ class Create extends React.Component {
                 error: "Need to complete all stages"
             })
         } else {
-            api
-                .post("/api/records", {
-                    checked_groups: this.state.results
-                })
-                .then(res => {
-                    this.props.onCreate('Successfully added a new record')
+            api.post("/api/records", {
+                checked_groups: this.state.results
+            })
+                .then((res) => {
+                    this.props.onCreate("Successfully added a new record")
                     this.props.history.push("/records")
                 })
-                .catch(err => {
+                .catch((err) => {
                     this.setState({
                         error: err.response?.data?.message || "Failed to submit record"
                     })
@@ -82,7 +80,7 @@ class Create extends React.Component {
     /**
      * startGroupCheck() Open single group for checks
      */
-    startGroupCheck = groupId => {
+    startGroupCheck = (groupId) => {
         const currentList = this.state.groups.find(({ _id }) => _id === groupId)
 
         if (!currentList.completed) {
@@ -101,7 +99,7 @@ class Create extends React.Component {
      * groupFinished() Group check was completed
      * add to results
      */
-    groupFinished = groupResults => {
+    groupFinished = (groupResults) => {
         let newGroups = []
         for (let i = 0; i < this.state.groups.length; i++) {
             let group = this.state.groups[i]
@@ -114,7 +112,7 @@ class Create extends React.Component {
             }
         }
 
-        this.setState(state => {
+        this.setState((state) => {
             let results = state.results.concat({
                 checks: groupResults,
                 group_id: state.currentList.check_group_id._id
@@ -143,7 +141,9 @@ class Create extends React.Component {
                 <div className="omc-inspection">
                     <TopAppBar />
                     <div className="omc-inspection__content">
-                        <p className="omc-inspection__helper" style={{ marginTop: 32 }}>Loading checklist…</p>
+                        <p className="omc-inspection__helper" style={{ marginTop: 32 }}>
+                            Loading checklist…
+                        </p>
                     </div>
                 </div>
             )
@@ -178,14 +178,13 @@ class Create extends React.Component {
                     </div>
 
                     {this.state.error && (
-                        <Alert variant="danger" className="omc-inspection__error">{this.state.error}</Alert>
+                        <Alert variant="danger" className="omc-inspection__error">
+                            {this.state.error}
+                        </Alert>
                     )}
 
                     <div className="omc-inspection__card">
-                        <GroupList
-                            groups={groups}
-                            onClick={this.startGroupCheck}
-                        />
+                        <GroupList groups={groups} onClick={this.startGroupCheck} />
                     </div>
 
                     <Button
