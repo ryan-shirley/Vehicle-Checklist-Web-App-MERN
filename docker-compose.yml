@@ -1,0 +1,71 @@
+services:
+  mongo:
+    image: mongo:6
+    container_name: vehicle-checklist-mongo
+    ports:
+      - '127.0.0.1:27017:27017'
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: vehicle-checklist
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: vehicle-checklist-backend
+    ports:
+      - '5001:5001'
+    depends_on:
+      mongo:
+        condition: service_healthy
+    env_file:
+      - path: ./backend/.env.local
+        required: false
+    environment:
+      - ATLAS_URI=mongodb://mongo:27017/vehicle-checklist
+      - JWT_VERIFY=${JWT_VERIFY:-local-dev-secret-change-me}
+      - PORT=5001
+      - SENTRY_DSN=${SENTRY_DSN:-}
+    volumes:
+      - ./backend:/app
+      - backend-modules:/app/node_modules
+    restart: on-failure
+    healthcheck:
+      test: ['CMD', 'node', '-e', "require('http').get('http://localhost:5001/api/plants',r=>process.exit(r.statusCode<500?0:1)).on('error',()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: vehicle-checklist-frontend
+    ports:
+      - '3000:3000'
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      - BACKEND_URL=http://backend:5001
+      - CHOKIDAR_USEPOLLING=true
+      - WDS_SOCKET_PORT=3000
+      - NODE_OPTIONS=--openssl-legacy-provider
+    volumes:
+      - .:/app
+      - frontend-modules:/app/node_modules
+    stdin_open: true
+    tty: true
+
+volumes:
+  mongo-data:
+  backend-modules:
+  frontend-modules:

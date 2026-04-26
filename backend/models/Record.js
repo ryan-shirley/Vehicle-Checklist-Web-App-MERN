@@ -13,7 +13,7 @@ const CheckSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    image_url : {
+    image_url: {
         type: String,
         required: false
     }

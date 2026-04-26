@@ -1,40 +1,43 @@
 {
-  "name": "vehicle-checklist-api",
-  "version": "1.0.0",
-  "description": "Vehicle Checklist API using express and mongoDB",
-  "main": "index.js",
-  "scripts": {
-    "test": "jest",
-    "watch": "nodemon index.js",
-    "serve": "firebase emulators:start --only functions",
-    "shell": "firebase functions:shell",
-    "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
-  },
-  "author": "Ryan Shirley",
-  "license": "ISC",
-  "engines": {
-    "node": "10"
-  },
-  "dependencies": {
-    "@sentry/node": "^5.29.0",
-    "@sentry/tracing": "^5.29.0",
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "firebase-admin": "^8.10.0",
-    "firebase-functions": "^3.6.1",
-    "jsonwebtoken": "^8.5.1",
-    "minimist": ">=1.2.3",
-    "mongoose": "^5.9.27",
-    "validator": "^12.2.0"
-  },
-  "devDependencies": {
-    "firebase-functions-test": "^0.2.0",
-    "jest": "^25.5.4",
-    "nodemon": "^2.0.4"
-  },
-  "private": true
+    "name": "vehicle-checklist-api",
+    "version": "1.0.0",
+    "description": "Vehicle Checklist API using express and mongoDB",
+    "main": "index.js",
+    "scripts": {
+        "test": "jest",
+        "watch": "nodemon index.js",
+        "dev": "node server.dev.js",
+        "seed": "node seed.js",
+        "serve": "firebase emulators:start --only functions",
+        "shell": "firebase functions:shell",
+        "start": "npm run shell",
+        "deploy": "firebase deploy --only functions",
+        "logs": "firebase functions:log"
+    },
+    "author": "Ryan Shirley",
+    "license": "ISC",
+    "engines": {
+        "node": "24"
+    },
+    "dependencies": {
+        "@sentry/node": "^5.29.0",
+        "@sentry/tracing": "^5.29.0",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "firebase-admin": "^8.10.0",
+        "firebase-functions": "^3.6.1",
+        "jsonwebtoken": "^8.5.1",
+        "minimist": ">=1.2.3",
+        "mongoose": "^5.9.27",
+        "validator": "^12.2.0"
+    },
+    "devDependencies": {
+        "dotenv": "^16.0.0",
+        "firebase-functions-test": "^0.2.0",
+        "jest": "^25.5.4",
+        "nodemon": "^2.0.4"
+    },
+    "private": true
 }

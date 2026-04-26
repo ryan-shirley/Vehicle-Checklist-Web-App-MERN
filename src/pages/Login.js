@@ -1,21 +1,17 @@
 import React from "react"
-import axios from "axios"
-import { Form, Button, Row, Col, Alert, Container } from "react-bootstrap"
+import api from "../services/api"
+import { STORAGE_KEYS } from "../constants"
+import { Form, Alert } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import { IconLocalShipping } from "../components/icons"
 
 class Login extends React.Component {
     constructor(props) {
         super(props)
 
-        // Generate welcome message
         let ndate = new Date()
         let hours = ndate.getHours()
-        let message =
-            hours < 12
-                ? "Good Morning"
-                : hours < 18
-                ? "Good Afternoon"
-                : "Good Evening"
+        let message = hours < 12 ? "Good Morning" : hours < 18 ? "Good Afternoon" : "Good Evening"
 
         this.state = {
             email: "",
@@ -24,125 +20,103 @@ class Login extends React.Component {
             welcomeMessage: message
         }
 
-        // Binding this to work in the callback
         this.onSubmit = this.onSubmit.bind(this)
     }
 
-    /**
-     * componentDidMount() Check for redirect message
-     */
     componentDidMount() {
         let redirect_message = this.props.location.redirect_message
-
         if (redirect_message) {
-            this.setState({
-                error: redirect_message
-            })
+            this.setState({ error: redirect_message })
         }
     }
 
-    /**
-     * handleInputChange() Handle form input from user
-     */
-    handleInputChange = e => {
-        const target = e.target
-        const { name, value } = target
-
-        this.setState({
-            [name]: value
-        })
+    handleInputChange = (e) => {
+        const { name, value } = e.target
+        this.setState({ [name]: value })
     }
 
-    /**
-     * onSubmit() Submit form to login
-     */
-    onSubmit = e => {
+    onSubmit = (e) => {
         e.preventDefault()
 
-        const user = {
-            email: this.state.email,
-            password: this.state.password
-        }
+        const user = { email: this.state.email, password: this.state.password }
 
-        axios
-            .post("/api/login", user)
-            .then(res => {
-                // save token in local storage
-                localStorage.setItem("jwtToken", res.data.token)
-                localStorage.setItem("UID", res.data.user._id)
+        api.post("/api/login", user)
+            .then((res) => {
+                localStorage.setItem(STORAGE_KEYS.JWT_TOKEN, res.data.token)
+                localStorage.setItem(STORAGE_KEYS.UID, res.data.user._id)
                 localStorage.setItem(
-                    "userFullName",
+                    STORAGE_KEYS.USER_FULL_NAME,
                     res.data.user.first_name + " " + res.data.user.last_name
                 )
-
                 this.props.onLogin(true)
                 this.props.history.push("/records")
             })
-            .catch(err => {
-                this.setState({
-                    error: err.response.data.message
-                })
+            .catch((err) => {
+                this.setState({ error: err.response?.data?.message || "Login failed. Please try again." })
             })
     }
 
     render() {
         return (
-            <Container className="mt-5 mb-5">
-                <div className="text-center">
-                    <h1>HGV Checklist System</h1>
-                    <p>
-                        {this.state.welcomeMessage} and welcome to my platform.
-                    </p>
-                    <hr style={{ width: 60 }} />
+            <div className="omc-auth">
+                <div className="omc-auth__hero">
+                    <div className="omc-auth__icon">
+                        <IconLocalShipping />
+                    </div>
+                    <h1 className="omc-auth__title">HGV Checklist</h1>
+                    <p className="omc-auth__subtitle">{this.state.welcomeMessage}</p>
                 </div>
 
-                <Row className="justify-content-md-center mt-5">
-                    <Col sm={6}>
-                        <p className="text-center">
-                            Sign in with your credentials
-                        </p>
+                <div className="omc-auth__card">
+                    <Form onSubmit={this.onSubmit}>
+                        {this.state.error && (
+                            <Alert variant="danger" className="omc-auth__error">
+                                {this.state.error}
+                            </Alert>
+                        )}
 
-                        <Form onSubmit={this.onSubmit} className="mt-3">
-                            {this.state.error && (
-                                <Alert variant="danger">
-                                    {this.state.error}
-                                </Alert>
-                            )}
+                        <div className="omc-auth__form-group">
+                            <label className="omc-auth__label" htmlFor="loginEmail">
+                                Email
+                            </label>
+                            <Form.Control
+                                id="loginEmail"
+                                type="email"
+                                placeholder="Email"
+                                name="email"
+                                value={this.state.email}
+                                onChange={this.handleInputChange}
+                                className="omc-auth__input"
+                                required
+                            />
+                        </div>
 
-                            <Form.Group controlId="hgvLoginEmail">
-                                <Form.Control
-                                    type="email"
-                                    placeholder="Email"
-                                    name="email"
-                                    value={this.state.email}
-                                    onChange={this.handleInputChange}
-                                    required
-                                />
-                            </Form.Group>
+                        <div className="omc-auth__form-group">
+                            <label className="omc-auth__label" htmlFor="loginPassword">
+                                Password
+                            </label>
+                            <Form.Control
+                                id="loginPassword"
+                                type="password"
+                                placeholder="Password"
+                                name="password"
+                                value={this.state.password}
+                                onChange={this.handleInputChange}
+                                className="omc-auth__input"
+                                required
+                            />
+                        </div>
 
-                            <Form.Group controlId="hgvLoginPassword">
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Password"
-                                    name="password"
-                                    value={this.state.password}
-                                    onChange={this.handleInputChange}
-                                    required
-                                />
-                            </Form.Group>
+                        <button type="submit" className="btn omc-auth__btn omc-auth__btn--primary">
+                            Sign In
+                        </button>
 
-                            <Button type="submit">Sign In</Button>
-
-                            <Link
-                                to="/register"
-                                className="btn btn-link float-right"
-                            >
-                                Register
-                            </Link>
-                        </Form>
-                    </Col>
-                </Row>
-            </Container>
+                        <Link to="/register" className="btn btn-link omc-auth__btn omc-auth__btn--link">
+                            Create account
+                        </Link>
+                    </Form>
+                </div>
+            </div>
         )
     }
 }

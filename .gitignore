@@ -31,3 +31,12 @@ backend/.env
 firebase-debug.log
 backend/.runtimeconfig.json
 ui-debug.log
+/.omc
+
+# Playwright e2e
+e2e/.auth/
+playwright-report/
+test-results/
+blob-report/
+/.playwright-mcp
+/new_designs

@@ -1,0 +1,59 @@
+{
+    "$schema": "https://biomejs.dev/schemas/2.4.13/schema.json",
+    "vcs": {
+        "enabled": true,
+        "clientKind": "git",
+        "useIgnoreFile": true
+    },
+    "files": {
+        "includes": ["src/**", "backend/**", "e2e/**"],
+        "experimentalScannerIgnores": ["node_modules", "backend/node_modules", "build", "coverage", ".firebase"]
+    },
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 120,
+        "lineEnding": "lf"
+    },
+    "javascript": {
+        "formatter": {
+            "quoteStyle": "double",
+            "jsxQuoteStyle": "double",
+            "semicolons": "asNeeded",
+            "trailingCommas": "none",
+            "arrowParentheses": "always"
+        }
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true,
+            "correctness": {
+                "noUnusedVariables": "warn",
+                "noUnusedImports": "warn"
+            },
+            "suspicious": {
+                "noConsole": "warn",
+                "noVar": "error"
+            },
+            "style": {
+                "useConst": "error",
+                "useTemplate": "warn"
+            },
+            "security": {
+                "noDangerouslySetInnerHtml": "warn"
+            }
+        }
+    },
+    "assist": {
+        "enabled": true,
+        "actions": {
+            "source": {
+                "organizeImports": {
+                    "level": "on"
+                }
+            }
+        }
+    }
+}

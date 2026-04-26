@@ -1,5 +1,6 @@
 import React from "react"
 import { Route, Redirect } from "react-router-dom"
+import { STORAGE_KEYS } from "../constants"
 
 /**
  * PrivateRoute() All private routes
@@ -8,16 +9,15 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     return (
         <Route
             {...rest}
-            render={props =>
-                localStorage.getItem("jwtToken") ? (
+            render={(props) =>
+                localStorage.getItem(STORAGE_KEYS.JWT_TOKEN) ? (
                     <Component {...props} {...rest} />
                 ) : (
                     <Redirect
                         to={{
                             pathname: "/",
                             state: { from: props.location },
-                            redirect_message:
-                                "You are not authorised to access that! Please login first."
+                            redirect_message: "You are not authorised to access that! Please login first."
                         }}
                     />
                 )

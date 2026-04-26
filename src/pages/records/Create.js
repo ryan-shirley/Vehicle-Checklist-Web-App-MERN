@@ -1,9 +1,12 @@
 import React from "react"
-import axios from "axios"
-import { Container, Row, Col, Button, Alert } from "react-bootstrap"
+import api from "../../services/api"
+import { STORAGE_KEYS } from "../../constants"
+import { Button, Alert } from "react-bootstrap"
+import { Link } from "react-router-dom"
 import GroupList from "./components/GroupList"
 import ChecksForm from "./components/ChecksForms"
-import { Link } from "react-router-dom"
+import TopAppBar from "../../components/TopAppBar"
+import { IconArrowBack } from "../../components/icons"
 
 class Create extends React.Component {
     constructor(props) {
@@ -27,14 +30,10 @@ class Create extends React.Component {
      * componentDidMount() Load user checklist
      */
     componentDidMount() {
-        const uid = localStorage.getItem("UID")
+        const uid = localStorage.getItem(STORAGE_KEYS.UID)
 
-        axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-            "jwtToken"
-        )
-        axios
-            .get("/api/users/" + uid + "/checklist")
-            .then(res => {
+        api.get("/api/users/" + uid + "/checklist")
+            .then((res) => {
                 const { name, required_checks } = res.data.checkList
 
                 this.setState({
@@ -43,9 +42,9 @@ class Create extends React.Component {
                     loading: false
                 })
             })
-            .catch(err => {
+            .catch((err) => {
                 this.setState({
-                    error: err.response.data.message
+                    error: err.response?.data?.message || "Failed to load checklist"
                 })
             })
     }
@@ -53,7 +52,7 @@ class Create extends React.Component {
     /**
      * onSubmit() Submit form
      */
-    onSubmit = e => {
+    onSubmit = (e) => {
         e.preventDefault()
 
         let { results, groups } = this.state
@@ -63,27 +62,17 @@ class Create extends React.Component {
                 error: "Need to complete all stages"
             })
         } else {
-            axios.defaults.headers.common[
-                "Authorization"
-            ] = localStorage.getItem("jwtToken")
-            axios
-                .post("/api/records", {
-                    checked_groups: this.state.results
-                })
-                .then(res => {
-                    this.props.onCreate('Successfully added a new record')
+            api.post("/api/records", {
+                checked_groups: this.state.results
+            })
+                .then((res) => {
+                    this.props.onCreate("Successfully added a new record")
                     this.props.history.push("/records")
                 })
-                .catch(err => {
+                .catch((err) => {
                     this.setState({
-                        error: err.response.data.message
+                        error: err.response?.data?.message || "Failed to submit record"
                     })
-
-                    if(err.response.status === 401) {
-                        // Unauthorised
-                        localStorage.removeItem("jwtToken")
-                        this.props.history.replace('/')
-                    }
                 })
         }
     }
@@ -91,7 +80,7 @@ class Create extends React.Component {
     /**
      * startGroupCheck() Open single group for checks
      */
-    startGroupCheck = groupId => {
+    startGroupCheck = (groupId) => {
         const currentList = this.state.groups.find(({ _id }) => _id === groupId)
 
         if (!currentList.completed) {
@@ -110,7 +99,7 @@ class Create extends React.Component {
      * groupFinished() Group check was completed
      * add to results
      */
-    groupFinished = groupResults => {
+    groupFinished = (groupResults) => {
         let newGroups = []
         for (let i = 0; i < this.state.groups.length; i++) {
             let group = this.state.groups[i]
@@ -123,7 +112,7 @@ class Create extends React.Component {
             }
         }
 
-        this.setState(state => {
+        this.setState((state) => {
             let results = state.results.concat({
                 checks: groupResults,
                 group_id: state.currentList.check_group_id._id
@@ -149,78 +138,70 @@ class Create extends React.Component {
     render() {
         if (this.state.loading) {
             return (
-                <h5 className="text-center bg-light border py-3">Loading...</h5>
+                <div className="omc-inspection">
+                    <TopAppBar />
+                    <div className="omc-inspection__content">
+                        <p className="omc-inspection__helper" style={{ marginTop: 32 }}>
+                            Loading checklist…
+                        </p>
+                    </div>
+                </div>
+            )
+        }
+
+        const { currentList, groups, results } = this.state
+
+        if (currentList.check_group_id && currentList.check_group_id.name) {
+            return (
+                <ChecksForm
+                    checks={currentList.check_group_id.checks}
+                    onComplete={this.groupFinished}
+                    onStageChange={this.setProgress}
+                    onBack={() => this.setState({ currentList: [] })}
+                />
             )
         }
 
         return (
-            <>
-                <p className="text-center bg-lightdarker create-header py-3 position-relative">
-                    {this.state.currentList.check_group_id ? (
-                        this.state.currentList.check_group_id.name
-                    ) : (
-                        <span>
-                            <span className="font-weight-semi-bold">
-                                Checklist:
-                            </span>{" "}
-                            {this.state.checklist}
-                        </span>
-                    )}
+            <div className="omc-inspection">
+                <TopAppBar />
 
-                    {this.state.process && (
-                        <span
-                            className="position-absolute text-primary"
-                            style={{ right: 20 }}
-                        >
-                            {this.state.process}
-                        </span>
-                    )}
-                </p>
+                <div className="omc-inspection__content">
+                    <div className="omc-inspection__nav">
+                        <Link to="/records" className="omc-back-btn" aria-label="Back to logbook">
+                            <IconArrowBack />
+                        </Link>
+                    </div>
+                    <div className="omc-inspection__hero">
+                        <span className="omc-inspection__overline">VEHICLE 201-D-17</span>
+                        <h1 className="omc-inspection__title">Inspection</h1>
+                    </div>
 
-                <Container fluid={true}>
                     {this.state.error && (
-                        <Alert variant="danger">{this.state.error}</Alert>
+                        <Alert variant="danger" className="omc-inspection__error">
+                            {this.state.error}
+                        </Alert>
                     )}
 
-                    <Row className="justify-content-md-center">
-                        <Col sm={4}>
-                            {this.state.currentList.check_group_id &&
-                            this.state.currentList.check_group_id.name ? (
-                                <ChecksForm
-                                    checks={
-                                        this.state.currentList.check_group_id
-                                            .checks
-                                    }
-                                    onComplete={this.groupFinished}
-                                    onStageChange={this.setProgress}
-                                />
-                            ) : (
-                                <>
-                                    <GroupList
-                                        groups={this.state.groups}
-                                        onClick={this.startGroupCheck}
-                                    />
+                    <div className="omc-inspection__card">
+                        <GroupList groups={groups} onClick={this.startGroupCheck} />
+                    </div>
 
-                                    <hr />
-
-                                    <Link
-                                        to="/records"
-                                        className="btn btn-secondary mr-2"
-                                    >
-                                        Cancel
-                                    </Link>
-                                    <Button
-                                        variant="primary"
-                                        onClick={this.onSubmit}
-                                    >
-                                        Submit
-                                    </Button>
-                                </>
-                            )}
-                        </Col>
-                    </Row>
-                </Container>
-            </>
+                    <Button
+                        className="omc-inspection__submit"
+                        block
+                        onClick={this.onSubmit}
+                        disabled={results.length !== groups.length}
+                    >
+                        Submit
+                    </Button>
+                    <p className="omc-inspection__helper">
+                        {results.length === groups.length
+                            ? "All sections complete."
+                            : "Complete all sections to enable submission."}
+                    </p>
+                </div>
+            </div>
         )
     }
 }

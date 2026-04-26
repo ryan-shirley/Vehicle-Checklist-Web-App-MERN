@@ -31,7 +31,7 @@ router.route("/login").post(async (req, res) => {
 
         // No user found in DB
         if (!user) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 code: 400,
                 message: "No user found with this email!"
@@ -39,7 +39,7 @@ router.route("/login").post(async (req, res) => {
         }
 
         // Validate password
-        if (!user.validPassword(password)) {
+        if (!(await user.validPassword(password))) {
             // Wrong password
             return res.status(401).json({
                 code: 401,

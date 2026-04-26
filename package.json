@@ -9,15 +9,16 @@
     "@sentry/tracing": "^5.29.0",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
+    "http-proxy-middleware": "^1.3.1",
     "moment": "^2.27.0",
-    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.3.0",
     "react-bootstrap-sweetalert": "^5.2.0",
     "react-dom": "^16.13.1",
     "react-moment": "^0.9.7",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.1",
+    "sass": "^1.69.0"
   },
   "scripts": {
     "start": "node server.js",
@@ -25,7 +26,20 @@
     "serve": "firebase emulators:start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "e2e": "playwright test",
+    "e2e:headed": "playwright test --headed",
+    "e2e:ui": "playwright test --ui",
+    "e2e:report": "playwright show-report",
+    "e2e:ci": "E2E_MODE=ci playwright test",
+    "e2e:up": "docker compose up -d mongo",
+    "e2e:up:ci": "docker compose up -d --wait",
+    "e2e:down": "docker compose down",
+    "format": "biome format --write",
+    "format:check": "biome format",
+    "lint": "biome lint",
+    "check": "biome check",
+    "check:fix": "biome check --write"
   },
   "browserslist": {
     "production": [
@@ -38,5 +52,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.13",
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0",
+    "typescript": "^5.9.3"
   }
 }

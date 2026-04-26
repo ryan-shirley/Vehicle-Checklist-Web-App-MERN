@@ -1,0 +1,123 @@
+// Failure Note screen styles
+.omc-failure-note {
+  background: var(--omc-bg-parchment);
+  min-height: 100vh;
+
+  &__hero {
+    text-align: center;
+    padding: 24px 16px 16px;
+  }
+
+  &__title {
+    font-family: var(--omc-font-serif);
+    font-weight: 500;
+    font-size: var(--omc-fs-screen-title);
+    color: var(--omc-text-near-black);
+    margin: 0 0 8px;
+  }
+
+  &__subtitle {
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body);
+    color: var(--omc-text-olive);
+    margin: 0;
+  }
+
+  &__form {
+    padding: 16px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  &__field {
+    margin-bottom: 20px;
+  }
+
+  &__label {
+    display: block;
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-overline);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--omc-text-olive);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  &__textarea.form-control {
+    background: var(--omc-bg-ivory);
+    border: 0;
+    box-shadow: var(--omc-ring-cream);
+    border-radius: var(--omc-radius-lg);
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body);
+    color: var(--omc-text-near-black);
+    padding: 16px;
+    min-height: 200px;
+    resize: vertical;
+
+    &::placeholder { color: var(--omc-text-stone); }
+
+    &:focus {
+      box-shadow: var(--omc-ring-cream), 0 0 0 2px var(--omc-brand-terracotta);
+      outline: none;
+    }
+  }
+
+  &__photo-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-overline);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--omc-text-stone);
+    cursor: pointer;
+
+    svg { width: 18px; height: 18px; }
+  }
+
+  &__file {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  &__btn.btn {
+    width: 100%;
+    padding: 16px;
+    border: 0;
+    border-radius: var(--omc-radius-lg);
+    font-family: var(--omc-font-sans);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+
+    svg { width: 20px; height: 20px; }
+  }
+
+  &__btn--submit.btn {
+    background: var(--omc-brand-terracotta);
+    color: var(--omc-bg-ivory);
+
+    &:hover { background: var(--omc-brand-terracotta-hover); color: var(--omc-bg-ivory); }
+    &:disabled { background: var(--omc-bg-warm-sand); color: var(--omc-text-olive); cursor: not-allowed; }
+  }
+
+  &__btn--cancel.btn {
+    background: var(--omc-bg-warm-sand);
+    color: var(--omc-text-olive);
+
+    &:hover { background: var(--omc-border-warm); color: var(--omc-text-olive); }
+  }
+}
