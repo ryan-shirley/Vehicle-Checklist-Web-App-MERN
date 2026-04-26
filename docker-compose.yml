@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mongo:
     image: mongo:6
@@ -28,7 +26,13 @@ services:
       mongo:
         condition: service_healthy
     env_file:
-      - ./backend/.env.local
+      - path: ./backend/.env.local
+        required: false
+    environment:
+      - ATLAS_URI=mongodb://mongo:27017/vehicle-checklist
+      - JWT_VERIFY=${JWT_VERIFY:-local-dev-secret-change-me}
+      - PORT=5001
+      - SENTRY_DSN=${SENTRY_DSN:-}
     volumes:
       - ./backend:/app
       - backend-modules:/app/node_modules
