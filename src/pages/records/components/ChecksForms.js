@@ -1,6 +1,6 @@
 import React from "react"
 import api from "../../../services/api"
-import { Button, Row, Col, Form, Spinner } from "react-bootstrap"
+import { Button, Form, Spinner } from "react-bootstrap"
 import {
     IconArrowBack,
     IconCheckCircle,

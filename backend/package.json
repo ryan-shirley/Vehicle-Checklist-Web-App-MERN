@@ -17,7 +17,7 @@
     "author": "Ryan Shirley",
     "license": "ISC",
     "engines": {
-        "node": "24"
+        "node": "20"
     },
     "dependencies": {
         "@sentry/node": "^5.29.0",
