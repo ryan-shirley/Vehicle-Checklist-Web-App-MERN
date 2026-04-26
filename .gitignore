@@ -32,6 +32,7 @@ firebase-debug.log
 backend/.runtimeconfig.json
 ui-debug.log
 /.omc
+/.claude
 
 # Playwright e2e
 e2e/.auth/
