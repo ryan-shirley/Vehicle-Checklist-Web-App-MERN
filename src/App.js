@@ -13,9 +13,10 @@ import Register from './pages/Register'
 import Home from './pages/Home'
 import Create from './pages/records/Create'
 import Edit from './pages/records/Edit'
+import Show from './pages/records/Show'
 
 // Components
-import HGVNavbar from './components/hgv-navbar'
+import HeaderRouter from './components/HeaderRouter'
 import SweetAlert from 'react-bootstrap-sweetalert'
 
 // Init Sentry Monitoring
@@ -105,13 +106,14 @@ class App extends Component {
         return (
             <main>
                 <Router history={history}>
-                    <HGVNavbar loggedIn={this.state.loggedIn} onLogout={this.updateLoggedInStatus} />
+                    <HeaderRouter loggedIn={this.state.loggedIn} onLogout={this.updateLoggedInStatus} />
                     {this.state.notification}
                     <Switch>
                         <RestricedRoute path="/" exact component={Login} onLogin={this.updateLoggedInStatus} />
                         <RestricedRoute path="/register" exact component={Register} onLogin={this.updateLoggedInStatus} />
                         <PrivateRoute path="/records/create" exact component={Create} onCreate={this.successNotification} />
                         <PrivateRoute path="/records/:recordId/edit" exact component={Edit} onEdit={this.successNotification} />
+                        <PrivateRoute path="/records/:recordId" exact component={Show} onDelete={this.successNotification} />
                         <PrivateRoute path="/records" component={Home} onDelete={this.successNotification} />
                     </Switch>
                 </Router>

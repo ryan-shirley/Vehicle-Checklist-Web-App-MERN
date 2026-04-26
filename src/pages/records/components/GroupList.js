@@ -6,10 +6,18 @@ import { Table, Badge } from "react-bootstrap"
  */
 const GroupList = props => {
     let rows = props.groups.map(group => (
-        <tr key={group._id} onClick={() => props.onClick(group._id)}>
-            <td>{group.check_group_id.name}</td>
-            <td>
-                <Badge pill variant={group.completed ? "success" : "danger"}>
+        <tr
+            key={group._id}
+            onClick={() => props.onClick(group._id)}
+            className={`omc-inspection__row${group.completed ? ' is-done' : ''}`}
+        >
+            <td className="omc-inspection__row-name">{group.check_group_id.name}</td>
+            <td className="omc-inspection__row-badge">
+                <Badge
+                    pill
+                    variant={group.completed ? "success" : "danger"}
+                    className={`omc-inspection__badge ${group.completed ? 'omc-inspection__badge--done' : 'omc-inspection__badge--not-done'}`}
+                >
                     {group.completed ? "Done" : "Not Done"}
                 </Badge>
             </td>

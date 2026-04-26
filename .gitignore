@@ -38,3 +38,5 @@ e2e/.auth/
 playwright-report/
 test-results/
 blob-report/
+/.playwright-mcp
+/new_designs

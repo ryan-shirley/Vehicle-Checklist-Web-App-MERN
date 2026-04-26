@@ -1,0 +1,143 @@
+// Inspection screen styles
+.omc-inspection {
+  background: var(--omc-bg-parchment);
+  min-height: 100vh;
+  padding: 0 0 100px;
+
+  &__content {
+    max-width: var(--omc-content-max);
+    margin: 0 auto;
+  }
+
+  &__nav {
+    padding: 16px 16px 0;
+  }
+
+  &__hero {
+    text-align: center;
+    padding: 24px 16px 16px;
+  }
+
+  &__overline {
+    display: block;
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-overline);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--omc-text-stone);
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    font-family: var(--omc-font-serif);
+    font-weight: 500;
+    font-size: var(--omc-fs-display);
+    color: var(--omc-text-near-black);
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  &__error {
+    margin: 0 16px 8px;
+  }
+
+  &__card {
+    margin: 16px;
+    background: var(--omc-bg-ivory);
+    box-shadow: var(--omc-ring-1), var(--omc-shadow-whisper);
+    border-radius: var(--omc-radius-lg);
+    overflow: hidden;
+
+    .table {
+      margin-bottom: 0;
+    }
+
+    thead { display: none; }
+
+    tbody tr {
+      cursor: pointer;
+      transition: background-color 120ms ease;
+
+      &:hover { background: var(--omc-bg-parchment); }
+    }
+
+    tbody td {
+      border: 0;
+      border-bottom: 1px solid var(--omc-border-cream);
+      padding: 16px 20px;
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td { border-bottom: 0; }
+  }
+
+  &__row-name {
+    font-family: var(--omc-font-serif);
+    font-weight: 500;
+    font-size: var(--omc-fs-card-title);
+    color: var(--omc-text-near-black);
+  }
+
+  &__row-badge { text-align: right; }
+
+  &__badge {
+    padding: 4px 12px;
+    border-radius: var(--omc-radius-pill);
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-overline);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  &__badge--done {
+    background: var(--omc-bg-primary-fixed);
+    color: var(--omc-brand-terracotta);
+  }
+
+  &__badge--not-done {
+    background: var(--omc-bg-warm-sand);
+    color: var(--omc-text-olive);
+  }
+
+  &__submit.btn {
+    display: block;
+    margin: 24px 16px 0;
+    width: calc(100% - 32px);
+    padding: 16px;
+    border: 0;
+    border-radius: var(--omc-radius-lg);
+    font-family: var(--omc-font-sans);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    background: var(--omc-bg-warm-sand);
+    color: var(--omc-text-near-black);
+    transition: background-color 120ms ease;
+
+    &:not(:disabled) {
+      background: var(--omc-brand-terracotta);
+      color: var(--omc-bg-ivory);
+
+      &:hover { background: var(--omc-brand-terracotta-hover); }
+    }
+
+    &:disabled {
+      opacity: 1;
+      cursor: not-allowed;
+    }
+  }
+
+  &__helper {
+    text-align: center;
+    color: var(--omc-text-stone);
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body-sm);
+    margin: 8px 16px 0;
+  }
+
+  &__loading {
+    margin: 0;
+    border-radius: 0;
+  }
+}

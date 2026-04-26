@@ -1,0 +1,123 @@
+// Login & Register screens
+.omc-auth {
+  min-height: 100vh;
+  background: var(--omc-bg-parchment);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 48px 16px 60px;
+
+  &__hero {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  &__icon {
+    color: var(--omc-brand-terracotta);
+    margin-bottom: 12px;
+
+    svg { width: 48px; height: 48px; }
+  }
+
+  &__title {
+    font-family: var(--omc-font-serif);
+    font-size: var(--omc-fs-screen-title);
+    font-weight: 500;
+    color: var(--omc-text-near-black);
+    margin: 0 0 8px;
+  }
+
+  &__subtitle {
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body);
+    color: var(--omc-text-olive);
+    margin: 0;
+  }
+
+  &__card {
+    width: 100%;
+    max-width: 400px;
+    background: var(--omc-bg-ivory);
+    border-radius: var(--omc-radius-lg);
+    box-shadow: var(--omc-ring-cream), var(--omc-shadow-whisper);
+    padding: 32px 24px;
+  }
+
+  &__form-group {
+    margin-bottom: 16px;
+  }
+
+  &__label {
+    display: block;
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-overline);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    color: var(--omc-text-olive);
+    margin-bottom: 6px;
+  }
+
+  &__input.form-control {
+    background: var(--omc-bg-parchment);
+    border: 0;
+    box-shadow: var(--omc-ring-cream);
+    border-radius: var(--omc-radius-md);
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body);
+    color: var(--omc-text-near-black);
+    padding: 12px 16px;
+    height: auto;
+
+    &::placeholder { color: var(--omc-text-stone); }
+
+    &:focus {
+      background: var(--omc-bg-parchment);
+      box-shadow: var(--omc-ring-cream), 0 0 0 2px var(--omc-brand-terracotta);
+      outline: none;
+    }
+  }
+
+  &__btn.btn {
+    display: block;
+    width: 100%;
+    padding: 14px 16px;
+    border: 0;
+    border-radius: var(--omc-radius-lg);
+    font-family: var(--omc-font-sans);
+    font-weight: 500;
+    font-size: var(--omc-fs-body);
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  &__btn--primary.btn {
+    background: var(--omc-brand-terracotta);
+    color: var(--omc-bg-ivory) !important;
+    margin-top: 24px;
+
+    &:hover { background: var(--omc-brand-terracotta-hover); color: var(--omc-bg-ivory) !important; }
+  }
+
+  &__btn--link.btn.btn-link {
+    background: transparent;
+    color: var(--omc-brand-terracotta);
+    padding: 10px 0;
+    margin-top: 8px;
+
+    &:hover { color: var(--omc-brand-terracotta-hover); text-decoration: underline; }
+  }
+
+  &__row {
+    display: flex;
+    gap: 12px;
+
+    > .omc-auth__form-group { flex: 1; }
+  }
+
+  &__error {
+    margin-bottom: 16px;
+  }
+}

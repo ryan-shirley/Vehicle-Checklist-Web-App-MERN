@@ -1,0 +1,124 @@
+// Logbook screen styles
+.omc-logbook {
+  background: var(--omc-bg-parchment);
+  min-height: 100vh;
+  padding: 0;
+
+  &__title {
+    font-family: var(--omc-font-serif);
+    font-weight: 500;
+    font-size: var(--omc-fs-display);
+    color: var(--omc-text-near-black);
+    line-height: 1.1;
+    margin: 24px 16px 8px;
+  }
+
+  &__subtitle {
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body);
+    color: var(--omc-text-olive);
+    margin: 0 16px 24px;
+  }
+
+  &__cta {
+    display: inline-block;
+    margin: 0 16px 16px;
+    background: var(--omc-brand-terracotta);
+    color: var(--omc-bg-ivory) !important;
+    border: 1px solid var(--omc-brand-terracotta);
+    border-radius: var(--omc-radius-md);
+    font-family: var(--omc-font-sans);
+    font-weight: 500;
+    padding: 8px 20px;
+    text-decoration: none;
+    font-size: var(--omc-fs-body);
+
+    &:hover {
+      background: var(--omc-brand-terracotta-hover);
+      border-color: var(--omc-brand-terracotta-hover);
+      color: var(--omc-bg-ivory);
+      text-decoration: none;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(201, 100, 66, 0.3);
+      border-color: var(--omc-brand-terracotta);
+    }
+  }
+
+  &__table {
+    thead { display: none; }
+
+    &.table {
+      border-collapse: separate;
+      border-spacing: 0 10px;
+      margin-bottom: 0;
+      padding: 0 12px;
+    }
+
+    tbody tr {
+      background: var(--omc-bg-ivory);
+      box-shadow: var(--omc-ring-cream), var(--omc-shadow-whisper);
+      border-radius: var(--omc-radius-lg);
+      transition: transform 120ms ease;
+      cursor: pointer;
+
+      &:hover { transform: translateY(-1px); }
+    }
+
+    tbody td {
+      border: 0;
+      padding: 16px;
+      vertical-align: middle;
+
+      &:first-child { border-radius: var(--omc-radius-lg) 0 0 var(--omc-radius-lg); }
+      &:last-child  { border-radius: 0 var(--omc-radius-lg) var(--omc-radius-lg) 0; }
+    }
+  }
+
+  &__row--fail {
+    box-shadow: inset 4px 0 0 var(--omc-brand-terracotta), var(--omc-ring-cream), var(--omc-shadow-whisper) !important;
+  }
+
+  &__badge {
+    border: 0;
+    padding: 4px 10px;
+    border-radius: var(--omc-radius-pill);
+    font-family: var(--omc-font-sans);
+    font-weight: 500;
+    font-size: var(--omc-fs-overline);
+    letter-spacing: 0.05em;
+  }
+
+  &__badge--pass {
+    background: var(--omc-brand-pass-teal);
+    color: var(--omc-text-near-black);
+  }
+
+  &__badge--fail {
+    background: var(--omc-bg-error-container);
+    color: var(--omc-error-crimson);
+  }
+
+  &__content {
+    max-width: var(--omc-content-max);
+    margin: 0 auto;
+  }
+
+  &__load-older {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 24px;
+    padding: 16px;
+    background: transparent;
+    border: 0;
+    color: var(--omc-text-stone);
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body-sm);
+    text-decoration: underline;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}

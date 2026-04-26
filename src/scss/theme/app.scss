@@ -1,3 +1,5 @@
+@import './design-tokens';
+
 // Theme Styles
 @import './text';
 
@@ -10,3 +12,69 @@
 //     flex-shrink: 1;
 //     transition: all 500ms ease;
 // }
+
+@import './components/top-app-bar';
+@import './components/logbook';
+@import './components/inspection';
+@import './components/check';
+@import './components/failure-note';
+@import './components/auth';
+@import './components/record-show';
+
+// Shared circular back button used across all pages
+.omc-back-btn {
+  background: transparent;
+  border: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--omc-radius-pill);
+  box-shadow: var(--omc-ring-1);
+  color: var(--omc-text-charcoal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+  flex-shrink: 0;
+
+  &:hover { background: var(--omc-bg-warm-sand); color: var(--omc-text-charcoal); text-decoration: none; }
+  &:focus { outline: none; box-shadow: 0 0 0 3px rgba(201, 100, 66, 0.3); }
+
+  svg { width: 20px; height: 20px; }
+}
+
+// Remove Bootstrap's blue focus/active ring from all buttons.
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(201, 100, 66, 0.3) !important;
+  border-color: transparent !important;
+}
+
+// Prevent Bootstrap's blue active (mousedown) state on primary buttons.
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active {
+  background-color: var(--omc-brand-terracotta-hover) !important;
+  border-color: var(--omc-brand-terracotta-hover) !important;
+  box-shadow: none !important;
+}
+
+// Prevent Bootstrap's red active state on danger buttons (used for Fail).
+.btn-danger:not(:disabled):not(.disabled):active,
+.btn-danger:not(:disabled):not(.disabled).active {
+  background-color: var(--omc-border-warm) !important;
+  border-color: var(--omc-border-warm) !important;
+  color: var(--omc-text-near-black) !important;
+  box-shadow: none !important;
+}
+
+// Inputs and selects: terracotta focus ring instead of Bootstrap blue
+.form-control:focus {
+  border-color: var(--omc-brand-terracotta) !important;
+  box-shadow: 0 0 0 2px rgba(201, 100, 66, 0.2) !important;
+}

@@ -1,0 +1,76 @@
+// TopAppBar — sticky header for redesigned screens
+// Import is added to app.scss in TODO 3.5 (not here)
+.omc-app-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--omc-appbar-h);
+  padding: 0 16px;
+  background: var(--omc-bg-ivory);
+  box-shadow: var(--omc-ring-cream);
+
+  &__title {
+    margin: 0;
+    font-family: var(--omc-font-serif);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--omc-brand-terracotta);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  &__menu-wrap {
+    position: relative;
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    margin: 0;
+    padding: 4px 0;
+    list-style: none;
+    background: var(--omc-bg-ivory);
+    border-radius: var(--omc-radius-md);
+    box-shadow: var(--omc-shadow-card);
+    min-width: 140px;
+    z-index: 100;
+  }
+
+  &__dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    background: transparent;
+    border: 0;
+    text-align: left;
+    font-family: var(--omc-font-sans);
+    font-size: 14px;
+    color: var(--omc-text-primary);
+    cursor: pointer;
+
+    &:hover { background: var(--omc-bg-warm-sand); }
+    &:focus-visible { outline: 2px solid var(--omc-brand-terracotta); outline-offset: -2px; }
+  }
+
+  &__icon {
+    background: transparent;
+    border: 0;
+    padding: 8px;
+    border-radius: var(--omc-radius-pill);
+    color: var(--omc-brand-terracotta);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 120ms ease;
+    cursor: pointer;
+
+    &:hover { background: var(--omc-bg-warm-sand); }
+    &:focus-visible { outline: 2px solid var(--omc-brand-terracotta); outline-offset: 2px; }
+
+    svg { width: 24px; height: 24px; }
+  }
+}
