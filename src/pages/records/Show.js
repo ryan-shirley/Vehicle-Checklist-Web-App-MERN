@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import axios from "axios"
+import api from "../../services/api"
 import Moment from "react-moment"
 import { Link } from "react-router-dom"
 import { Modal, Button, Image } from "react-bootstrap"
@@ -34,8 +34,7 @@ class RecordShow extends Component {
     fetchRecord() {
         const recordId = this.props.match.params.recordId
 
-        axios.defaults.headers.common["Authorization"] = localStorage.getItem("jwtToken")
-        axios
+        api
             .get("/api/records/" + recordId)
             .then(res => {
                 if (this._isMounted) {
@@ -45,7 +44,7 @@ class RecordShow extends Component {
             .catch(err => {
                 if (this._isMounted) {
                     this.setState({
-                        error: err.response ? err.response.data.message : "Failed to load record",
+                        error: err.response?.data?.message || "Failed to load record",
                         loading: false
                     })
                 }
@@ -55,16 +54,13 @@ class RecordShow extends Component {
     deleteRecord() {
         const recordId = this.props.match.params.recordId
 
-        axios.defaults.headers.common["Authorization"] = localStorage.getItem("jwtToken")
-        axios
+        api
             .delete("/api/records/" + recordId)
             .then(() => {
                 this.props.onDelete("Successfully deleted record")
                 this.props.history.push("/records")
             })
-            .catch(err => {
-                console.error("Delete failed:", err.response ? err.response.data.message : err.message)
-            })
+            .catch(() => {})
     }
 
     toggleDetails(details = null) {

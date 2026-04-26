@@ -8,7 +8,9 @@ const functionsConfig = functions.config()
 
 const cors = require('cors')
 var corsOptions = {
-    origin: true
+    origin: process.env.ALLOWED_ORIGINS
+        ? process.env.ALLOWED_ORIGINS.split(',')
+        : ['http://localhost:3000', 'http://localhost:5001'],
 }
 
 // Routes

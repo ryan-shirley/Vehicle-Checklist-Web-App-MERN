@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import axios from "axios"
+import api from "../../services/api"
 import Moment from "react-moment"
 import { Container, Row, Col, Button, Form, Alert } from "react-bootstrap"
 import { Link } from "react-router-dom"
@@ -40,10 +40,7 @@ class RecordEdit extends Component {
             loading: true
         })
 
-        axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-            "jwtToken"
-        )
-        axios
+        api
             .get("/api/records/" + recordId)
             .then(res => {
                 this.setState({
@@ -53,13 +50,9 @@ class RecordEdit extends Component {
             })
             .catch(err => {
                 this.setState({
-                    error: err.response.data.message,
+                    error: err.response?.data?.message || "Failed to load record",
                     loading: false
                 })
-
-                if (err.response.data.code === 401) {
-                    this.props.history.replace("/records")
-                }
             })
     }
 
@@ -75,10 +68,7 @@ class RecordEdit extends Component {
             processing: true
         })
 
-        axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-            "jwtToken"
-        )
-        axios
+        api
             .put(
                 "/api/records/" + recordId,
                 this.state.record
@@ -89,7 +79,7 @@ class RecordEdit extends Component {
             })
             .catch(err => {
                 this.setState({
-                    error: err.response.data.error,
+                    error: err.response?.data?.error || "Failed to update record",
                     processing: false
                 })
             })

@@ -1,5 +1,5 @@
 import React from "react"
-import axios from "axios"
+import api from "../services/api"
 import { Table, Badge } from "react-bootstrap"
 import Moment from "react-moment"
 import { Link } from "react-router-dom"
@@ -19,18 +19,12 @@ class Home extends React.Component {
     }
 
     fetchRecords() {
-        axios.defaults.headers.common["Authorization"] = localStorage.getItem("jwtToken")
-        axios
+        api
             .get("/api/records")
             .then(res => {
                 this.setState({ records: res.data })
             })
-            .catch(err => {
-                if (err.response && err.response.status === 401) {
-                    localStorage.removeItem("jwtToken")
-                    this.props.history.replace("/")
-                }
-            })
+            .catch(() => {})
     }
 
     render() {

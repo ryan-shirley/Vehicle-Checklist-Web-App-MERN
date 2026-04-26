@@ -1,5 +1,6 @@
 import React from "react"
-import axios from "axios"
+import api from "../../services/api"
+import { STORAGE_KEYS } from "../../constants"
 import { Button, Alert } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import GroupList from "./components/GroupList"
@@ -29,12 +30,9 @@ class Create extends React.Component {
      * componentDidMount() Load user checklist
      */
     componentDidMount() {
-        const uid = localStorage.getItem("UID")
+        const uid = localStorage.getItem(STORAGE_KEYS.UID)
 
-        axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-            "jwtToken"
-        )
-        axios
+        api
             .get("/api/users/" + uid + "/checklist")
             .then(res => {
                 const { name, required_checks } = res.data.checkList
@@ -47,7 +45,7 @@ class Create extends React.Component {
             })
             .catch(err => {
                 this.setState({
-                    error: err.response.data.message
+                    error: err.response?.data?.message || "Failed to load checklist"
                 })
             })
     }
@@ -65,10 +63,7 @@ class Create extends React.Component {
                 error: "Need to complete all stages"
             })
         } else {
-            axios.defaults.headers.common[
-                "Authorization"
-            ] = localStorage.getItem("jwtToken")
-            axios
+            api
                 .post("/api/records", {
                     checked_groups: this.state.results
                 })
@@ -78,14 +73,8 @@ class Create extends React.Component {
                 })
                 .catch(err => {
                     this.setState({
-                        error: err.response.data.message
+                        error: err.response?.data?.message || "Failed to submit record"
                     })
-
-                    if(err.response.status === 401) {
-                        // Unauthorised
-                        localStorage.removeItem("jwtToken")
-                        this.props.history.replace('/')
-                    }
                 })
         }
     }

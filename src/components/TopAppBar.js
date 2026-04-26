@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { IconLocalShipping, IconMoreVert } from "./icons"
+import { STORAGE_KEYS } from "../constants"
 
 const TopAppBar = ({ title = "TRUCK-402X" }) => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -16,9 +17,9 @@ const TopAppBar = ({ title = "TRUCK-402X" }) => {
   }, [menuOpen])
 
   const handleLogout = () => {
-    localStorage.removeItem("jwtToken")
-    localStorage.removeItem("UID")
-    localStorage.removeItem("userFullName")
+    localStorage.removeItem(STORAGE_KEYS.JWT_TOKEN)
+    localStorage.removeItem(STORAGE_KEYS.UID)
+    localStorage.removeItem(STORAGE_KEYS.USER_FULL_NAME)
     window.location.replace("/")
   }
 

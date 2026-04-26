@@ -1,5 +1,6 @@
 import React from "react"
-import axios from "axios"
+import api from "../services/api"
+import { STORAGE_KEYS } from "../constants"
 import { Form, Alert } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { IconLocalShipping } from "../components/icons"
@@ -28,22 +29,22 @@ class Register extends React.Component {
     }
 
     componentDidMount() {
-        axios
+        api
             .get("/api/check-lists")
             .then(res => {
                 this.setState({ checklists: res.data, check_list_id: res.data[0]._id })
             })
             .catch(err => {
-                this.setState({ error: err.response.data.message })
+                this.setState({ error: err.response?.data?.message || "Failed to load checklists" })
             })
 
-        axios
+        api
             .get("/api/plants")
             .then(res => {
                 this.setState({ plants: res.data, plant_id: res.data[0]._id })
             })
             .catch(err => {
-                this.setState({ error: err.response.data.message })
+                this.setState({ error: err.response?.data?.message || "Failed to load plants" })
             })
     }
 
@@ -82,20 +83,20 @@ class Register extends React.Component {
             password
         }
 
-        axios
+        api
             .post("/api/users", user)
             .then(res => {
-                localStorage.setItem("jwtToken", res.data.token)
-                localStorage.setItem("UID", res.data.user._id)
+                localStorage.setItem(STORAGE_KEYS.JWT_TOKEN, res.data.token)
+                localStorage.setItem(STORAGE_KEYS.UID, res.data.user._id)
                 localStorage.setItem(
-                    "userFullName",
+                    STORAGE_KEYS.USER_FULL_NAME,
                     res.data.user.first_name + " " + res.data.user.last_name
                 )
                 this.props.onLogin(true)
                 this.props.history.push("/records")
             })
             .catch(err => {
-                this.setState({ error: err.response.data.error })
+                this.setState({ error: err.response?.data?.error || "Registration failed. Please try again." })
             })
     }
 

@@ -1,5 +1,5 @@
 import React from "react"
-import axios from "axios"
+import api from "../../../services/api"
 import { Button, Row, Col, Form, Spinner } from "react-bootstrap"
 import { IconArrowBack, IconCheckCircle, IconCancel, IconAssignmentTurnedIn, IconReport, IconAddPhotoAlternate } from "../../../components/icons"
 import TopAppBar from "../../../components/TopAppBar"
@@ -107,16 +107,20 @@ class ChecksForm extends React.Component {
     submitFailure = async () => {
         let image = this.state.image
 
-        if (image) {
-            let res = await this.uploadImage()
-            
-            this.setState({
-                imageURL: res.data.path,
-                image: null
-            }, () => this.submitCheck(false))
-        }
-        else {
-            this.submitCheck(false)
+        try {
+            if (image) {
+                let res = await this.uploadImage()
+
+                this.setState({
+                    imageURL: res.data.path,
+                    image: null
+                }, () => this.submitCheck(false))
+            } else {
+                this.submitCheck(false)
+            }
+        } catch (err) {
+            this.setState({ processing: false })
+            console.error('Image upload failed:', err)
         }
     }
 
@@ -130,10 +134,7 @@ class ChecksForm extends React.Component {
             let formData = new FormData()
             formData.append("image", this.state.image)
 
-            axios.defaults.headers.common[
-                "Authorization"
-            ] = localStorage.getItem("jwtToken")
-            axios
+            api
                 .post("/api/upload", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data"

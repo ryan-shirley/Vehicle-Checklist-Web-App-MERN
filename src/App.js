@@ -17,6 +17,8 @@ import Show from './pages/records/Show'
 
 // Components
 import HeaderRouter from './components/HeaderRouter'
+import { STORAGE_KEYS } from './constants'
+import ErrorBoundary from './components/ErrorBoundary'
 import SweetAlert from 'react-bootstrap-sweetalert'
 
 // Init Sentry Monitoring
@@ -47,7 +49,7 @@ class App extends Component {
         super(props)
 
         this.state = {
-            loggedIn: localStorage.getItem('UID') ? true : false,
+            loggedIn: !!localStorage.getItem(STORAGE_KEYS.UID),
             notification: null
         }
 
@@ -104,6 +106,7 @@ class App extends Component {
 
     render() {
         return (
+            <ErrorBoundary>
             <main>
                 <Router history={history}>
                     <HeaderRouter loggedIn={this.state.loggedIn} onLogout={this.updateLoggedInStatus} />
@@ -118,6 +121,7 @@ class App extends Component {
                     </Switch>
                 </Router>
             </main>
+            </ErrorBoundary>
         );
     }
 }

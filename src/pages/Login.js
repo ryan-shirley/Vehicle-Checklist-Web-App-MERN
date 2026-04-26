@@ -1,5 +1,6 @@
 import React from "react"
-import axios from "axios"
+import api from "../services/api"
+import { STORAGE_KEYS } from "../constants"
 import { Form, Alert } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { IconLocalShipping } from "../components/icons"
@@ -40,20 +41,20 @@ class Login extends React.Component {
 
         const user = { email: this.state.email, password: this.state.password }
 
-        axios
+        api
             .post("/api/login", user)
             .then(res => {
-                localStorage.setItem("jwtToken", res.data.token)
-                localStorage.setItem("UID", res.data.user._id)
+                localStorage.setItem(STORAGE_KEYS.JWT_TOKEN, res.data.token)
+                localStorage.setItem(STORAGE_KEYS.UID, res.data.user._id)
                 localStorage.setItem(
-                    "userFullName",
+                    STORAGE_KEYS.USER_FULL_NAME,
                     res.data.user.first_name + " " + res.data.user.last_name
                 )
                 this.props.onLogin(true)
                 this.props.history.push("/records")
             })
             .catch(err => {
-                this.setState({ error: err.response.data.message })
+                this.setState({ error: err.response?.data?.message || "Login failed. Please try again." })
             })
     }
 

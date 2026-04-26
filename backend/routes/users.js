@@ -16,7 +16,7 @@ router.route("/:id").get(checkIfAuthenticated, (req, res) => {
     const user_id_token = req.decoded._id
 
     if (user_id !== user_id_token) {
-        res.status(401).json({
+        return res.status(401).json({
             code: 401,
             message: 'Unauthorised! You are not able to access other users data.'
         })
@@ -43,7 +43,7 @@ router.route("/:id/checklist").get(checkIfAuthenticated, async (req, res) => {
     const user_id_token = req.decoded._id
 
     if (user_id !== user_id_token) {
-        res.status(401).json({
+        return res.status(401).json({
             code: 401,
             message: 'Unauthorised! You are not able to access other users data.'
         })
@@ -79,7 +79,6 @@ router.route("/").post(async (req, res) => {
             token
         })
     } catch (e) {
-        console.log(e)
         res.status(400).json({
             error: e.message
         })
