@@ -2,9 +2,8 @@ name: E2E
 
 on:
   push:
-    branches: [master, Redesign]
+    branches: [master]
   pull_request:
-    branches: [master, Redesign]
 
 jobs:
   e2e:
