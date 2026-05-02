@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/react"
 import { Integrations } from "@sentry/tracing"
 import { createBrowserHistory } from "history"
-import { Component } from "react"
+import React, { Component } from "react"
 import { matchPath, Router, Switch } from "react-router-dom"
 import PrivateRoute from "./components/PrivateRoute"
 import RestricedRoute from "./components/RestricedRoute"

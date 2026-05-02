@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { APP_ROUTES, STORAGE_KEYS } from "../constants"
 import { IconLocalShipping, IconMoreVert } from "./icons"

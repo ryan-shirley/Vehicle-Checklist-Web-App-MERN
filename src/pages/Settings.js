@@ -1,4 +1,4 @@
-import { Component } from "react"
+import React, { Component } from "react"
 import { Spinner } from "react-bootstrap"
 import TopAppBar from "../components/TopAppBar"
 import { STORAGE_KEYS } from "../constants"

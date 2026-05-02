@@ -1,3 +1,4 @@
+import React from "react"
 import { Badge, Table } from "react-bootstrap"
 
 /**

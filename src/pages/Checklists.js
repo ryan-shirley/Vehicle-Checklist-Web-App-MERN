@@ -1,4 +1,4 @@
-import { Component } from "react"
+import React, { Component } from "react"
 import { Spinner } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { IconArrowBack } from "../components/icons"

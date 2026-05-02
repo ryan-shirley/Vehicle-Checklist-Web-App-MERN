@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/react"
-import { Component } from "react"
+import React, { Component } from "react"
 
 class ErrorBoundary extends Component {
     constructor(props) {

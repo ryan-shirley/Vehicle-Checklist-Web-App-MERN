@@ -1,4 +1,4 @@
-import { Component } from "react"
+import React, { Component } from "react"
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap"
 import Moment from "react-moment"
 import { Link } from "react-router-dom"

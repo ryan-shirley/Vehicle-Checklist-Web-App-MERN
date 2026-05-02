@@ -1,4 +1,4 @@
-import { Component } from "react"
+import React, { Component } from "react"
 import { Nav, Navbar, NavDropdown } from "react-bootstrap"
 import { Link, Redirect } from "react-router-dom"
 
