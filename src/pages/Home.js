@@ -4,18 +4,23 @@ import { Table, Badge } from "react-bootstrap"
 import Moment from "react-moment"
 import { Link } from "react-router-dom"
 import TopAppBar from "../components/TopAppBar"
+import { getCurrentUser } from "../services/currentUser"
 
 class Home extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            records: []
+            records: [],
+            user: null
         }
     }
 
     componentDidMount() {
         this.fetchRecords()
+        getCurrentUser()
+            .then((data) => this.setState({ user: data }))
+            .catch(() => {})
     }
 
     fetchRecords() {
@@ -32,10 +37,10 @@ class Home extends React.Component {
 
         return (
             <div className="omc-logbook">
-                <TopAppBar />
+                <TopAppBar title={this.state.user?.vehicle?.registration_number} />
                 <div className="omc-logbook__content">
                     <h1 className="omc-logbook__title">Logbook</h1>
-                    <p className="omc-logbook__subtitle">Vehicle: 201-D-17</p>
+                    <p className="omc-logbook__subtitle">Vehicle: {this.state.user?.vehicle?.registration_number || "—"}</p>
 
                     <div className="text-right px-4">
                         <Link to="/records/create" className="omc-logbook__cta">

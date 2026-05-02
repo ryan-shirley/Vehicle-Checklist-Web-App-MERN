@@ -19,5 +19,6 @@ export const APP_ROUTES = {
     RECORDS: "/records",
     RECORDS_CREATE: "/records/create",
     RECORD_DETAIL: (id) => `/records/${id}`,
-    RECORD_EDIT: (id) => `/records/${id}/edit`
+    RECORD_EDIT: (id) => `/records/${id}/edit`,
+    SETTINGS: "/settings"
 }

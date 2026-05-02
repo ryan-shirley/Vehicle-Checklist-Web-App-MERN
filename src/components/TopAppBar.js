@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { IconLocalShipping, IconMoreVert } from "./icons"
-import { STORAGE_KEYS } from "../constants"
+import { STORAGE_KEYS, APP_ROUTES } from "../constants"
 
-const TopAppBar = ({ title = "TRUCK-402X" }) => {
+const TopAppBar = ({ title }) => {
     const [menuOpen, setMenuOpen] = useState(false)
     const menuRef = useRef(null)
 
@@ -42,6 +42,16 @@ const TopAppBar = ({ title = "TRUCK-402X" }) => {
                 </button>
                 {menuOpen && (
                     <ul className="omc-app-bar__dropdown" role="menu">
+                        <li role="none">
+                            <Link
+                                to={APP_ROUTES.SETTINGS}
+                                role="menuitem"
+                                className="omc-app-bar__dropdown-item"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                Settings
+                            </Link>
+                        </li>
                         <li role="none">
                             <button
                                 type="button"

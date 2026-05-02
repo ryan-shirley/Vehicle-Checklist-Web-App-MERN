@@ -7,6 +7,7 @@ import GroupList from "./components/GroupList"
 import ChecksForm from "./components/ChecksForms"
 import TopAppBar from "../../components/TopAppBar"
 import { IconArrowBack } from "../../components/icons"
+import { getCurrentUser } from "../../services/currentUser"
 
 class Create extends React.Component {
     constructor(props) {
@@ -19,7 +20,8 @@ class Create extends React.Component {
             loading: true,
             currentList: [],
             results: [],
-            process: ""
+            process: "",
+            user: null
         }
 
         // Binding this to work in the callback
@@ -47,6 +49,10 @@ class Create extends React.Component {
                     error: err.response?.data?.message || "Failed to load checklist"
                 })
             })
+
+        getCurrentUser()
+            .then((data) => this.setState({ user: data }))
+            .catch(() => {})
     }
 
     /**
@@ -139,7 +145,7 @@ class Create extends React.Component {
         if (this.state.loading) {
             return (
                 <div className="omc-inspection">
-                    <TopAppBar />
+                    <TopAppBar title={this.state.user?.vehicle?.registration_number} />
                     <div className="omc-inspection__content">
                         <p className="omc-inspection__helper" style={{ marginTop: 32 }}>
                             Loading checklist…
@@ -164,7 +170,7 @@ class Create extends React.Component {
 
         return (
             <div className="omc-inspection">
-                <TopAppBar />
+                <TopAppBar title={this.state.user?.vehicle?.registration_number} />
 
                 <div className="omc-inspection__content">
                     <div className="omc-inspection__nav">
@@ -173,7 +179,7 @@ class Create extends React.Component {
                         </Link>
                     </div>
                     <div className="omc-inspection__hero">
-                        <span className="omc-inspection__overline">VEHICLE 201-D-17</span>
+                        <span className="omc-inspection__overline">VEHICLE {this.state.user?.vehicle?.registration_number || ""}</span>
                         <h1 className="omc-inspection__title">Inspection</h1>
                     </div>
 

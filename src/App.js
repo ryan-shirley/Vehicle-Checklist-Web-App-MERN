@@ -14,10 +14,11 @@ import Home from "./pages/Home"
 import Create from "./pages/records/Create"
 import Edit from "./pages/records/Edit"
 import Show from "./pages/records/Show"
+import Settings from "./pages/Settings"
 
 // Components
 import HeaderRouter from "./components/HeaderRouter"
-import { STORAGE_KEYS } from "./constants"
+import { STORAGE_KEYS, APP_ROUTES } from "./constants"
 import ErrorBoundary from "./components/ErrorBoundary"
 import SweetAlert from "react-bootstrap-sweetalert"
 
@@ -27,6 +28,7 @@ const routes = [
     { path: "/records/:recordId/edit" },
     { path: "/records" },
     { path: "/records/create" },
+    { path: "/settings" },
     { path: "/register" },
     { path: "/" }
 ]
@@ -146,6 +148,12 @@ class App extends Component {
                                 onDelete={this.successNotification}
                             />
                             <PrivateRoute path="/records" component={Home} onDelete={this.successNotification} />
+                            <PrivateRoute
+                                path={APP_ROUTES.SETTINGS}
+                                exact
+                                component={Settings}
+                                onUpdate={this.successNotification}
+                            />
                         </Switch>
                     </Router>
                 </main>
