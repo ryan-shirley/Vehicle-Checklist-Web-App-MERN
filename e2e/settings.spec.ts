@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 // Seed values from backend/seed.js — any drift there will break these assertions,
 // which is the desired signal.
@@ -6,7 +6,7 @@ const SEED = {
     registration: "TE57 TDR",
     make: "Volvo",
     model: "FH16",
-    plant: "Depot A",
+    plant: "Depot A"
 }
 
 const UPDATED_REG = "XY21 ABC"
@@ -43,7 +43,8 @@ test.describe("Settings page", () => {
         await page.getByRole("menuitem", { name: /Settings/i }).click()
 
         await expect(page).toHaveURL(/\/settings$/)
-        await expect(page.getByRole("heading", { name: /Settings/i })).toBeVisible()
+        // Scope to h2 — the TopAppBar h1 may briefly also read "Settings" while user data loads.
+        await expect(page.getByRole("heading", { name: /Settings/i, level: 2 })).toBeVisible()
     })
 
     test("saves updated vehicle details and persists after navigation", async ({ page }) => {
@@ -54,9 +55,7 @@ test.describe("Settings page", () => {
         await regInput.fill(UPDATED_REG)
 
         // Intercept the PUT before clicking submit.
-        const putPromise = page.waitForResponse(
-            (r) => r.url().includes("/api/users") && r.request().method() === "PUT"
-        )
+        const putPromise = page.waitForResponse((r) => r.url().includes("/api/users") && r.request().method() === "PUT")
         await page.getByRole("button", { name: /Save Changes/i }).click()
 
         const putResp = await putPromise
@@ -76,9 +75,7 @@ test.describe("Settings page", () => {
 
         await page.getByLabel("Registration Number").fill(UPDATED_REG)
 
-        const putPromise = page.waitForResponse(
-            (r) => r.url().includes("/api/users") && r.request().method() === "PUT"
-        )
+        const putPromise = page.waitForResponse((r) => r.url().includes("/api/users") && r.request().method() === "PUT")
         await page.getByRole("button", { name: /Save Changes/i }).click()
         await putPromise
 
@@ -100,9 +97,9 @@ test.describe("Settings page", () => {
         await expect(page.getByText("Settings saved successfully.")).not.toBeVisible()
 
         // The input itself should be marked invalid by the browser.
-        const isValid = await page.getByLabel("Registration Number").evaluate(
-            (el: HTMLInputElement) => el.validity.valid
-        )
+        const isValid = await page
+            .getByLabel("Registration Number")
+            .evaluate((el: HTMLInputElement) => el.validity.valid)
         expect(isValid).toBe(false)
     })
 

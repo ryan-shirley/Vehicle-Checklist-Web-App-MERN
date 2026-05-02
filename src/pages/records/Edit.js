@@ -1,8 +1,8 @@
-import React, { Component } from "react"
-import api from "../../services/api"
+import { Component } from "react"
+import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap"
 import Moment from "react-moment"
-import { Container, Row, Col, Button, Form, Alert } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import api from "../../services/api"
 
 /**
  * RecordEdit() Edit record
@@ -34,13 +34,13 @@ class RecordEdit extends Component {
      * fetchRecord() Fetch single record
      */
     fetchRecord() {
-        let recordId = this.props.match.params.recordId
+        const recordId = this.props.match.params.recordId
 
         this.setState({
             loading: true
         })
 
-        api.get("/api/records/" + recordId)
+        api.get(`/api/records/${recordId}`)
             .then((res) => {
                 this.setState({
                     record: res.data,
@@ -61,14 +61,14 @@ class RecordEdit extends Component {
     updateRecord = (e) => {
         e.preventDefault()
 
-        let recordId = this.props.match.params.recordId
+        const recordId = this.props.match.params.recordId
 
         this.setState({
             processing: true
         })
 
-        api.put("/api/records/" + recordId, this.state.record)
-            .then((res) => {
+        api.put(`/api/records/${recordId}`, this.state.record)
+            .then((_res) => {
                 this.props.onEdit(`Successfully update record for ${this.state.record.date}`)
                 this.props.history.push("/records")
             })
@@ -89,7 +89,7 @@ class RecordEdit extends Component {
 
         // Update Record
         this.setState((state) => {
-            let record = state.record
+            const record = state.record
             record.checked_groups[gIndex].checks[cIndex].passed = passed
 
             // Reset note message
@@ -110,7 +110,7 @@ class RecordEdit extends Component {
 
         // Update Record
         this.setState((state) => {
-            let record = state.record
+            const record = state.record
 
             record.checked_groups[gIndex].checks[cIndex].note = value
 
@@ -139,70 +139,69 @@ class RecordEdit extends Component {
                                 <Form onSubmit={this.updateRecord}>
                                     {this.state.error && <Alert variant="danger">{this.state.error}</Alert>}
 
-                                    {this.state.record.checked_groups &&
-                                        this.state.record.checked_groups.map((group, gIndex) => (
-                                            <div key={group._id}>
-                                                <h4>{group.group_id.name}</h4>
-                                                <hr />
+                                    {this.state.record.checked_groups?.map((group, gIndex) => (
+                                        <div key={group._id}>
+                                            <h4>{group.group_id.name}</h4>
+                                            <hr />
 
-                                                <Row>
-                                                    <Col className="text-uppercase font-weight-bold" xs={9} sm={6}>
-                                                        Check
-                                                    </Col>
-                                                    <Col className="text-uppercase font-weight-bold" xs={3} sm={2}>
-                                                        Status
-                                                    </Col>
-                                                    <Col
-                                                        className="text-uppercase font-weight-bold d-none d-sm-block"
-                                                        xs={3}
-                                                        sm={4}
-                                                    >
-                                                        Notes
-                                                    </Col>
-                                                </Row>
+                                            <Row>
+                                                <Col className="text-uppercase font-weight-bold" xs={9} sm={6}>
+                                                    Check
+                                                </Col>
+                                                <Col className="text-uppercase font-weight-bold" xs={3} sm={2}>
+                                                    Status
+                                                </Col>
+                                                <Col
+                                                    className="text-uppercase font-weight-bold d-none d-sm-block"
+                                                    xs={3}
+                                                    sm={4}
+                                                >
+                                                    Notes
+                                                </Col>
+                                            </Row>
 
-                                                {group.checks.map((check, cIndex) => (
-                                                    <Form.Group as={Row} key={check._id}>
-                                                        <Form.Label column xs={9} sm={6}>
-                                                            {group.group_id.checks[cIndex].title}
-                                                        </Form.Label>
-                                                        <Col xs={3} sm={2}>
-                                                            <Form.Check
-                                                                type="checkbox"
-                                                                id="custom-switch"
-                                                                name={check.code}
-                                                                checked={
-                                                                    this.state.record.checked_groups[gIndex].checks[
-                                                                        cIndex
-                                                                    ].passed
-                                                                }
-                                                                onChange={(e) => this.handleChange(e, gIndex, cIndex)}
-                                                            />
-                                                        </Col>
-                                                        <Col xs={12} sm={4}>
-                                                            {!this.state.record.checked_groups[gIndex].checks[cIndex]
-                                                                .passed && (
-                                                                <Form.Group controlId="hgvFailureNote">
-                                                                    <Form.Control
-                                                                        as="textarea"
-                                                                        rows="3"
-                                                                        placeholder="Note about failure"
-                                                                        name="note"
-                                                                        value={
-                                                                            this.state.record.checked_groups[gIndex]
-                                                                                .checks[cIndex].note
-                                                                        }
-                                                                        onChange={(e) =>
-                                                                            this.handleInputChange(e, gIndex, cIndex)
-                                                                        }
-                                                                    />
-                                                                </Form.Group>
-                                                            )}
-                                                        </Col>
-                                                    </Form.Group>
-                                                ))}
-                                            </div>
-                                        ))}
+                                            {group.checks.map((check, cIndex) => (
+                                                <Form.Group as={Row} key={check._id}>
+                                                    <Form.Label column xs={9} sm={6}>
+                                                        {group.group_id.checks[cIndex].title}
+                                                    </Form.Label>
+                                                    <Col xs={3} sm={2}>
+                                                        <Form.Check
+                                                            type="checkbox"
+                                                            id="custom-switch"
+                                                            name={check.code}
+                                                            checked={
+                                                                this.state.record.checked_groups[gIndex].checks[cIndex]
+                                                                    .passed
+                                                            }
+                                                            onChange={(e) => this.handleChange(e, gIndex, cIndex)}
+                                                        />
+                                                    </Col>
+                                                    <Col xs={12} sm={4}>
+                                                        {!this.state.record.checked_groups[gIndex].checks[cIndex]
+                                                            .passed && (
+                                                            <Form.Group controlId="hgvFailureNote">
+                                                                <Form.Control
+                                                                    as="textarea"
+                                                                    rows="3"
+                                                                    placeholder="Note about failure"
+                                                                    name="note"
+                                                                    value={
+                                                                        this.state.record.checked_groups[gIndex].checks[
+                                                                            cIndex
+                                                                        ].note
+                                                                    }
+                                                                    onChange={(e) =>
+                                                                        this.handleInputChange(e, gIndex, cIndex)
+                                                                    }
+                                                                />
+                                                            </Form.Group>
+                                                        )}
+                                                    </Col>
+                                                </Form.Group>
+                                            ))}
+                                        </div>
+                                    ))}
 
                                     <hr />
                                     <Link to="/records" className="btn btn-secondary mr-2">

@@ -1,0 +1,257 @@
+// Checklists management page styles
+.omc-checklists {
+  background: var(--omc-bg-parchment);
+  min-height: 100vh;
+  padding: 0 0 80px;
+
+  &__content {
+    max-width: var(--omc-content-max);
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  &__topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  // ---- Buttons ----
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border-radius: var(--omc-radius-md);
+    font-family: var(--omc-font-sans);
+    font-weight: 500;
+    font-size: var(--omc-fs-body);
+    cursor: pointer;
+    border: 0;
+    text-decoration: none;
+    transition: background-color 120ms ease, color 120ms ease;
+
+    &--primary {
+      background: var(--omc-brand-terracotta);
+      color: var(--omc-bg-ivory) !important;
+      &:hover { background: var(--omc-brand-terracotta-hover); color: var(--omc-bg-ivory) !important; }
+    }
+
+    &--secondary {
+      background: var(--omc-bg-warm-sand);
+      color: var(--omc-text-charcoal);
+      &:hover { background: var(--omc-border-warm); }
+    }
+
+    &--danger {
+      background: transparent;
+      border: 1px solid var(--omc-border-warm);
+      color: var(--omc-error-crimson);
+      &:hover { background: var(--omc-bg-error-container); }
+    }
+
+    &--link {
+      background: transparent;
+      padding: 8px 0;
+      color: var(--omc-brand-terracotta);
+      &:hover { color: var(--omc-brand-terracotta-hover); text-decoration: underline; }
+    }
+
+    &:disabled { opacity: 0.6; cursor: not-allowed; }
+  }
+
+  // ---- Alert ----
+  &__alert {
+    border-radius: var(--omc-radius-md);
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body-sm);
+
+    &--error {
+      background: var(--omc-bg-error-container);
+      color: var(--omc-error-crimson);
+    }
+  }
+
+  // ---- List ----
+  &__empty {
+    color: var(--omc-text-stone);
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body);
+    padding: 48px 0;
+    text-align: center;
+  }
+
+  &__item {
+    background: var(--omc-bg-ivory);
+    border-radius: var(--omc-radius-lg);
+    box-shadow: var(--omc-ring-cream), var(--omc-shadow-whisper);
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__item-name {
+    font-family: var(--omc-font-sans);
+    font-weight: 500;
+    font-size: var(--omc-fs-body-lg);
+    color: var(--omc-text-near-black);
+    margin: 0 0 2px;
+  }
+
+  &__item-meta {
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body-sm);
+    color: var(--omc-text-stone);
+  }
+
+  &__item-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: var(--omc-radius-pill);
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-overline);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--omc-bg-warm-sand);
+    color: var(--omc-text-stone);
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  // ---- Builder (create / edit) ----
+  &__builder-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  &__builder-title {
+    font-family: var(--omc-font-serif);
+    font-weight: 500;
+    font-size: var(--omc-fs-screen-title);
+    color: var(--omc-text-near-black);
+    margin: 0;
+  }
+
+  &__form-group {
+    margin-bottom: 16px;
+  }
+
+  &__label {
+    display: block;
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-overline);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    color: var(--omc-text-olive);
+    margin-bottom: 6px;
+  }
+
+  &__input.form-control {
+    background: var(--omc-bg-ivory);
+    border: 0;
+    box-shadow: var(--omc-ring-cream);
+    border-radius: var(--omc-radius-md);
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body);
+    color: var(--omc-text-near-black);
+    padding: 10px 14px;
+    height: auto;
+
+    &:focus {
+      background: var(--omc-bg-ivory);
+      box-shadow: var(--omc-ring-cream), 0 0 0 2px var(--omc-brand-terracotta);
+      outline: none;
+    }
+  }
+
+  &__section-card {
+    background: var(--omc-bg-ivory);
+    border-radius: var(--omc-radius-lg);
+    box-shadow: var(--omc-ring-cream), var(--omc-shadow-whisper);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  &__section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  &__section-name.form-control {
+    background: var(--omc-bg-parchment);
+    border: 0;
+    box-shadow: var(--omc-ring-cream);
+    border-radius: var(--omc-radius-md);
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body);
+    color: var(--omc-text-near-black);
+    padding: 8px 12px;
+    height: auto;
+    flex: 1;
+
+    &:focus {
+      background: var(--omc-bg-parchment);
+      box-shadow: var(--omc-ring-cream), 0 0 0 2px var(--omc-brand-terracotta);
+      outline: none;
+    }
+  }
+
+  &__check-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding-left: 16px;
+  }
+
+  &__check-input.form-control {
+    background: var(--omc-bg-parchment);
+    border: 0;
+    box-shadow: var(--omc-ring-cream);
+    border-radius: var(--omc-radius-md);
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body-sm);
+    color: var(--omc-text-near-black);
+    padding: 7px 12px;
+    height: auto;
+    flex: 1;
+
+    &:focus {
+      background: var(--omc-bg-parchment);
+      box-shadow: var(--omc-ring-cream), 0 0 0 2px var(--omc-brand-terracotta);
+      outline: none;
+    }
+  }
+
+  &__builder-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  &__builder-hint {
+    font-family: var(--omc-font-sans);
+    font-size: var(--omc-fs-body-sm);
+    color: var(--omc-text-stone);
+    margin-top: 12px;
+  }
+}

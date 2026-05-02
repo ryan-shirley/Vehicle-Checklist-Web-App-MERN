@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import { Navbar, Nav, NavDropdown } from "react-bootstrap"
-import { Redirect, Link } from "react-router-dom"
+import { Component } from "react"
+import { Nav, Navbar, NavDropdown } from "react-bootstrap"
+import { Link, Redirect } from "react-router-dom"
 
 /**
  * HGVNavbar() Main navbar for all users

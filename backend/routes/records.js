@@ -3,7 +3,7 @@ const router = require("express").Router()
 // Models
 const Record = require("../models/Record")
 const User = require("../models/User")
-const CheckList = require("../models/CheckList")
+const _CheckList = require("../models/CheckList")
 
 // Middleware
 const checkIfAuthenticated = require("../middleware/auth-middleware")
@@ -42,7 +42,7 @@ router.route("/:id").get(checkIfAuthenticated, (req, res) => {
     })
         .populate("checked_groups.group_id check_list_id")
         .then((record) => {
-            if (record.user_id == user_id) {
+            if (record.user_id === user_id) {
                 res.json(record)
             } else {
                 res.status(401).json({
@@ -75,15 +75,19 @@ router.route("/").post(checkIfAuthenticated, async (req, res) => {
     }
 
     try {
-        let user = await User.findOne({
+        const check_list_id = req.body.check_list_id
+        if (!check_list_id) {
+            return res.status(400).json({ code: 400, message: "check_list_id is required" })
+        }
+
+        const user = await User.findOne({
             _id: user_id
         })
-            .select("vehicle.registration_number vehicle.check_list_id")
+            .select("vehicle.registration_number plant_id")
             .populate("plant_id")
             .exec()
 
         const registration_number = user.vehicle.registration_number
-        const check_list_id = user.vehicle.check_list_id
         const plant_name = user.plant_id.name
 
         // Add user, vehicle, checklist, plant and pass information
@@ -95,8 +99,8 @@ router.route("/").post(checkIfAuthenticated, async (req, res) => {
 
         // Determin if passed
         record.passed = true
-        for (var i = 0; i < record.checked_groups.length; i++) {
-            for (var j = 0; j < record.checked_groups[i].checks.length; j++) {
+        for (let i = 0; i < record.checked_groups.length; i++) {
+            for (let j = 0; j < record.checked_groups[i].checks.length; j++) {
                 if (!record.checked_groups[i].checks[j].passed) {
                     record.passed = false
                     break
@@ -123,12 +127,12 @@ router.route("/").post(checkIfAuthenticated, async (req, res) => {
 router.route("/:id").put(checkIfAuthenticated, async (req, res) => {
     const user_id = req.decoded._id
     const id = req.params.id
-    let record = req.body
+    const record = req.body
 
     // Determin if passed
     record.passed = true
-    for (var i = 0; i < record.checked_groups.length; i++) {
-        for (var j = 0; j < record.checked_groups[i].checks.length; j++) {
+    for (let i = 0; i < record.checked_groups.length; i++) {
+        for (let j = 0; j < record.checked_groups[i].checks.length; j++) {
             if (!record.checked_groups[i].checks[j].passed) {
                 record.passed = false
                 break
@@ -169,7 +173,7 @@ router.route("/:id").delete(checkIfAuthenticated, async (req, res) => {
             _id: id,
             user_id
         },
-        (err, doc) => {
+        (err, _doc) => {
             if (err)
                 return res.status(500).json({
                     code: 500,

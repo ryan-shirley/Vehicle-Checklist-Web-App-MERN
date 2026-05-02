@@ -1,4 +1,4 @@
-import { test as setup, expect } from "@playwright/test"
+import { expect, test as setup } from "@playwright/test"
 
 const STORAGE_STATE = "e2e/.auth/user.json"
 

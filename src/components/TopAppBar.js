@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
+import { APP_ROUTES, STORAGE_KEYS } from "../constants"
 import { IconLocalShipping, IconMoreVert } from "./icons"
-import { STORAGE_KEYS, APP_ROUTES } from "../constants"
 
 const TopAppBar = ({ title }) => {
     const [menuOpen, setMenuOpen] = useState(false)
@@ -24,7 +24,7 @@ const TopAppBar = ({ title }) => {
     }
 
     return (
-        <header className="omc-app-bar" role="banner">
+        <header className="omc-app-bar">
             <Link to="/records" className="omc-app-bar__icon" aria-label="Vehicle home">
                 <IconLocalShipping />
             </Link>
@@ -41,7 +41,17 @@ const TopAppBar = ({ title }) => {
                     <IconMoreVert />
                 </button>
                 {menuOpen && (
-                    <ul className="omc-app-bar__dropdown" role="menu">
+                    <ul className="omc-app-bar__dropdown">
+                        <li role="none">
+                            <Link
+                                to={APP_ROUTES.CHECKLISTS}
+                                role="menuitem"
+                                className="omc-app-bar__dropdown-item"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                Manage Checklists
+                            </Link>
+                        </li>
                         <li role="none">
                             <Link
                                 to={APP_ROUTES.SETTINGS}

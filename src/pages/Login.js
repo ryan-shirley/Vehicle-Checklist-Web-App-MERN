@@ -1,17 +1,17 @@
 import React from "react"
-import api from "../services/api"
-import { STORAGE_KEYS } from "../constants"
-import { Form, Alert } from "react-bootstrap"
+import { Alert, Form } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { IconLocalShipping } from "../components/icons"
+import { STORAGE_KEYS } from "../constants"
+import api from "../services/api"
 
 class Login extends React.Component {
     constructor(props) {
         super(props)
 
-        let ndate = new Date()
-        let hours = ndate.getHours()
-        let message = hours < 12 ? "Good Morning" : hours < 18 ? "Good Afternoon" : "Good Evening"
+        const ndate = new Date()
+        const hours = ndate.getHours()
+        const message = hours < 12 ? "Good Morning" : hours < 18 ? "Good Afternoon" : "Good Evening"
 
         this.state = {
             email: "",
@@ -24,7 +24,7 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
-        let redirect_message = this.props.location.redirect_message
+        const redirect_message = this.props.location.redirect_message
         if (redirect_message) {
             this.setState({ error: redirect_message })
         }
@@ -46,7 +46,7 @@ class Login extends React.Component {
                 localStorage.setItem(STORAGE_KEYS.UID, res.data.user._id)
                 localStorage.setItem(
                     STORAGE_KEYS.USER_FULL_NAME,
-                    res.data.user.first_name + " " + res.data.user.last_name
+                    `${res.data.user.first_name} ${res.data.user.last_name}`
                 )
                 this.props.onLogin(true)
                 this.props.history.push("/records")

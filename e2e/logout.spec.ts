@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 test("logs out via the 3-dot menu and lands on the login page", async ({ page }) => {
     await page.goto("/records")

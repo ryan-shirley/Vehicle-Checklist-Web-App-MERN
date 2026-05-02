@@ -1,26 +1,26 @@
-import React, { Component } from "react"
-import { Router, Switch, matchPath } from "react-router-dom"
-import { createBrowserHistory } from "history"
 import * as Sentry from "@sentry/react"
 import { Integrations } from "@sentry/tracing"
+import { createBrowserHistory } from "history"
+import { Component } from "react"
+import { matchPath, Router, Switch } from "react-router-dom"
 import PrivateRoute from "./components/PrivateRoute"
 import RestricedRoute from "./components/RestricedRoute"
 import "./App.scss"
 
+import SweetAlert from "react-bootstrap-sweetalert"
+import ErrorBoundary from "./components/ErrorBoundary"
+// Components
+import HeaderRouter from "./components/HeaderRouter"
+import { APP_ROUTES, STORAGE_KEYS } from "./constants"
+import Checklists from "./pages/Checklists"
+import Home from "./pages/Home"
 // Pages
 import Login from "./pages/Login"
 import Register from "./pages/Register"
-import Home from "./pages/Home"
 import Create from "./pages/records/Create"
 import Edit from "./pages/records/Edit"
 import Show from "./pages/records/Show"
 import Settings from "./pages/Settings"
-
-// Components
-import HeaderRouter from "./components/HeaderRouter"
-import { STORAGE_KEYS, APP_ROUTES } from "./constants"
-import ErrorBoundary from "./components/ErrorBoundary"
-import SweetAlert from "react-bootstrap-sweetalert"
 
 // Init Sentry Monitoring
 const routes = [
@@ -28,6 +28,7 @@ const routes = [
     { path: "/records/:recordId/edit" },
     { path: "/records" },
     { path: "/records/create" },
+    { path: "/checklists" },
     { path: "/settings" },
     { path: "/register" },
     { path: "/" }
@@ -75,7 +76,7 @@ class App extends Component {
             loggedIn: newStatus
         })
 
-        let message = newStatus ? "Successfully logged in!" : "Successfully logged out!"
+        const message = newStatus ? "Successfully logged in!" : "Successfully logged out!"
         this.successNotification(message)
     }
 
@@ -89,8 +90,8 @@ class App extends Component {
     /**
      * createNotification() Hide alert from screen
      */
-    createNotification(type = "success", title, duration = 2000) {
-        let notification = (
+    createNotification(_type = "success", title, duration = 2000) {
+        const notification = (
             <SweetAlert
                 success
                 title={title}
@@ -152,6 +153,12 @@ class App extends Component {
                                 path={APP_ROUTES.SETTINGS}
                                 exact
                                 component={Settings}
+                                onUpdate={this.successNotification}
+                            />
+                            <PrivateRoute
+                                path={APP_ROUTES.CHECKLISTS}
+                                exact
+                                component={Checklists}
                                 onUpdate={this.successNotification}
                             />
                         </Switch>

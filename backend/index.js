@@ -7,7 +7,7 @@ const app = express()
 const functionsConfig = functions.config()
 
 const cors = require("cors")
-var corsOptions = {
+const corsOptions = {
     origin: true
 }
 
@@ -50,11 +50,10 @@ app.use(cors(corsOptions))
 mongoose.connect(
     ATLAS_URI,
     { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false },
-    function (err) {
+    (err) => {
         if (err) {
             throw err
         } else {
-            console.log(`Successfully connected to Atlas: MongoDB`)
         }
     }
 )
@@ -69,11 +68,11 @@ app.use("/api/records", recordsRouter)
 app.use(Sentry.Handlers.errorHandler())
 
 // Optional fallthrough error handler
-app.use(function onError(err, req, res, next) {
+app.use(function onError(_err, _req, res, _next) {
     // The error id is attached to `res.sentry` to be returned
     // and optionally displayed to the user for support.
     res.statusCode = 500
-    res.end(res.sentry + "\n")
+    res.end(`${res.sentry}\n`)
 })
 
 // app.listen(port, () => console.log(`Example app listening on port ${port}!`))

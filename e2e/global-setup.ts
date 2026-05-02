@@ -1,4 +1,4 @@
-import http from "http"
+import http from "node:http"
 
 const BACKEND_HEALTHCHECK = "http://localhost:5001/api/plants"
 
@@ -45,7 +45,5 @@ function waitForHttp(url: string, budgetMs: number, intervalMs: number): Promise
 }
 
 export default async function globalSetup(): Promise<void> {
-    console.log(`[e2e/global-setup] waiting for backend at ${BACKEND_HEALTHCHECK} ...`)
     await waitForHttp(BACKEND_HEALTHCHECK, 60_000, 1_000)
-    console.log("[e2e/global-setup] backend healthy. (seed manually when needed: node backend/seed.js)")
 }

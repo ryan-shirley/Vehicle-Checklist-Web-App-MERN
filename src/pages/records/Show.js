@@ -1,10 +1,10 @@
-import React, { Component } from "react"
-import api from "../../services/api"
+import { Component } from "react"
+import { Button, Image, Modal } from "react-bootstrap"
 import Moment from "react-moment"
 import { Link } from "react-router-dom"
-import { Modal, Button, Image } from "react-bootstrap"
-import TopAppBar from "../../components/TopAppBar"
 import { IconArrowBack } from "../../components/icons"
+import TopAppBar from "../../components/TopAppBar"
+import api from "../../services/api"
 
 class RecordShow extends Component {
     _isMounted = false
@@ -34,7 +34,7 @@ class RecordShow extends Component {
     fetchRecord() {
         const recordId = this.props.match.params.recordId
 
-        api.get("/api/records/" + recordId)
+        api.get(`/api/records/${recordId}`)
             .then((res) => {
                 if (this._isMounted) {
                     this.setState({ record: res.data, loading: false })
@@ -53,7 +53,7 @@ class RecordShow extends Component {
     deleteRecord() {
         const recordId = this.props.match.params.recordId
 
-        api.delete("/api/records/" + recordId)
+        api.delete(`/api/records/${recordId}`)
             .then(() => {
                 this.props.onDelete("Successfully deleted record")
                 this.props.history.push("/records")
@@ -144,9 +144,7 @@ class RecordShow extends Component {
                         </span>
                     </div>
 
-                    <p className="omc-record-show__checklist-name">
-                        {record.check_list_id && record.check_list_id.name}
-                    </p>
+                    <p className="omc-record-show__checklist-name">{record.check_list_id?.name}</p>
 
                     {groups}
 

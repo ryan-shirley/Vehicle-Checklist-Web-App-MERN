@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 // Override the default storageState (which would auto-redirect to /records)
 // so the login UI is exercised and visible in the HTML report.
