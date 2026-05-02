@@ -1,4 +1,4 @@
-import { test, expect, Page } from "@playwright/test"
+import { expect, type Page, test } from "@playwright/test"
 
 // Group order + check titles MUST match backend/seed.js. Any drift in seed.js
 // will fail this spec at the first missing title — that is the desired signal.
@@ -74,16 +74,21 @@ test("walks every group, submits, and the new record appears at the top", async 
     await expect(page.getByRole("table")).toBeVisible()
     const before = await page.locator("table tbody tr").count()
 
-    // Step 2 — open Create and wait for the checklist fetch to land.
+    // Step 2 — open Create and wait for the active-checklists fetch to land.
     await Promise.all([
         page.waitForResponse(
-            (r) => r.url().includes("/api/users") && r.url().includes("/checklist") && r.status() === 200
+            (r) => r.url().includes("/api/check-lists") && r.url().includes("active=true") && r.status() === 200
         ),
         page.goto("/records/create")
     ])
+
+    // Step 2.5 — pick checklist from the picker.
+    await page.getByRole("button", { name: /HGV Daily Walkaround/i }).click()
+
+    // After selection the group table should be visible.
     await expect(page.getByRole("table")).toBeVisible()
 
-    // Step 3 — walk all 4 groups (Create.js:61-64 submit gate requires every
+    // Step 3 — walk all 4 groups (Create.js submit gate requires every
     // group complete; no defaults exist, so every check must be answered).
     for (const group of GROUPS) {
         await walkGroup(page, group)

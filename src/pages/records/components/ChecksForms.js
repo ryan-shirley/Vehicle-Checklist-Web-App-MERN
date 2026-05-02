@@ -1,15 +1,15 @@
 import React from "react"
-import api from "../../../services/api"
 import { Button, Form, Spinner } from "react-bootstrap"
 import {
+    IconAddPhotoAlternate,
     IconArrowBack,
-    IconCheckCircle,
-    IconCancel,
     IconAssignmentTurnedIn,
-    IconReport,
-    IconAddPhotoAlternate
+    IconCancel,
+    IconCheckCircle,
+    IconReport
 } from "../../../components/icons"
 import TopAppBar from "../../../components/TopAppBar"
+import api from "../../../services/api"
 
 /**
  * ChecksForm() Pass or fail certain checks
@@ -35,7 +35,7 @@ class ChecksForm extends React.Component {
      * componentDidMount() Load user checklist & last check status
      */
     componentDidMount() {
-        let { checks } = this.props
+        const { checks } = this.props
 
         this.setState({
             numChecks: checks.length,
@@ -63,13 +63,13 @@ class ChecksForm extends React.Component {
      */
     submitCheck(passed) {
         // Get form data
-        let stage = this.state.stage
-        let code = this.state.checks[stage - 1].code
-        let note = this.state.note
-        let image_url = this.state.imageURL
+        const stage = this.state.stage
+        const code = this.state.checks[stage - 1].code
+        const note = this.state.note
+        const image_url = this.state.imageURL
 
         // Create Results obj
-        let result = {}
+        const result = {}
         result.code = code
         result.passed = passed
 
@@ -110,11 +110,11 @@ class ChecksForm extends React.Component {
      * submitFailure() Submit failure notes and image
      */
     submitFailure = async () => {
-        let image = this.state.image
+        const image = this.state.image
 
         try {
             if (image) {
-                let res = await this.uploadImage()
+                const res = await this.uploadImage()
 
                 this.setState(
                     {
@@ -126,9 +126,8 @@ class ChecksForm extends React.Component {
             } else {
                 this.submitCheck(false)
             }
-        } catch (err) {
+        } catch (_err) {
             this.setState({ processing: false })
-            console.error("Image upload failed:", err)
         }
     }
 
@@ -139,7 +138,7 @@ class ChecksForm extends React.Component {
         this.setState({ processing: true })
 
         return new Promise((resolve, reject) => {
-            let formData = new FormData()
+            const formData = new FormData()
             formData.append("image", this.state.image)
 
             api.post("/api/upload", formData, {
@@ -159,8 +158,8 @@ class ChecksForm extends React.Component {
     }
 
     render() {
-        let stage = this.state.stage
-        let title = this.state.checks[stage - 1] && this.state.checks[stage - 1].title
+        const stage = this.state.stage
+        const title = this.state.checks[stage - 1] && this.state.checks[stage - 1].title
 
         return (
             <>

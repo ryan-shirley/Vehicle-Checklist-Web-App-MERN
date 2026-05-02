@@ -13,7 +13,8 @@ const CheckListSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    required_checks: [Checks]
+    required_checks: [Checks],
+    archived: { type: Boolean, default: false }
 })
 
 module.exports = mongoose.model("CheckList", CheckListSchema)

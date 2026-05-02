@@ -1,10 +1,9 @@
 // Local development entry point — do not use in production.
 // Mocks firebase-functions so the Express app in index.js starts without the Firebase runtime.
-const path = require("path")
+const path = require("node:path")
 require("dotenv").config({ path: path.join(__dirname, ".env.local") })
 
 if (process.env.NODE_ENV === "production") {
-    console.error("[dev] server.dev.js must not run with NODE_ENV=production")
     process.exit(1)
 }
 
@@ -13,7 +12,6 @@ const jwtSecret = process.env.JWT_VERIFY
 const sentryDsn = process.env.SENTRY_DSN || ""
 
 if (!jwtSecret) {
-    console.error("[dev] JWT_VERIFY is required. Set it in backend/.env.local")
     process.exit(1)
 }
 
@@ -39,7 +37,4 @@ require.cache[ffPath] = {
 const { app } = require("./index")
 const PORT = parseInt(process.env.PORT || "5001", 10)
 
-app.listen(PORT, () => {
-    console.log(`[dev] Backend running on http://localhost:${PORT}`)
-    console.log(`[dev] MongoDB: ${mongoUri}`)
-})
+app.listen(PORT, () => {})

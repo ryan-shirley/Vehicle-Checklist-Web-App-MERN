@@ -1,9 +1,9 @@
 import React from "react"
-import api from "../services/api"
-import { STORAGE_KEYS } from "../constants"
-import { Form, Alert } from "react-bootstrap"
+import { Alert, Form } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { IconLocalShipping } from "../components/icons"
+import { STORAGE_KEYS } from "../constants"
+import api from "../services/api"
 
 class Register extends React.Component {
     constructor(props) {
@@ -15,12 +15,10 @@ class Register extends React.Component {
             registration_number: "",
             make: "",
             model: "",
-            check_list_id: "",
             plant_id: "",
             email: "",
             password: "",
             confirmPassword: "",
-            checklists: [],
             plants: [],
             error: ""
         }
@@ -29,14 +27,6 @@ class Register extends React.Component {
     }
 
     componentDidMount() {
-        api.get("/api/check-lists")
-            .then((res) => {
-                this.setState({ checklists: res.data, check_list_id: res.data[0]._id })
-            })
-            .catch((err) => {
-                this.setState({ error: err.response?.data?.message || "Failed to load checklists" })
-            })
-
         api.get("/api/plants")
             .then((res) => {
                 this.setState({ plants: res.data, plant_id: res.data[0]._id })
@@ -60,7 +50,6 @@ class Register extends React.Component {
             registration_number,
             make,
             model,
-            check_list_id,
             plant_id,
             email,
             password,
@@ -75,7 +64,7 @@ class Register extends React.Component {
         const user = {
             first_name,
             last_name,
-            vehicle: { registration_number, make, model, check_list_id },
+            vehicle: { registration_number, make, model },
             plant_id,
             email,
             password
@@ -87,7 +76,7 @@ class Register extends React.Component {
                 localStorage.setItem(STORAGE_KEYS.UID, res.data.user._id)
                 localStorage.setItem(
                     STORAGE_KEYS.USER_FULL_NAME,
-                    res.data.user.first_name + " " + res.data.user.last_name
+                    `${res.data.user.first_name} ${res.data.user.last_name}`
                 )
                 this.props.onLogin(true)
                 this.props.history.push("/records")
@@ -193,45 +182,24 @@ class Register extends React.Component {
                             </div>
                         </div>
 
-                        <div className="omc-auth__row">
-                            <div className="omc-auth__form-group">
-                                <label className="omc-auth__label" htmlFor="regChecklist">
-                                    Checklist
-                                </label>
-                                <Form.Control
-                                    id="regChecklist"
-                                    as="select"
-                                    name="check_list_id"
-                                    value={this.state.check_list_id}
-                                    onChange={this.handleInputChange}
-                                    className="omc-auth__input"
-                                >
-                                    {this.state.checklists.map((list) => (
-                                        <option key={list._id} value={list._id}>
-                                            {list.name}
-                                        </option>
-                                    ))}
-                                </Form.Control>
-                            </div>
-                            <div className="omc-auth__form-group">
-                                <label className="omc-auth__label" htmlFor="regPlant">
-                                    Plant
-                                </label>
-                                <Form.Control
-                                    id="regPlant"
-                                    as="select"
-                                    name="plant_id"
-                                    value={this.state.plant_id}
-                                    onChange={this.handleInputChange}
-                                    className="omc-auth__input"
-                                >
-                                    {this.state.plants.map((plant) => (
-                                        <option key={plant._id} value={plant._id}>
-                                            {plant.name}
-                                        </option>
-                                    ))}
-                                </Form.Control>
-                            </div>
+                        <div className="omc-auth__form-group">
+                            <label className="omc-auth__label" htmlFor="regPlant">
+                                Plant
+                            </label>
+                            <Form.Control
+                                id="regPlant"
+                                as="select"
+                                name="plant_id"
+                                value={this.state.plant_id}
+                                onChange={this.handleInputChange}
+                                className="omc-auth__input"
+                            >
+                                {this.state.plants.map((plant) => (
+                                    <option key={plant._id} value={plant._id}>
+                                        {plant.name}
+                                    </option>
+                                ))}
+                            </Form.Control>
                         </div>
 
                         <div className="omc-auth__form-group">

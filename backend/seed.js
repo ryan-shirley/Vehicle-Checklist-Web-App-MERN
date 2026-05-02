@@ -12,7 +12,7 @@
  *   Password: Test1234!
  */
 
-const path = require("path")
+const path = require("node:path")
 require("dotenv").config({ path: path.join(__dirname, ".env.local") })
 
 const mongoose = require("mongoose")
@@ -28,6 +28,14 @@ function daysAgo(n) {
     return new Date(Date.now() - n * 24 * 60 * 60 * 1000)
 }
 
+function slugify(s) {
+    return String(s)
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+}
+
 function buildCheckedGroups(groups, failOverrides = {}) {
     return groups.map((group) => ({
         group_id: group._id,
@@ -41,7 +49,6 @@ function buildCheckedGroups(groups, failOverrides = {}) {
 
 async function seed() {
     if (process.env.NODE_ENV === "production") {
-        console.error("Refusing to run seeder with NODE_ENV=production")
         process.exit(1)
     }
 
@@ -49,73 +56,79 @@ async function seed() {
     const parsedUrl = new URL(MONGO_URI.replace("mongodb+srv://", "https://").replace("mongodb://", "http://"))
     const allowedHosts = new Set(["mongo", "localhost", "127.0.0.1", "::1"])
     if (!allowedHosts.has(parsedUrl.hostname)) {
-        console.error(`Refusing to seed non-local host: ${parsedUrl.hostname}`)
-        console.error("Set ATLAS_URI to a local mongo instance, or unset it to use the Docker default.")
         process.exit(1)
     }
 
-    console.log(`\nConnecting to MongoDB: ${MONGO_URI}`)
     await mongoose.connect(MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
         useFindAndModify: false
     })
-    console.log("Connected.\n")
 
-    // ── Reset ──────────────────────────────────────────────────────────────────
-    console.log("Dropping database...")
+    // Migration: clear legacy field from any pre-existing documents before dropping
+    await User.updateMany({}, { $unset: { "vehicle.check_list_id": "" } })
+
     await mongoose.connection.dropDatabase()
 
-    // ── Plants ─────────────────────────────────────────────────────────────────
-    console.log("Seeding plant...")
     const plant = await new Plant({ name: "Depot A" }).save()
 
-    // ── Check groups ───────────────────────────────────────────────────────────
-    console.log("Seeding check groups...")
     const [engineGroup, lightsGroup, safetyGroup, tyresGroup] = await CheckGroup.insertMany([
         {
             name: "Engine & Fluids",
             checks: [
-                { code: "EF01", title: "Engine oil level satisfactory" },
-                { code: "EF02", title: "Coolant level satisfactory" },
-                { code: "EF03", title: "Brake fluid level satisfactory" },
-                { code: "EF04", title: "Power steering fluid satisfactory" }
+                { title: "Engine oil level satisfactory", code: slugify("Engine oil level satisfactory") },
+                { title: "Coolant level satisfactory", code: slugify("Coolant level satisfactory") },
+                { title: "Brake fluid level satisfactory", code: slugify("Brake fluid level satisfactory") },
+                { title: "Power steering fluid satisfactory", code: slugify("Power steering fluid satisfactory") }
             ]
         },
         {
             name: "Lights & Signals",
             checks: [
-                { code: "LS01", title: "Headlights working" },
-                { code: "LS02", title: "Tail lights working" },
-                { code: "LS03", title: "Indicators (nearside) working" },
-                { code: "LS04", title: "Indicators (offside) working" },
-                { code: "LS05", title: "Hazard lights working" }
+                { title: "Headlights working", code: slugify("Headlights working") },
+                { title: "Tail lights working", code: slugify("Tail lights working") },
+                { title: "Indicators (nearside) working", code: slugify("Indicators (nearside) working") },
+                { title: "Indicators (offside) working", code: slugify("Indicators (offside) working") },
+                { title: "Hazard lights working", code: slugify("Hazard lights working") }
             ]
         },
         {
             name: "Safety Equipment",
             checks: [
-                { code: "SE01", title: "First aid kit present and in date" },
-                { code: "SE02", title: "Fire extinguisher present and charged" },
-                { code: "SE03", title: "Warning triangle present" },
-                { code: "SE04", title: "Hi-vis vest present" }
+                { title: "First aid kit present and in date", code: slugify("First aid kit present and in date") },
+                {
+                    title: "Fire extinguisher present and charged",
+                    code: slugify("Fire extinguisher present and charged")
+                },
+                { title: "Warning triangle present", code: slugify("Warning triangle present") },
+                { title: "Hi-vis vest present", code: slugify("Hi-vis vest present") }
             ]
         },
         {
             name: "Tyres & Wheels",
             checks: [
-                { code: "TW01", title: "Front offside tyre condition satisfactory" },
-                { code: "TW02", title: "Front nearside tyre condition satisfactory" },
-                { code: "TW03", title: "Rear offside tyres condition satisfactory" },
-                { code: "TW04", title: "Rear nearside tyres condition satisfactory" },
-                { code: "TW05", title: "Wheel nuts secure" }
+                {
+                    title: "Front offside tyre condition satisfactory",
+                    code: slugify("Front offside tyre condition satisfactory")
+                },
+                {
+                    title: "Front nearside tyre condition satisfactory",
+                    code: slugify("Front nearside tyre condition satisfactory")
+                },
+                {
+                    title: "Rear offside tyres condition satisfactory",
+                    code: slugify("Rear offside tyres condition satisfactory")
+                },
+                {
+                    title: "Rear nearside tyres condition satisfactory",
+                    code: slugify("Rear nearside tyres condition satisfactory")
+                },
+                { title: "Wheel nuts secure", code: slugify("Wheel nuts secure") }
             ]
         }
     ])
 
-    // ── Checklist ──────────────────────────────────────────────────────────────
-    console.log("Seeding checklist...")
     const checklist = await new CheckList({
         name: "HGV Daily Walkaround",
         required_checks: [
@@ -126,8 +139,6 @@ async function seed() {
         ]
     }).save()
 
-    // ── Test user ──────────────────────────────────────────────────────────────
-    console.log("Seeding user (password will be hashed)...")
     const user = await new User({
         first_name: "Test",
         last_name: "Driver",
@@ -137,13 +148,10 @@ async function seed() {
         vehicle: {
             registration_number: "TE57 TDR",
             make: "Volvo",
-            model: "FH16",
-            check_list_id: checklist._id
+            model: "FH16"
         }
     }).save()
 
-    // ── Records ────────────────────────────────────────────────────────────────
-    console.log("Seeding inspection records...")
     const allGroups = [engineGroup, lightsGroup, safetyGroup, tyresGroup]
     const regNumber = user.vehicle.registration_number
     const plantName = plant.name
@@ -162,8 +170,8 @@ async function seed() {
         // 7 days ago — two defects found
         {
             checked_groups: buildCheckedGroups(allGroups, {
-                EF01: "Oil low — topped up before departure",
-                LS03: "Nearside indicator bulb blown — reported to workshop"
+                "engine-oil-level-satisfactory": "Oil low — topped up before departure",
+                "indicators-nearside-working": "Nearside indicator bulb blown — reported to workshop"
             }),
             date: daysAgo(7),
             registration_number: regNumber,
@@ -184,20 +192,10 @@ async function seed() {
         }
     ])
 
-    console.log("\n✅ Seed complete!")
-    console.log("─────────────────────────────────")
-    console.log("  Plant:      Depot A")
-    console.log("  Checklist:  HGV Daily Walkaround (4 groups, 18 checks)")
-    console.log("  User email: test@local.dev")
-    console.log("  Password:   Test1234!")
-    console.log("  Records:    3 (2 passed, 1 failed)")
-    console.log("─────────────────────────────────\n")
-
     await mongoose.disconnect()
     process.exit(0)
 }
 
-seed().catch((err) => {
-    console.error("\n❌ Seed failed:", err.message)
+seed().catch((_err) => {
     process.exit(1)
 })

@@ -1,11 +1,11 @@
 import React from "react"
-import { Table, Badge } from "react-bootstrap"
+import { Badge, Table } from "react-bootstrap"
 
 /**
  * GroupList() List all the groups of checks that need to be preformed
  */
 const GroupList = (props) => {
-    let rows = props.groups.map((group) => (
+    const rows = props.groups.map((group) => (
         <tr
             key={group._id}
             onClick={() => props.onClick(group._id)}

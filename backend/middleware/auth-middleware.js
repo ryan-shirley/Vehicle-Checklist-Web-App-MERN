@@ -11,7 +11,7 @@ const checkIfAuthenticated = async (req, res, next) => {
         const decoded = jwt.verify(token, functions.config().jwt.verify)
 
         req.decoded = decoded
-    } catch (error) {
+    } catch (_error) {
         return res.status(401).json({ error: "You are not authenticated!" })
     }
 

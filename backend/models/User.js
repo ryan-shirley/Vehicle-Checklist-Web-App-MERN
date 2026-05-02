@@ -17,11 +17,6 @@ const VehicleSchema = new mongoose.Schema({
     model: {
         type: String,
         required: true
-    },
-    check_list_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "CheckList"
     }
 })
 
@@ -85,8 +80,7 @@ const UserSchema = new mongoose.Schema({
 })
 
 UserSchema.methods.newAuthToken = async function () {
-    const user = this
-    const token = jwt.sign({ _id: user.id.toString() }, functions.config().jwt.verify, { expiresIn: "120 days" })
+    const token = jwt.sign({ _id: this.id.toString() }, functions.config().jwt.verify, { expiresIn: "120 days" })
     // user.tokens = user.tokens.concat({ token })
     // await user.save()
 
@@ -98,9 +92,8 @@ UserSchema.methods.validPassword = function (password) {
 }
 
 UserSchema.pre("save", async function (next) {
-    const user = this
-    if (user.isModified("password")) {
-        user.password = await bcrypt.hash(user.password, 8)
+    if (this.isModified("password")) {
+        this.password = await bcrypt.hash(this.password, 8)
     }
     next()
 })

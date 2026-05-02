@@ -1,25 +1,29 @@
 import React from "react"
-import api from "../../services/api"
-import { STORAGE_KEYS } from "../../constants"
-import { Button, Alert } from "react-bootstrap"
+import { Alert, Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
-import GroupList from "./components/GroupList"
-import ChecksForm from "./components/ChecksForms"
-import TopAppBar from "../../components/TopAppBar"
 import { IconArrowBack } from "../../components/icons"
+import TopAppBar from "../../components/TopAppBar"
+import { APP_ROUTES } from "../../constants"
+import api from "../../services/api"
+import { getCurrentUser } from "../../services/currentUser"
+import ChecksForm from "./components/ChecksForms"
+import GroupList from "./components/GroupList"
 
 class Create extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
+            availableChecklists: [],
+            selectedChecklistId: null,
             checklist: "",
             groups: [],
             error: "",
             loading: true,
             currentList: [],
             results: [],
-            process: ""
+            process: "",
+            user: null
         }
 
         // Binding this to work in the callback
@@ -27,26 +31,37 @@ class Create extends React.Component {
     }
 
     /**
-     * componentDidMount() Load user checklist
+     * componentDidMount() Load active checklists for picker
      */
     componentDidMount() {
-        const uid = localStorage.getItem(STORAGE_KEYS.UID)
-
-        api.get("/api/users/" + uid + "/checklist")
+        api.get("/api/check-lists?active=true")
             .then((res) => {
-                const { name, required_checks } = res.data.checkList
-
                 this.setState({
-                    checklist: name,
-                    groups: required_checks,
+                    availableChecklists: res.data,
                     loading: false
                 })
             })
             .catch((err) => {
                 this.setState({
-                    error: err.response?.data?.message || "Failed to load checklist"
+                    error: err.response?.data?.message || "Failed to load checklists",
+                    loading: false
                 })
             })
+
+        getCurrentUser()
+            .then((data) => this.setState({ user: data }))
+            .catch(() => {})
+    }
+
+    /**
+     * selectChecklist() User picks a checklist from the picker
+     */
+    selectChecklist = (checklist) => {
+        this.setState({
+            selectedChecklistId: checklist._id,
+            checklist: checklist.name,
+            groups: checklist.required_checks
+        })
     }
 
     /**
@@ -55,7 +70,7 @@ class Create extends React.Component {
     onSubmit = (e) => {
         e.preventDefault()
 
-        let { results, groups } = this.state
+        const { results, groups } = this.state
 
         if (results.length !== groups.length) {
             this.setState({
@@ -63,9 +78,10 @@ class Create extends React.Component {
             })
         } else {
             api.post("/api/records", {
-                checked_groups: this.state.results
+                checked_groups: this.state.results,
+                check_list_id: this.state.selectedChecklistId
             })
-                .then((res) => {
+                .then((_res) => {
                     this.props.onCreate("Successfully added a new record")
                     this.props.history.push("/records")
                 })
@@ -100,9 +116,9 @@ class Create extends React.Component {
      * add to results
      */
     groupFinished = (groupResults) => {
-        let newGroups = []
+        const newGroups = []
         for (let i = 0; i < this.state.groups.length; i++) {
-            let group = this.state.groups[i]
+            const group = this.state.groups[i]
 
             if (group._id === this.state.currentList._id) {
                 group.completed = true
@@ -113,7 +129,7 @@ class Create extends React.Component {
         }
 
         this.setState((state) => {
-            let results = state.results.concat({
+            const results = state.results.concat({
                 checks: groupResults,
                 group_id: state.currentList.check_group_id._id
             })
@@ -139,19 +155,19 @@ class Create extends React.Component {
         if (this.state.loading) {
             return (
                 <div className="omc-inspection">
-                    <TopAppBar />
+                    <TopAppBar title={this.state.user?.vehicle?.registration_number} />
                     <div className="omc-inspection__content">
                         <p className="omc-inspection__helper" style={{ marginTop: 32 }}>
-                            Loading checklist…
+                            Loading checklists…
                         </p>
                     </div>
                 </div>
             )
         }
 
-        const { currentList, groups, results } = this.state
+        const { currentList, groups, results, availableChecklists, selectedChecklistId } = this.state
 
-        if (currentList.check_group_id && currentList.check_group_id.name) {
+        if (currentList.check_group_id?.name) {
             return (
                 <ChecksForm
                     checks={currentList.check_group_id.checks}
@@ -162,9 +178,52 @@ class Create extends React.Component {
             )
         }
 
+        if (!selectedChecklistId) {
+            return (
+                <div className="omc-inspection">
+                    <TopAppBar title={this.state.user?.vehicle?.registration_number} />
+                    <div className="omc-inspection__content">
+                        <div className="omc-inspection__nav">
+                            <Link to="/records" className="omc-back-btn" aria-label="Back to logbook">
+                                <IconArrowBack />
+                            </Link>
+                        </div>
+                        <div className="omc-inspection__hero">
+                            <span className="omc-inspection__overline">SELECT CHECKLIST</span>
+                            <h1 className="omc-inspection__title">New Inspection</h1>
+                        </div>
+
+                        {this.state.error && (
+                            <Alert variant="danger" className="omc-inspection__error">
+                                {this.state.error}
+                            </Alert>
+                        )}
+
+                        {availableChecklists.length === 0 ? (
+                            <Alert variant="info">
+                                No active checklists available. <Link to={APP_ROUTES.CHECKLISTS}>Create one</Link>.
+                            </Alert>
+                        ) : (
+                            <div className="omc-inspection__card">
+                                {availableChecklists.map((cl) => (
+                                    <button
+                                        key={cl._id}
+                                        className="omc-inspection__picker-item"
+                                        onClick={() => this.selectChecklist(cl)}
+                                    >
+                                        {cl.name}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )
+        }
+
         return (
             <div className="omc-inspection">
-                <TopAppBar />
+                <TopAppBar title={this.state.user?.vehicle?.registration_number} />
 
                 <div className="omc-inspection__content">
                     <div className="omc-inspection__nav">
@@ -173,7 +232,9 @@ class Create extends React.Component {
                         </Link>
                     </div>
                     <div className="omc-inspection__hero">
-                        <span className="omc-inspection__overline">VEHICLE 201-D-17</span>
+                        <span className="omc-inspection__overline">
+                            VEHICLE {this.state.user?.vehicle?.registration_number || ""}
+                        </span>
                         <h1 className="omc-inspection__title">Inspection</h1>
                     </div>
 

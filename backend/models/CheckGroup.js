@@ -2,8 +2,7 @@ const mongoose = require("mongoose")
 
 const CheckSchema = new mongoose.Schema({
     code: {
-        type: String,
-        required: true
+        type: String
     },
     title: {
         type: String,
