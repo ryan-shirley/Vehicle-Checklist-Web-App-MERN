@@ -24,7 +24,7 @@ const TopAppBar = ({ title }) => {
     }
 
     return (
-        <header className="omc-app-bar">
+        <header className="omc-app-bar" role="banner">
             <Link to="/records" className="omc-app-bar__icon" aria-label="Vehicle home">
                 <IconLocalShipping />
             </Link>
