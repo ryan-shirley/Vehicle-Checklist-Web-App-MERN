@@ -15,7 +15,7 @@ if (!jwtSecret) {
     process.exit(1)
 }
 
-const ffPath = require.resolve("firebase-functions")
+const ffPath = require.resolve("firebase-functions/v1")
 require.cache[ffPath] = {
     id: ffPath,
     filename: ffPath,

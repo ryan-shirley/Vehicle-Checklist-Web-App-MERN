@@ -1,4 +1,4 @@
-const functions = require("firebase-functions")
+const functions = require("firebase-functions/v1")
 const Sentry = require("@sentry/node")
 const Tracing = require("@sentry/tracing")
 const express = require("express")

@@ -1,4 +1,4 @@
-const functions = require("firebase-functions")
+const functions = require("firebase-functions/v1")
 const mongoose = require("mongoose")
 const validator = require("validator")
 const jwt = require("jsonwebtoken")
